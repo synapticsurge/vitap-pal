@@ -23,18 +23,18 @@
   let lastUpdate: number | undefined = $state(undefined);
 
   async function loadfromstorage() {
-    const store = await Store.load("attendance.json");
-    let selsem: string | undefined = await store.get("sel_attendance_semid");
-    semid = await store.get("attendance_semid");
+    const store = await Store.load("utils.json");
+    let selsem: string | undefined = await store.get("sel_marks_semid");
+    semid = await store.get("marks_semid");
     selsemid.value = selsem;
     await store.save();
     //console.log("from semid loadfrom storage",selsemid.value)
   }
 
   async function getsemids() {
-    const store = await Store.load("attendance.json");
-    let semids: string | undefined = await store.get("attendance_semid");
-    lastUpdate = await store.get("attendance_semid_lastupdate");
+    const store = await Store.load("utils.json");
+    let semids: string | undefined = await store.get("marks_semid");
+    lastUpdate = await store.get("marks_semid_lastupdate");
     let check = semids == undefined ? true : false;
     if (
       (selsemid.value == undefined ||
@@ -47,18 +47,18 @@
         reload.status = true;
       }
       //@ts-ignore
-      let [status, semid_rs] = await invoke("attendance_semid");
+      let [status, semid_rs] = await invoke("marks_page");
       //("updating semids")
       if (check) {
         reload.status = false;
       }
       if (status) {
         let temp = JSON.parse(semid_rs);
-        store.set("attendance_semid", temp);
+        store.set("marks_semid", temp);
         let time = unixTimestamp();
-        await store.set("attendance_semid_lastupdate", time);
+        await store.set("marks_semid_lastupdate", time);
         await store.save();
-        //console.log("updating attendance semids set");
+        //console.log("updating marks semids set");
         if (temp != semid && temp != "") {
           semid = temp;
         }
@@ -71,9 +71,9 @@
   async function onClickHandel(id) {
     let selectedValue = id.target.value;
 
-    const store = await Store.load("attendance.json");
+    const store = await Store.load("utils.json");
     if (selectedValue != "" && selectedValue != undefined) {
-      await store.set("sel_attendance_semid", selectedValue);
+      await store.set("sel_marks_semid", selectedValue);
       await store.save();
       selsemid.value = selectedValue;
       //console.log("from semid",selsemid.value)
@@ -107,7 +107,7 @@
     errors.code;
     if (reload.status) {
     }
-    // console.log("running effect from attendance semid");
+    // console.log("running effect from marks semid");
     untrack(() => {
       loadfromstorage().then(() => getsemids());
     });
