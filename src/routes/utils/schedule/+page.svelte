@@ -4,11 +4,11 @@
   import { Store } from "@tauri-apps/plugin-store";
   import { selsemid, loading } from "./store.svelte";
   import { getContext } from "svelte";
-  import Days from "./days.svelte";
+  import Schedule from "./schedule.svelte";
 
-  let timetable_before: string | undefined = $state(undefined);
+  let examschedule_before: string | undefined = $state(undefined);
   let distime = $state(0);
-
+  let stat = $state(undefined);
   interface relaod {
     [key: string]: boolean;
   }
@@ -19,9 +19,11 @@
   let errors: datasate = getContext("errors");
 
   async function loadfromstorage() {
-    const store = await Store.load("timetable.json");
+    const store = await Store.load("examschedule.json");
     if (selsemid.value != undefined) {
-      timetable_before = await store.get(`full_timetable_${selsemid.value}`);
+      examschedule_before = await store.get(
+        `full_examschedule_${selsemid.value}`,
+      );
       //console.log("sem id from storage",selsemid.value)
     }
   }
@@ -30,8 +32,8 @@
     return Math.floor(Date.now() / 1000);
   }
 
-  async function gettimetable() {
-    // console.log("in get timetable")
+  async function getexamschedule() {
+    // console.log("in get examschedule")
 
     if (selsemid.value == undefined) {
       return;
@@ -41,13 +43,13 @@
       return;
     }
     loading.value.push(sel_sem);
-    const store = await Store.load("timetable.json");
+    const store = await Store.load("examschedule.json");
     let last_update: undefined | number = await store.get(
-      `full_timetable_${sel_sem}_lastupdate`,
+      `full_examschedule_${sel_sem}_lastupdate`,
     );
     distime = last_update;
     if (
-      (timetable_before == undefined ||
+      (examschedule_before == undefined ||
         last_update == undefined ||
         Math.abs(unixTimestamp() - last_update) > time_diff_relaod ||
         reload.status) &&
@@ -55,29 +57,34 @@
     ) {
       reload.status = true;
       //@ts-ignore
-      const [status, full_timetable_fetched] = await invoke("timetable", {
+      const [status, full_examschedule_fetched] = await invoke("exam_shedule", {
         semid: sel_sem,
       });
+      console.log(full_examschedule_fetched);
+      stat = status;
       reload.status = false;
-      if (status && full_timetable_fetched != "") {
+      if (status && full_examschedule_fetched != "") {
         const time = unixTimestamp();
-        await store.set(`full_timetable_${sel_sem}_lastupdate`, time);
+        await store.set(`full_examschedule_${sel_sem}_lastupdate`, time);
         distime = time;
         if (
-          full_timetable_fetched != "" &&
-          full_timetable_fetched != undefined &&
-          full_timetable_fetched != timetable_before
+          full_examschedule_fetched != "" &&
+          full_examschedule_fetched != undefined &&
+          full_examschedule_fetched != examschedule_before
         ) {
-          await store.set(`full_timetable_${sel_sem}`, full_timetable_fetched);
+          await store.set(
+            `full_examschedule_${sel_sem}`,
+            full_examschedule_fetched,
+          );
           if (sel_sem == selsemid.value) {
-            timetable_before = full_timetable_fetched;
+            examschedule_before = full_examschedule_fetched;
           }
         }
       } else {
-        if (full_timetable_fetched == "NE") {
+        if (full_examschedule_fetched == "NE") {
           //triggerInfo("No Internet")
         } else {
-          //triggerInfo(full_timetable1)
+          //triggerInfo(full_examschedule1)
         }
       }
     }
@@ -94,7 +101,7 @@
     if (selsemid.value != undefined) {
       (async () => {
         await loadfromstorage();
-        await gettimetable();
+        await getexamschedule();
       })();
     }
   });
@@ -104,8 +111,10 @@
   <div class="">
     <Semid />
     <div>
-      {#if timetable_before != undefined}
-        <Days full_timetable_list={timetable_before} updatedTime={distime} />
+      {#if examschedule_before != undefined}
+        <Schedule examshedule={examschedule_before} updatedtime={distime} />
+      {:else if stat == false}
+        No schedule this sem
       {:else}
         <div class="skeleton h-[80vh] w-full"></div>
       {/if}

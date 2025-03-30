@@ -3,7 +3,7 @@
   import { BookPlus } from "lucide-svelte";
 
   function click() {
-    goto("/utils/Marks");
+    goto("/utils/schedule");
   }
 </script>
 
@@ -15,12 +15,12 @@
         <h2
           class="text-center text-2xl font-semibold grow translate-x-[-1.5vh]"
         >
-          Marks
+          Exam Shedule
         </h2>
         <span class="translate-x-[-1.5vh]">
           <div class="form-control mt-6 flex justify-evenly">
             <button class="btn btn-primary" onclick={click}>
-              Open MarksPage
+              Open Exam Shedule
             </button>
           </div>
         </span>
