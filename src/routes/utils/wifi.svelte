@@ -32,7 +32,7 @@
   usernamepass();
   dialog = document.getElementById("wificreds");
 
-  // Inject script for handling input modifications
+  
   setTimeout(() => {
     let script = document.createElement("script");
     script.innerHTML = `
@@ -52,7 +52,7 @@
       }
     `;
     document.body.appendChild(script);
-  }, 100); // Slight delay to ensure DOM is ready
+  }, 100); 
 });
 
 
