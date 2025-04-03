@@ -19,7 +19,11 @@
           <p><strong>Useranme :</strong> {(() => creds.username)()}</p>
           <p>
             <strong>password :</strong>
+<<<<<<< HEAD
             {(() => "*".repeat(creds.password?.length))()}
+=======
+            {(() => "*".repeat(creds.password?.length ?? 0 ))()}
+>>>>>>> 908260e (wifi logout reset feature added)
           </p>
         </div>
       </div>

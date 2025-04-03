@@ -13,6 +13,10 @@
   },
   "license": "MIT",
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "@sveltejs/adapter-auto": "^6.0.0",
+>>>>>>> 908260e (wifi logout reset feature added)
     "@tailwindcss/vite": "^4.0.9",
     "@tauri-apps/api": "^2.3.0",
     "@tauri-apps/plugin-dialog": "^2.2.0",
@@ -27,7 +31,11 @@
   "devDependencies": {
     "@skeletonlabs/skeleton": "^3.0.0-next.12",
     "@skeletonlabs/skeleton-svelte": "^1.0.0-next.21",
+<<<<<<< HEAD
     "@sveltejs/adapter-static": "^3.0.6",
+=======
+    "@sveltejs/adapter-static": "^3.0.8",
+>>>>>>> 908260e (wifi logout reset feature added)
     "@sveltejs/kit": "^2.9.0",
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
     "@tailwindcss/forms": "^0.5.10",

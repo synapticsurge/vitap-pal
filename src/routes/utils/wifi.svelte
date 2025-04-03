@@ -22,10 +22,40 @@
   let dialog;
 
   onMount(async () => {
+
     await loadData();
     usernamepass();
     dialog = document.getElementById("wificreds");
   });
+
+  await loadData();
+  usernamepass();
+  dialog = document.getElementById("wificreds");
+
+  // Inject script for handling input modifications
+  setTimeout(() => {
+    let script = document.createElement("script");
+    script.innerHTML = `
+      let inputField = document.getElementById("username");
+      if (inputField) {
+        inputField.oninput = null;
+
+        inputField.addEventListener("paste", (event) => {
+            event.preventDefault(); 
+            let text = (event.clipboardData || window.clipboardData).getData("text");
+            inputField.value += text; 
+        });
+
+        inputField.addEventListener("input", function () {
+            this.value = this.value.normalize("NFC"); // Ensure proper encoding
+        });
+      }
+    `;
+    document.body.appendChild(script);
+  }, 100); // Slight delay to ensure DOM is ready
+});
+
+
 
   function usernamepass() {
     if (
