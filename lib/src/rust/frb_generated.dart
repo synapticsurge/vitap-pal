@@ -4,6 +4,14 @@
 // ignore_for_file: unused_import, unused_element, unnecessary_import, duplicate_ignore, invalid_use_of_internal_member, annotate_overrides, non_constant_identifier_names, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, unused_field
 
 import 'api/simple.dart';
+import 'api/vtop/client.dart';
+import 'api/vtop/parseattn.dart';
+import 'api/vtop/parsecoursepg.dart';
+import 'api/vtop/parsemarks.dart';
+import 'api/vtop/parsesched.dart';
+import 'api/vtop/parsett.dart';
+import 'api/vtop/wifi.dart';
+import 'api/vtop_main.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'frb_generated.dart';
@@ -64,7 +72,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.9.0';
 
   @override
-  int get rustContentHash => -1918914929;
+  int get rustContentHash => 368451091;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -75,9 +83,185 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 }
 
 abstract class RustLibApi extends BaseApi {
+  String crateApiVtopClientIclientAutoAccessorGetCaptcha({
+    required Iclient that,
+  });
+
+  String crateApiVtopClientIclientAutoAccessorGetCsrf({required Iclient that});
+
+  bool crateApiVtopClientIclientAutoAccessorGetLoginactive({
+    required Iclient that,
+  });
+
+  String crateApiVtopClientIclientAutoAccessorGetUsername({
+    required Iclient that,
+  });
+
+  void crateApiVtopClientIclientAutoAccessorSetCaptcha({
+    required Iclient that,
+    required String captcha,
+  });
+
+  void crateApiVtopClientIclientAutoAccessorSetCsrf({
+    required Iclient that,
+    required String csrf,
+  });
+
+  void crateApiVtopClientIclientAutoAccessorSetLoginactive({
+    required Iclient that,
+    required bool loginactive,
+  });
+
+  void crateApiVtopClientIclientAutoAccessorSetUsername({
+    required Iclient that,
+    required String username,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetAttendance({
+    required Iclient that,
+    required String semid,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetAttendancePage({
+    required Iclient that,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetCourseClasses({
+    required Iclient that,
+    required String semid,
+    required String classid,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetCourseCourses({
+    required Iclient that,
+    required String semid,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetCourseDlist({
+    required Iclient that,
+    required String semid,
+    required String classid,
+    required String erpId,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetCoursePage({
+    required Iclient that,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetExamShedule({
+    required Iclient that,
+    required String semid,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetExamSheduleSems({
+    required Iclient that,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetFullAttendance({
+    required Iclient that,
+    required String courseId,
+    required String semid,
+    required String courseType,
+  });
+
+  Future<String?> crateApiVtopClientIclientGetLoginPageError({
+    required Iclient that,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetMarksList({
+    required Iclient that,
+    required String semid,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetMarksPage({
+    required Iclient that,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetTimetable({
+    required Iclient that,
+    required String semid,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientGetTimetablePage({
+    required Iclient that,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientLogin({
+    required Iclient that,
+    required String cap,
+  });
+
+  Future<(bool, String)> crateApiVtopClientIclientLoginPageload({
+    required Iclient that,
+  });
+
+  Future<Iclient> crateApiVtopClientIclientNew();
+
+  Future<void> crateApiVtopClientIclientUpdateCred({
+    required Iclient that,
+    required String username,
+    required String password,
+  });
+
+  Future<void> crateApiVtopMainCheckClient({
+    required Iclient iclient,
+    required String username,
+    required String password,
+  });
+
+  Future<(bool, String)> crateApiVtopMainClientLogin({
+    required Iclient iclient,
+  });
+
+  Future<Iclient> crateApiVtopMainGetClient();
+
   String crateApiSimpleGreet({required String name});
 
   Future<void> crateApiSimpleInitApp();
+
+  Future<String> crateApiVtopParseattnParseAttendance({required String html});
+
+  Future<String> crateApiVtopParsecoursepgParseClasses({required String html});
+
+  Future<String> crateApiVtopParsecoursepgParseCourses({required String html});
+
+  Future<String> crateApiVtopParsecoursepgParseDlist({required String html});
+
+  Future<String> crateApiVtopParseattnParseFullAttendance({
+    required String html,
+  });
+
+  Future<String> crateApiVtopParsemarksParseMarks({required String html});
+
+  Future<String> crateApiVtopParseschedParseSchedule({required String html});
+
+  Future<String> crateApiVtopParsecoursepgParseSemid({required String html});
+
+  Future<String> crateApiVtopParseattnParseSemidAttendance({
+    required String html,
+  });
+
+  Future<String> crateApiVtopParsemarksParseSemidMarks({required String html});
+
+  Future<String> crateApiVtopParseschedParseSemidSchedule({
+    required String html,
+  });
+
+  Future<String> crateApiVtopParsettParseSemidTimetable({required String html});
+
+  Future<String> crateApiVtopParsettParseTimetable({required String html});
+
+  Future<(bool, String)> crateApiVtopWifiWifiLoginLogout({
+    required int i,
+    required String username,
+    required String password,
+  });
+
+  RustArcIncrementStrongCountFnType get rust_arc_increment_strong_count_Iclient;
+
+  RustArcDecrementStrongCountFnType get rust_arc_decrement_strong_count_Iclient;
+
+  CrossPlatformFinalizerArg get rust_arc_decrement_strong_count_IclientPtr;
 }
 
 class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
@@ -89,13 +273,1046 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   });
 
   @override
+  String crateApiVtopClientIclientAutoAccessorGetCaptcha({
+    required Iclient that,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 1)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientAutoAccessorGetCaptchaConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientAutoAccessorGetCaptchaConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_auto_accessor_get_captcha",
+        argNames: ["that"],
+      );
+
+  @override
+  String crateApiVtopClientIclientAutoAccessorGetCsrf({required Iclient that}) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 2)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientAutoAccessorGetCsrfConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientAutoAccessorGetCsrfConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_auto_accessor_get_csrf",
+        argNames: ["that"],
+      );
+
+  @override
+  bool crateApiVtopClientIclientAutoAccessorGetLoginactive({
+    required Iclient that,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 3)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_bool,
+          decodeErrorData: null,
+        ),
+        constMeta:
+            kCrateApiVtopClientIclientAutoAccessorGetLoginactiveConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta
+  get kCrateApiVtopClientIclientAutoAccessorGetLoginactiveConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_auto_accessor_get_loginactive",
+        argNames: ["that"],
+      );
+
+  @override
+  String crateApiVtopClientIclientAutoAccessorGetUsername({
+    required Iclient that,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientAutoAccessorGetUsernameConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta
+  get kCrateApiVtopClientIclientAutoAccessorGetUsernameConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_auto_accessor_get_username",
+        argNames: ["that"],
+      );
+
+  @override
+  void crateApiVtopClientIclientAutoAccessorSetCaptcha({
+    required Iclient that,
+    required String captcha,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(captcha, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 5)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_unit,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientAutoAccessorSetCaptchaConstMeta,
+        argValues: [that, captcha],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientAutoAccessorSetCaptchaConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_auto_accessor_set_captcha",
+        argNames: ["that", "captcha"],
+      );
+
+  @override
+  void crateApiVtopClientIclientAutoAccessorSetCsrf({
+    required Iclient that,
+    required String csrf,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(csrf, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 6)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_unit,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientAutoAccessorSetCsrfConstMeta,
+        argValues: [that, csrf],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientAutoAccessorSetCsrfConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_auto_accessor_set_csrf",
+        argNames: ["that", "csrf"],
+      );
+
+  @override
+  void crateApiVtopClientIclientAutoAccessorSetLoginactive({
+    required Iclient that,
+    required bool loginactive,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_bool(loginactive, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 7)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_unit,
+          decodeErrorData: null,
+        ),
+        constMeta:
+            kCrateApiVtopClientIclientAutoAccessorSetLoginactiveConstMeta,
+        argValues: [that, loginactive],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta
+  get kCrateApiVtopClientIclientAutoAccessorSetLoginactiveConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_auto_accessor_set_loginactive",
+        argNames: ["that", "loginactive"],
+      );
+
+  @override
+  void crateApiVtopClientIclientAutoAccessorSetUsername({
+    required Iclient that,
+    required String username,
+  }) {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(username, serializer);
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 8)!;
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_unit,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientAutoAccessorSetUsernameConstMeta,
+        argValues: [that, username],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta
+  get kCrateApiVtopClientIclientAutoAccessorSetUsernameConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_auto_accessor_set_username",
+        argNames: ["that", "username"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetAttendance({
+    required Iclient that,
+    required String semid,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(semid, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 9,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetAttendanceConstMeta,
+        argValues: [that, semid],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetAttendanceConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_attendance",
+        argNames: ["that", "semid"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetAttendancePage({
+    required Iclient that,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 10,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetAttendancePageConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetAttendancePageConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_attendance_page",
+        argNames: ["that"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetCourseClasses({
+    required Iclient that,
+    required String semid,
+    required String classid,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(semid, serializer);
+          sse_encode_String(classid, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 11,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetCourseClassesConstMeta,
+        argValues: [that, semid, classid],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetCourseClassesConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_course_classes",
+        argNames: ["that", "semid", "classid"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetCourseCourses({
+    required Iclient that,
+    required String semid,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(semid, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 12,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetCourseCoursesConstMeta,
+        argValues: [that, semid],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetCourseCoursesConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_course_courses",
+        argNames: ["that", "semid"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetCourseDlist({
+    required Iclient that,
+    required String semid,
+    required String classid,
+    required String erpId,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(semid, serializer);
+          sse_encode_String(classid, serializer);
+          sse_encode_String(erpId, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 13,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetCourseDlistConstMeta,
+        argValues: [that, semid, classid, erpId],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetCourseDlistConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_course_dlist",
+        argNames: ["that", "semid", "classid", "erpId"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetCoursePage({
+    required Iclient that,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 14,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetCoursePageConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetCoursePageConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_course_page",
+        argNames: ["that"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetExamShedule({
+    required Iclient that,
+    required String semid,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(semid, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 15,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetExamSheduleConstMeta,
+        argValues: [that, semid],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetExamSheduleConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_exam_shedule",
+        argNames: ["that", "semid"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetExamSheduleSems({
+    required Iclient that,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 16,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetExamSheduleSemsConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetExamSheduleSemsConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_exam_shedule_sems",
+        argNames: ["that"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetFullAttendance({
+    required Iclient that,
+    required String courseId,
+    required String semid,
+    required String courseType,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(courseId, serializer);
+          sse_encode_String(semid, serializer);
+          sse_encode_String(courseType, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 17,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetFullAttendanceConstMeta,
+        argValues: [that, courseId, semid, courseType],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetFullAttendanceConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_full_attendance",
+        argNames: ["that", "courseId", "semid", "courseType"],
+      );
+
+  @override
+  Future<String?> crateApiVtopClientIclientGetLoginPageError({
+    required Iclient that,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 18,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_opt_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetLoginPageErrorConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetLoginPageErrorConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_login_page_error",
+        argNames: ["that"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetMarksList({
+    required Iclient that,
+    required String semid,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(semid, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 19,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetMarksListConstMeta,
+        argValues: [that, semid],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetMarksListConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_marks_list",
+        argNames: ["that", "semid"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetMarksPage({
+    required Iclient that,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 20,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetMarksPageConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetMarksPageConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_marks_page",
+        argNames: ["that"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetTimetable({
+    required Iclient that,
+    required String semid,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(semid, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 21,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetTimetableConstMeta,
+        argValues: [that, semid],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetTimetableConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_timetable",
+        argNames: ["that", "semid"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientGetTimetablePage({
+    required Iclient that,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 22,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetTimetablePageConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetTimetablePageConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_get_timetable_page",
+        argNames: ["that"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientLogin({
+    required Iclient that,
+    required String cap,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(cap, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 23,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientLoginConstMeta,
+        argValues: [that, cap],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientLoginConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_login",
+        argNames: ["that", "cap"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopClientIclientLoginPageload({
+    required Iclient that,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 24,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientLoginPageloadConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientLoginPageloadConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_login_pageload",
+        argNames: ["that"],
+      );
+
+  @override
+  Future<Iclient> crateApiVtopClientIclientNew() {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 25,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientNewConstMeta,
+        argValues: [],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientNewConstMeta =>
+      const TaskConstMeta(debugName: "Iclient_new", argNames: []);
+
+  @override
+  Future<void> crateApiVtopClientIclientUpdateCred({
+    required Iclient that,
+    required String username,
+    required String password,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          sse_encode_String(username, serializer);
+          sse_encode_String(password, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 26,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_unit,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientUpdateCredConstMeta,
+        argValues: [that, username, password],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientUpdateCredConstMeta =>
+      const TaskConstMeta(
+        debugName: "Iclient_update_cred",
+        argNames: ["that", "username", "password"],
+      );
+
+  @override
+  Future<void> crateApiVtopMainCheckClient({
+    required Iclient iclient,
+    required String username,
+    required String password,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            iclient,
+            serializer,
+          );
+          sse_encode_String(username, serializer);
+          sse_encode_String(password, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 27,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_unit,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopMainCheckClientConstMeta,
+        argValues: [iclient, username, password],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopMainCheckClientConstMeta =>
+      const TaskConstMeta(
+        debugName: "check_client",
+        argNames: ["iclient", "username", "password"],
+      );
+
+  @override
+  Future<(bool, String)> crateApiVtopMainClientLogin({
+    required Iclient iclient,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            iclient,
+            serializer,
+          );
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 28,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopMainClientLoginConstMeta,
+        argValues: [iclient],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopMainClientLoginConstMeta =>
+      const TaskConstMeta(debugName: "client_login", argNames: ["iclient"]);
+
+  @override
+  Future<Iclient> crateApiVtopMainGetClient() {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 29,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData:
+              sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopMainGetClientConstMeta,
+        argValues: [],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopMainGetClientConstMeta =>
+      const TaskConstMeta(debugName: "get_client", argNames: []);
+
+  @override
   String crateApiSimpleGreet({required String name}) {
     return handler.executeSync(
       SyncTask(
         callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
           sse_encode_String(name, serializer);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 1)!;
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 30)!;
         },
         codec: SseCodec(
           decodeSuccessData: sse_decode_String,
@@ -120,7 +1337,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 2,
+            funcId: 31,
             port: port_,
           );
         },
@@ -138,6 +1355,471 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kCrateApiSimpleInitAppConstMeta =>
       const TaskConstMeta(debugName: "init_app", argNames: []);
 
+  @override
+  Future<String> crateApiVtopParseattnParseAttendance({required String html}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 32,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParseattnParseAttendanceConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParseattnParseAttendanceConstMeta =>
+      const TaskConstMeta(debugName: "parse_attendance", argNames: ["html"]);
+
+  @override
+  Future<String> crateApiVtopParsecoursepgParseClasses({required String html}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 33,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParsecoursepgParseClassesConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParsecoursepgParseClassesConstMeta =>
+      const TaskConstMeta(debugName: "parse_classes", argNames: ["html"]);
+
+  @override
+  Future<String> crateApiVtopParsecoursepgParseCourses({required String html}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 34,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParsecoursepgParseCoursesConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParsecoursepgParseCoursesConstMeta =>
+      const TaskConstMeta(debugName: "parse_courses", argNames: ["html"]);
+
+  @override
+  Future<String> crateApiVtopParsecoursepgParseDlist({required String html}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 35,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParsecoursepgParseDlistConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParsecoursepgParseDlistConstMeta =>
+      const TaskConstMeta(debugName: "parse_dlist", argNames: ["html"]);
+
+  @override
+  Future<String> crateApiVtopParseattnParseFullAttendance({
+    required String html,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 36,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParseattnParseFullAttendanceConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParseattnParseFullAttendanceConstMeta =>
+      const TaskConstMeta(
+        debugName: "parse_full_attendance",
+        argNames: ["html"],
+      );
+
+  @override
+  Future<String> crateApiVtopParsemarksParseMarks({required String html}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 37,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParsemarksParseMarksConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParsemarksParseMarksConstMeta =>
+      const TaskConstMeta(debugName: "parse_marks", argNames: ["html"]);
+
+  @override
+  Future<String> crateApiVtopParseschedParseSchedule({required String html}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 38,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParseschedParseScheduleConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParseschedParseScheduleConstMeta =>
+      const TaskConstMeta(debugName: "parse_schedule", argNames: ["html"]);
+
+  @override
+  Future<String> crateApiVtopParsecoursepgParseSemid({required String html}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 39,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParsecoursepgParseSemidConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParsecoursepgParseSemidConstMeta =>
+      const TaskConstMeta(debugName: "parse_semid", argNames: ["html"]);
+
+  @override
+  Future<String> crateApiVtopParseattnParseSemidAttendance({
+    required String html,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 40,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParseattnParseSemidAttendanceConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParseattnParseSemidAttendanceConstMeta =>
+      const TaskConstMeta(
+        debugName: "parse_semid_attendance",
+        argNames: ["html"],
+      );
+
+  @override
+  Future<String> crateApiVtopParsemarksParseSemidMarks({required String html}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 41,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParsemarksParseSemidMarksConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParsemarksParseSemidMarksConstMeta =>
+      const TaskConstMeta(debugName: "parse_semid_marks", argNames: ["html"]);
+
+  @override
+  Future<String> crateApiVtopParseschedParseSemidSchedule({
+    required String html,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 42,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParseschedParseSemidScheduleConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParseschedParseSemidScheduleConstMeta =>
+      const TaskConstMeta(
+        debugName: "parse_semid_schedule",
+        argNames: ["html"],
+      );
+
+  @override
+  Future<String> crateApiVtopParsettParseSemidTimetable({
+    required String html,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 43,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParsettParseSemidTimetableConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParsettParseSemidTimetableConstMeta =>
+      const TaskConstMeta(
+        debugName: "parse_semid_timetable",
+        argNames: ["html"],
+      );
+
+  @override
+  Future<String> crateApiVtopParsettParseTimetable({required String html}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 44,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_String,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParsettParseTimetableConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParsettParseTimetableConstMeta =>
+      const TaskConstMeta(debugName: "parse_timetable", argNames: ["html"]);
+
+  @override
+  Future<(bool, String)> crateApiVtopWifiWifiLoginLogout({
+    required int i,
+    required String username,
+    required String password,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_i_32(i, serializer);
+          sse_encode_String(username, serializer);
+          sse_encode_String(password, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 45,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopWifiWifiLoginLogoutConstMeta,
+        argValues: [i, username, password],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopWifiWifiLoginLogoutConstMeta =>
+      const TaskConstMeta(
+        debugName: "wifi_login_logout",
+        argNames: ["i", "username", "password"],
+      );
+
+  RustArcIncrementStrongCountFnType
+  get rust_arc_increment_strong_count_Iclient =>
+      wire.rust_arc_increment_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient;
+
+  RustArcDecrementStrongCountFnType
+  get rust_arc_decrement_strong_count_Iclient =>
+      wire.rust_arc_decrement_strong_count_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient;
+
+  @protected
+  Iclient
+  dco_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return IclientImpl.frbInternalDcoDecode(raw as List<dynamic>);
+  }
+
+  @protected
+  Iclient
+  dco_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return IclientImpl.frbInternalDcoDecode(raw as List<dynamic>);
+  }
+
+  @protected
+  Iclient
+  dco_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return IclientImpl.frbInternalDcoDecode(raw as List<dynamic>);
+  }
+
+  @protected
+  Iclient
+  dco_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return IclientImpl.frbInternalDcoDecode(raw as List<dynamic>);
+  }
+
   @protected
   String dco_decode_String(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
@@ -145,9 +1827,37 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  bool dco_decode_bool(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw as bool;
+  }
+
+  @protected
+  int dco_decode_i_32(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw as int;
+  }
+
+  @protected
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as Uint8List;
+  }
+
+  @protected
+  String? dco_decode_opt_String(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw == null ? null : dco_decode_String(raw);
+  }
+
+  @protected
+  (bool, String) dco_decode_record_bool_string(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2) {
+      throw Exception('Expected 2 elements, got ${arr.length}');
+    }
+    return (dco_decode_bool(arr[0]), dco_decode_String(arr[1]));
   }
 
   @protected
@@ -163,6 +1873,60 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  BigInt dco_decode_usize(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dcoDecodeU64(raw);
+  }
+
+  @protected
+  Iclient
+  sse_decode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return IclientImpl.frbInternalSseDecode(
+      sse_decode_usize(deserializer),
+      sse_decode_i_32(deserializer),
+    );
+  }
+
+  @protected
+  Iclient
+  sse_decode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return IclientImpl.frbInternalSseDecode(
+      sse_decode_usize(deserializer),
+      sse_decode_i_32(deserializer),
+    );
+  }
+
+  @protected
+  Iclient
+  sse_decode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return IclientImpl.frbInternalSseDecode(
+      sse_decode_usize(deserializer),
+      sse_decode_i_32(deserializer),
+    );
+  }
+
+  @protected
+  Iclient
+  sse_decode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return IclientImpl.frbInternalSseDecode(
+      sse_decode_usize(deserializer),
+      sse_decode_i_32(deserializer),
+    );
+  }
+
+  @protected
   String sse_decode_String(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var inner = sse_decode_list_prim_u_8_strict(deserializer);
@@ -170,10 +1934,41 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  bool sse_decode_bool(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return deserializer.buffer.getUint8() != 0;
+  }
+
+  @protected
+  int sse_decode_i_32(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return deserializer.buffer.getInt32();
+  }
+
+  @protected
   Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var len_ = sse_decode_i_32(deserializer);
     return deserializer.buffer.getUint8List(len_);
+  }
+
+  @protected
+  String? sse_decode_opt_String(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    if (sse_decode_bool(deserializer)) {
+      return (sse_decode_String(deserializer));
+    } else {
+      return null;
+    }
+  }
+
+  @protected
+  (bool, String) sse_decode_record_bool_string(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_field0 = sse_decode_bool(deserializer);
+    var var_field1 = sse_decode_String(deserializer);
+    return (var_field0, var_field1);
   }
 
   @protected
@@ -188,21 +1983,79 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  int sse_decode_i_32(SseDeserializer deserializer) {
+  BigInt sse_decode_usize(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getInt32();
+    return deserializer.buffer.getBigUint64();
   }
 
   @protected
-  bool sse_decode_bool(SseDeserializer deserializer) {
+  void
+  sse_encode_Auto_Owned_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+    Iclient self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getUint8() != 0;
+    sse_encode_usize(
+      (self as IclientImpl).frbInternalSseEncode(move: true),
+      serializer,
+    );
+  }
+
+  @protected
+  void
+  sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+    Iclient self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_usize(
+      (self as IclientImpl).frbInternalSseEncode(move: false),
+      serializer,
+    );
+  }
+
+  @protected
+  void
+  sse_encode_Auto_Ref_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+    Iclient self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_usize(
+      (self as IclientImpl).frbInternalSseEncode(move: false),
+      serializer,
+    );
+  }
+
+  @protected
+  void
+  sse_encode_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+    Iclient self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_usize(
+      (self as IclientImpl).frbInternalSseEncode(move: null),
+      serializer,
+    );
   }
 
   @protected
   void sse_encode_String(String self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_list_prim_u_8_strict(utf8.encoder.convert(self), serializer);
+  }
+
+  @protected
+  void sse_encode_bool(bool self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putUint8(self ? 1 : 0);
+  }
+
+  @protected
+  void sse_encode_i_32(int self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putInt32(self);
   }
 
   @protected
@@ -213,6 +2066,26 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
     serializer.buffer.putUint8List(self);
+  }
+
+  @protected
+  void sse_encode_opt_String(String? self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    sse_encode_bool(self != null, serializer);
+    if (self != null) {
+      sse_encode_String(self, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_record_bool_string(
+    (bool, String) self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_bool(self.$1, serializer);
+    sse_encode_String(self.$2, serializer);
   }
 
   @protected
@@ -227,14 +2100,150 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_i_32(int self, SseSerializer serializer) {
+  void sse_encode_usize(BigInt self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putInt32(self);
+    serializer.buffer.putBigUint64(self);
   }
+}
 
-  @protected
-  void sse_encode_bool(bool self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putUint8(self ? 1 : 0);
-  }
+@sealed
+class IclientImpl extends RustOpaque implements Iclient {
+  // Not to be used by end users
+  IclientImpl.frbInternalDcoDecode(List<dynamic> wire)
+    : super.frbInternalDcoDecode(wire, _kStaticData);
+
+  // Not to be used by end users
+  IclientImpl.frbInternalSseDecode(BigInt ptr, int externalSizeOnNative)
+    : super.frbInternalSseDecode(ptr, externalSizeOnNative, _kStaticData);
+
+  static final _kStaticData = RustArcStaticData(
+    rustArcIncrementStrongCount:
+        RustLib.instance.api.rust_arc_increment_strong_count_Iclient,
+    rustArcDecrementStrongCount:
+        RustLib.instance.api.rust_arc_decrement_strong_count_Iclient,
+    rustArcDecrementStrongCountPtr:
+        RustLib.instance.api.rust_arc_decrement_strong_count_IclientPtr,
+  );
+
+  String get captcha => RustLib.instance.api
+      .crateApiVtopClientIclientAutoAccessorGetCaptcha(that: this);
+
+  String get csrf => RustLib.instance.api
+      .crateApiVtopClientIclientAutoAccessorGetCsrf(that: this);
+
+  bool get loginactive => RustLib.instance.api
+      .crateApiVtopClientIclientAutoAccessorGetLoginactive(that: this);
+
+  String get username => RustLib.instance.api
+      .crateApiVtopClientIclientAutoAccessorGetUsername(that: this);
+
+  set captcha(String captcha) =>
+      RustLib.instance.api.crateApiVtopClientIclientAutoAccessorSetCaptcha(
+        that: this,
+        captcha: captcha,
+      );
+
+  set csrf(String csrf) => RustLib.instance.api
+      .crateApiVtopClientIclientAutoAccessorSetCsrf(that: this, csrf: csrf);
+
+  set loginactive(bool loginactive) =>
+      RustLib.instance.api.crateApiVtopClientIclientAutoAccessorSetLoginactive(
+        that: this,
+        loginactive: loginactive,
+      );
+
+  set username(String username) =>
+      RustLib.instance.api.crateApiVtopClientIclientAutoAccessorSetUsername(
+        that: this,
+        username: username,
+      );
+
+  Future<(bool, String)> getAttendance({required String semid}) => RustLib
+      .instance
+      .api
+      .crateApiVtopClientIclientGetAttendance(that: this, semid: semid);
+
+  Future<(bool, String)> getAttendancePage() => RustLib.instance.api
+      .crateApiVtopClientIclientGetAttendancePage(that: this);
+
+  Future<(bool, String)> getCourseClasses({
+    required String semid,
+    required String classid,
+  }) => RustLib.instance.api.crateApiVtopClientIclientGetCourseClasses(
+    that: this,
+    semid: semid,
+    classid: classid,
+  );
+
+  Future<(bool, String)> getCourseCourses({required String semid}) => RustLib
+      .instance
+      .api
+      .crateApiVtopClientIclientGetCourseCourses(that: this, semid: semid);
+
+  Future<(bool, String)> getCourseDlist({
+    required String semid,
+    required String classid,
+    required String erpId,
+  }) => RustLib.instance.api.crateApiVtopClientIclientGetCourseDlist(
+    that: this,
+    semid: semid,
+    classid: classid,
+    erpId: erpId,
+  );
+
+  Future<(bool, String)> getCoursePage() =>
+      RustLib.instance.api.crateApiVtopClientIclientGetCoursePage(that: this);
+
+  Future<(bool, String)> getExamShedule({required String semid}) => RustLib
+      .instance
+      .api
+      .crateApiVtopClientIclientGetExamShedule(that: this, semid: semid);
+
+  Future<(bool, String)> getExamSheduleSems() => RustLib.instance.api
+      .crateApiVtopClientIclientGetExamSheduleSems(that: this);
+
+  Future<(bool, String)> getFullAttendance({
+    required String courseId,
+    required String semid,
+    required String courseType,
+  }) => RustLib.instance.api.crateApiVtopClientIclientGetFullAttendance(
+    that: this,
+    courseId: courseId,
+    semid: semid,
+    courseType: courseType,
+  );
+
+  Future<String?> getLoginPageError() => RustLib.instance.api
+      .crateApiVtopClientIclientGetLoginPageError(that: this);
+
+  Future<(bool, String)> getMarksList({required String semid}) => RustLib
+      .instance
+      .api
+      .crateApiVtopClientIclientGetMarksList(that: this, semid: semid);
+
+  Future<(bool, String)> getMarksPage() =>
+      RustLib.instance.api.crateApiVtopClientIclientGetMarksPage(that: this);
+
+  Future<(bool, String)> getTimetable({required String semid}) => RustLib
+      .instance
+      .api
+      .crateApiVtopClientIclientGetTimetable(that: this, semid: semid);
+
+  Future<(bool, String)> getTimetablePage() => RustLib.instance.api
+      .crateApiVtopClientIclientGetTimetablePage(that: this);
+
+  Future<(bool, String)> login({required String cap}) =>
+      RustLib.instance.api.crateApiVtopClientIclientLogin(that: this, cap: cap);
+
+  Future<(bool, String)> loginPageload() =>
+      RustLib.instance.api.crateApiVtopClientIclientLoginPageload(that: this);
+
+  Future<void> updateCred({
+    required String username,
+    required String password,
+  }) => RustLib.instance.api.crateApiVtopClientIclientUpdateCred(
+    that: this,
+    username: username,
+    password: password,
+  );
 }
