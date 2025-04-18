@@ -9,7 +9,7 @@ import 'vtop/client.dart';
 
 // These functions are ignored because they are not marked as `pub`: `login_vtop`
 
-Future<Iclient> getClient() => RustLib.instance.api.crateApiVtopMainGetClient();
+Iclient getClient() => RustLib.instance.api.crateApiVtopMainGetClient();
 
 Future<void> checkClient({
   required Iclient iclient,
@@ -21,5 +21,12 @@ Future<void> checkClient({
   password: password,
 );
 
-Future<(bool, String)> clientLogin({required Iclient iclient}) =>
-    RustLib.instance.api.crateApiVtopMainClientLogin(iclient: iclient);
+Future<(bool, String)> onstartRun({
+  required Iclient iclient,
+  required String username,
+  required String password,
+}) => RustLib.instance.api.crateApiVtopMainOnstartRun(
+  iclient: iclient,
+  username: username,
+  password: password,
+);

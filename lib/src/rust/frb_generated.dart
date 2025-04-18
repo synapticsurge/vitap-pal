@@ -72,7 +72,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.9.0';
 
   @override
-  int get rustContentHash => 368451091;
+  int get rustContentHash => 2031132929;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -209,15 +209,17 @@ abstract class RustLibApi extends BaseApi {
     required String password,
   });
 
-  Future<(bool, String)> crateApiVtopMainClientLogin({
-    required Iclient iclient,
-  });
-
-  Future<Iclient> crateApiVtopMainGetClient();
+  Iclient crateApiVtopMainGetClient();
 
   String crateApiSimpleGreet({required String name});
 
   Future<void> crateApiSimpleInitApp();
+
+  Future<(bool, String)> crateApiVtopMainOnstartRun({
+    required Iclient iclient,
+    required String username,
+    required String password,
+  });
 
   Future<String> crateApiVtopParseattnParseAttendance({required String html});
 
@@ -1245,50 +1247,12 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<(bool, String)> crateApiVtopMainClientLogin({
-    required Iclient iclient,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
+  Iclient crateApiVtopMainGetClient() {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
-            iclient,
-            serializer,
-          );
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 28,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_record_bool_string,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateApiVtopMainClientLoginConstMeta,
-        argValues: [iclient],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateApiVtopMainClientLoginConstMeta =>
-      const TaskConstMeta(debugName: "client_login", argNames: ["iclient"]);
-
-  @override
-  Future<Iclient> crateApiVtopMainGetClient() {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 29,
-            port: port_,
-          );
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 28)!;
         },
         codec: SseCodec(
           decodeSuccessData:
@@ -1312,7 +1276,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
           sse_encode_String(name, serializer);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 30)!;
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 29)!;
         },
         codec: SseCodec(
           decodeSuccessData: sse_decode_String,
@@ -1337,7 +1301,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 31,
+            funcId: 30,
             port: port_,
           );
         },
@@ -1354,6 +1318,45 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
 
   TaskConstMeta get kCrateApiSimpleInitAppConstMeta =>
       const TaskConstMeta(debugName: "init_app", argNames: []);
+
+  @override
+  Future<(bool, String)> crateApiVtopMainOnstartRun({
+    required Iclient iclient,
+    required String username,
+    required String password,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            iclient,
+            serializer,
+          );
+          sse_encode_String(username, serializer);
+          sse_encode_String(password, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 31,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopMainOnstartRunConstMeta,
+        argValues: [iclient, username, password],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopMainOnstartRunConstMeta => const TaskConstMeta(
+    debugName: "onstart_run",
+    argNames: ["iclient", "username", "password"],
+  );
 
   @override
   Future<String> crateApiVtopParseattnParseAttendance({required String html}) {
