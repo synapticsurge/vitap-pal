@@ -11,6 +11,9 @@ class Client {
   Client();
   Future<(bool, String)> clientLogin(VtopUser user) async {
     var login = await loginWithCreds(user.username, user.password);
+    if (login.$2 == "NC") {
+      user.nocreds = true;
+    }
     if (!login.$1) {
       if (user.username != null &&
           user.password != null &&
@@ -29,7 +32,6 @@ class Client {
     if (username == null || password == null) {
       return (false, "NC");
     }
-
     var login = await onstartRun(
       iclient: iclient,
       username: username!,
@@ -39,7 +41,7 @@ class Client {
     return login;
   }
 
-  void _validateInternalState((bool, String) state) {
+  void _validateInternalState(dynamic state) {
     if (!state.$1) {
       if (state.$2 == "NE") {
         isOnline = false;
@@ -47,5 +49,13 @@ class Client {
         isVtopDown = false;
       }
     }
+  }
+
+  Future<(bool, String, List<String>)> timetableSemid() async {
+    (bool, String, List<String>) k = await rustTimetableSemid(client: iclient);
+    if (k.$1) {
+      //dbupdate
+    }
+    return k;
   }
 }

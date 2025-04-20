@@ -6,6 +6,7 @@
 import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'vtop/client.dart';
+import 'vtop/types.dart';
 
 // These functions are ignored because they are not marked as `pub`: `login_vtop`
 
@@ -29,4 +30,16 @@ Future<(bool, String)> onstartRun({
   iclient: iclient,
   username: username,
   password: password,
+);
+
+Future<(bool, String, List<String>)> rustTimetableSemid({
+  required Iclient client,
+}) => RustLib.instance.api.crateApiVtopMainRustTimetableSemid(client: client);
+
+Future<(bool, String, List<Timetable>)> rustTimetable({
+  required Iclient client,
+  required String semid,
+}) => RustLib.instance.api.crateApiVtopMainRustTimetable(
+  client: client,
+  semid: semid,
 );

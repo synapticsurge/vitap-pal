@@ -3,25 +3,16 @@ use serde;
 use serde::Deserialize;
 use serde_json;
 
-pub fn parse_timetable(html: String) -> String {
+use super::types::Timetable;
+
+pub fn parse_timetable(html: String) -> Vec<Timetable> {
     #[derive(serde::Serialize, Deserialize)]
     struct Timeing {
         serial: String,
         start_time: String,
         end_time: String,
     }
-    #[derive(serde::Serialize, Deserialize)]
-    struct Timetable {
-        serial: String,
-        day: String,
-        slot: String,
-        course_code: String,
-        course_type: String,
-        room_no: String,
-        block: String,
-        start_time: String,
-        end_time: String,
-    }
+ 
     let document = Html::parse_document(&html);
     let rows_selector = Selector::parse("tr").unwrap();
     let mut timetables: Vec<Timetable> = Vec::new();
@@ -102,7 +93,6 @@ pub fn parse_timetable(html: String) -> String {
             count_for_offset += 1;
         }
     }
-    //let json_data_timings = serde_json::to_string_pretty(&timeings_temp).unwrap();
     for timetable in &mut timetables {
         if let Some(times) = timeings_temp.iter().find(|t| t.serial == timetable.serial) {
             timetable.start_time = times.start_time.clone();
@@ -110,11 +100,10 @@ pub fn parse_timetable(html: String) -> String {
         }
     }
 
-    let json_data = serde_json::to_string_pretty(&timetables).unwrap();
-    //println!("{}", json_data);
-    return json_data;
+
+    return timetables;
 }
-pub fn parse_semid_timetable(html: String) -> String {
+pub fn parse_semid_timetable(html: String) -> Vec<String> {
     let mut sem_names_ids = vec![];
     let document = Html::parse_document(&html);
     let selector = Selector::parse(r#"select[name="semesterSubId"] option"#).unwrap();
@@ -129,6 +118,5 @@ pub fn parse_semid_timetable(html: String) -> String {
             }
         }
     }
-
-    return serde_json::to_string(&sem_names_ids).unwrap();
+    sem_names_ids
 }

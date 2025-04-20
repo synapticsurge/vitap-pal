@@ -5,9 +5,10 @@
 
 import '../../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
+import 'types.dart';
 
-Future<String> parseTimetable({required String html}) =>
+Future<List<Timetable>> parseTimetable({required String html}) =>
     RustLib.instance.api.crateApiVtopParsettParseTimetable(html: html);
 
-Future<String> parseSemidTimetable({required String html}) =>
+Future<List<String>> parseSemidTimetable({required String html}) =>
     RustLib.instance.api.crateApiVtopParsettParseSemidTimetable(html: html);

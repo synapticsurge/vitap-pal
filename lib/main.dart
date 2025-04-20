@@ -12,15 +12,11 @@ Future<void> main() async {
   runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final goRouter = ref.read(goRouterprovider);
     final Color primaryBlue = AppColors.primary;
     final Color accentRed = AppColors.secondary;
     return MaterialApp.router(

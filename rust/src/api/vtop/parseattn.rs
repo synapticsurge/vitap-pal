@@ -1,9 +1,8 @@
 use scraper::{Html, Selector};
-use serde;
-use serde::Deserialize;
-use serde_json;
 
-pub fn parse_semid_attendance(html: String) -> String {
+use super::types::{AtCourse, AttendanceList};
+
+pub fn parse_semid_attendance(html: String) -> Vec<String> {
     let mut sem_names_ids = vec![];
     let document = Html::parse_document(&html);
     let selector = Selector::parse(r#"select[name="semesterSubId"] option"#).unwrap();
@@ -18,28 +17,14 @@ pub fn parse_semid_attendance(html: String) -> String {
             }
         }
     }
-    return serde_json::to_string(&sem_names_ids).unwrap();
+    return sem_names_ids;
 }
 
-pub fn parse_attendance(html: String) -> String {
-    #[derive(serde::Serialize, Deserialize)]
-    struct Course {
-        serial: String,
-        category: String,
-        course_name: String,
-        course_code: String,
-        course_type: String,
-        faculty_detail: String,
-        classes_attended: String,
-        total_classes: String,
-        attendance_percentage: String,
-        attendence_fat_cat: String,
-        debar_status: String,
-        course_id: String,
-    }
+pub fn parse_attendance(html: String) -> Vec<AtCourse> {
+
     let document = Html::parse_document(&html);
     let rows_selector = Selector::parse("tr").unwrap();
-    let mut courses: Vec<Course> = Vec::new();
+    let mut courses: Vec<AtCourse> = Vec::new();
     for row in document.select(&rows_selector).skip(1) {
         let cells: Vec<_> = row.select(&Selector::parse("td").unwrap()).collect();
         if cells.len() > 10 {
@@ -49,7 +34,7 @@ pub fn parse_attendance(html: String) -> String {
             let course_type: String = infocell[3].split(")").collect::<Vec<_>>()[0]
                 .to_string()
                 .replace("'", "");
-            let course = Course {
+            let course = AtCourse {
                 serial: cells[0]
                     .text()
                     .collect::<Vec<_>>()
@@ -127,20 +112,12 @@ pub fn parse_attendance(html: String) -> String {
             courses.push(course);
         }
     }
-    let json_data = serde_json::to_string_pretty(&courses).unwrap();
-    return json_data;
+    ;
+    return courses;
 }
 
-pub fn parse_full_attendance(html: String) -> String {
-    #[derive(serde::Serialize, Deserialize)]
-    struct AttendanceList {
-        serial: String,
-        date: String,
-        slot: String,
-        day_time: String,
-        status: String,
-        remark: String,
-    }
+pub fn parse_full_attendance(html: String) -> Vec<AttendanceList> {
+   
     let document = Html::parse_document(&html);
     let rows_selector = Selector::parse("tr").unwrap();
     let mut attendance_lists: Vec<AttendanceList> = Vec::new();
@@ -195,6 +172,5 @@ pub fn parse_full_attendance(html: String) -> String {
             attendance_lists.push(attendance_list);
         }
     }
-    let json_data = serde_json::to_string_pretty(&attendance_lists).unwrap();
-    return json_data;
+    return attendance_lists;
 }

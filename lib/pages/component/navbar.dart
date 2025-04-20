@@ -44,10 +44,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
           }
         },
         items: [
-          _buildNavItem(Icons.home_outlined, Icons.home, 'Timetable', 0),
+          _buildNavItem(
+            Icons.table_chart_outlined,
+            Icons.table_chart,
+            'Timetable',
+            0,
+          ),
           _buildNavItem(Icons.book_outlined, Icons.book, 'Attendance', 1),
           _buildNavItem(Icons.view_cozy_outlined, Icons.view_cozy, 'Others', 2),
-          _buildNavItem(Icons.contacts_outlined, Icons.contacts, 'Social ', 3),
+          _buildNavItem(Icons.token_outlined, Icons.token, 'Social ', 3),
         ],
       ),
     );
@@ -74,8 +79,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
-          if (isSelected) Icon(sicon),
-          if (!isSelected) Icon(icon),
+          if (isSelected) Icon(icon),
+          if (!isSelected) Icon(sicon),
         ],
       ),
       label: isSelected ? label : '',

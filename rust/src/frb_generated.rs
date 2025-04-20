@@ -38,7 +38,7 @@ flutter_rust_bridge::frb_generated_boilerplate!(
     default_rust_auto_opaque = RustAutoOpaqueMoi,
 );
 pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_VERSION: &str = "2.9.0";
-pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = 2031132929;
+pub(crate) const FLUTTER_RUST_BRIDGE_CODEGEN_CONTENT_HASH: i32 = -336472996;
 
 // Section: executor
 
@@ -2173,6 +2173,130 @@ fn wire__crate__api__vtop__parsett__parse_timetable_impl(
         },
     )
 }
+fn wire__crate__api__vtop_main__rust_timetable_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_async::<flutter_rust_bridge::for_generated::SseCodec, _, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "rust_timetable",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_client = <RustOpaqueMoi<
+                flutter_rust_bridge::for_generated::RustAutoOpaqueInner<Iclient>,
+            >>::sse_decode(&mut deserializer);
+            let api_semid = <String>::sse_decode(&mut deserializer);
+            deserializer.end();
+            move |context| async move {
+                transform_result_sse::<_, ()>(
+                    (move || async move {
+                        let mut api_client_guard = None;
+                        let decode_indices_ =
+                            flutter_rust_bridge::for_generated::lockable_compute_decode_order(
+                                vec![flutter_rust_bridge::for_generated::LockableOrderInfo::new(
+                                    &api_client,
+                                    0,
+                                    true,
+                                )],
+                            );
+                        for i in decode_indices_ {
+                            match i {
+                                0 => {
+                                    api_client_guard =
+                                        Some(api_client.lockable_decode_async_ref_mut().await)
+                                }
+                                _ => unreachable!(),
+                            }
+                        }
+                        let mut api_client_guard = api_client_guard.unwrap();
+                        let output_ok = Result::<_, ()>::Ok(
+                            crate::api::vtop_main::rust_timetable(
+                                &mut *api_client_guard,
+                                api_semid,
+                            )
+                            .await,
+                        )?;
+                        Ok(output_ok)
+                    })()
+                    .await,
+                )
+            }
+        },
+    )
+}
+fn wire__crate__api__vtop_main__rust_timetable_semid_impl(
+    port_: flutter_rust_bridge::for_generated::MessagePort,
+    ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
+    rust_vec_len_: i32,
+    data_len_: i32,
+) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap_async::<flutter_rust_bridge::for_generated::SseCodec, _, _, _>(
+        flutter_rust_bridge::for_generated::TaskInfo {
+            debug_name: "rust_timetable_semid",
+            port: Some(port_),
+            mode: flutter_rust_bridge::for_generated::FfiCallMode::Normal,
+        },
+        move || {
+            let message = unsafe {
+                flutter_rust_bridge::for_generated::Dart2RustMessageSse::from_wire(
+                    ptr_,
+                    rust_vec_len_,
+                    data_len_,
+                )
+            };
+            let mut deserializer =
+                flutter_rust_bridge::for_generated::SseDeserializer::new(message);
+            let api_client = <RustOpaqueMoi<
+                flutter_rust_bridge::for_generated::RustAutoOpaqueInner<Iclient>,
+            >>::sse_decode(&mut deserializer);
+            deserializer.end();
+            move |context| async move {
+                transform_result_sse::<_, ()>(
+                    (move || async move {
+                        let mut api_client_guard = None;
+                        let decode_indices_ =
+                            flutter_rust_bridge::for_generated::lockable_compute_decode_order(
+                                vec![flutter_rust_bridge::for_generated::LockableOrderInfo::new(
+                                    &api_client,
+                                    0,
+                                    true,
+                                )],
+                            );
+                        for i in decode_indices_ {
+                            match i {
+                                0 => {
+                                    api_client_guard =
+                                        Some(api_client.lockable_decode_async_ref_mut().await)
+                                }
+                                _ => unreachable!(),
+                            }
+                        }
+                        let mut api_client_guard = api_client_guard.unwrap();
+                        let output_ok = Result::<_, ()>::Ok(
+                            crate::api::vtop_main::rust_timetable_semid(&mut *api_client_guard)
+                                .await,
+                        )?;
+                        Ok(output_ok)
+                    })()
+                    .await,
+                )
+            }
+        },
+    )
+}
 fn wire__crate__api__vtop__wifi__wifi_login_logout_impl(
     port_: flutter_rust_bridge::for_generated::MessagePort,
     ptr_: flutter_rust_bridge::for_generated::PlatformGeneralizedUint8ListPtr,
@@ -2253,6 +2377,58 @@ impl SseDecode for String {
     }
 }
 
+impl SseDecode for crate::api::vtop::types::AtCourse {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_serial = <String>::sse_decode(deserializer);
+        let mut var_category = <String>::sse_decode(deserializer);
+        let mut var_courseName = <String>::sse_decode(deserializer);
+        let mut var_courseCode = <String>::sse_decode(deserializer);
+        let mut var_courseType = <String>::sse_decode(deserializer);
+        let mut var_facultyDetail = <String>::sse_decode(deserializer);
+        let mut var_classesAttended = <String>::sse_decode(deserializer);
+        let mut var_totalClasses = <String>::sse_decode(deserializer);
+        let mut var_attendancePercentage = <String>::sse_decode(deserializer);
+        let mut var_attendenceFatCat = <String>::sse_decode(deserializer);
+        let mut var_debarStatus = <String>::sse_decode(deserializer);
+        let mut var_courseId = <String>::sse_decode(deserializer);
+        return crate::api::vtop::types::AtCourse {
+            serial: var_serial,
+            category: var_category,
+            course_name: var_courseName,
+            course_code: var_courseCode,
+            course_type: var_courseType,
+            faculty_detail: var_facultyDetail,
+            classes_attended: var_classesAttended,
+            total_classes: var_totalClasses,
+            attendance_percentage: var_attendancePercentage,
+            attendence_fat_cat: var_attendenceFatCat,
+            debar_status: var_debarStatus,
+            course_id: var_courseId,
+        };
+    }
+}
+
+impl SseDecode for crate::api::vtop::types::AttendanceList {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_serial = <String>::sse_decode(deserializer);
+        let mut var_date = <String>::sse_decode(deserializer);
+        let mut var_slot = <String>::sse_decode(deserializer);
+        let mut var_dayTime = <String>::sse_decode(deserializer);
+        let mut var_status = <String>::sse_decode(deserializer);
+        let mut var_remark = <String>::sse_decode(deserializer);
+        return crate::api::vtop::types::AttendanceList {
+            serial: var_serial,
+            date: var_date,
+            slot: var_slot,
+            day_time: var_dayTime,
+            status: var_status,
+            remark: var_remark,
+        };
+    }
+}
+
 impl SseDecode for bool {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2267,6 +2443,46 @@ impl SseDecode for i32 {
     }
 }
 
+impl SseDecode for Vec<String> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = vec![];
+        for idx_ in 0..len_ {
+            ans_.push(<String>::sse_decode(deserializer));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for Vec<crate::api::vtop::types::AtCourse> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = vec![];
+        for idx_ in 0..len_ {
+            ans_.push(<crate::api::vtop::types::AtCourse>::sse_decode(
+                deserializer,
+            ));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for Vec<crate::api::vtop::types::AttendanceList> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = vec![];
+        for idx_ in 0..len_ {
+            ans_.push(<crate::api::vtop::types::AttendanceList>::sse_decode(
+                deserializer,
+            ));
+        }
+        return ans_;
+    }
+}
+
 impl SseDecode for Vec<u8> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2274,6 +2490,20 @@ impl SseDecode for Vec<u8> {
         let mut ans_ = vec![];
         for idx_ in 0..len_ {
             ans_.push(<u8>::sse_decode(deserializer));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for Vec<crate::api::vtop::types::Timetable> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = vec![];
+        for idx_ in 0..len_ {
+            ans_.push(<crate::api::vtop::types::Timetable>::sse_decode(
+                deserializer,
+            ));
         }
         return ans_;
     }
@@ -2296,6 +2526,52 @@ impl SseDecode for (bool, String) {
         let mut var_field0 = <bool>::sse_decode(deserializer);
         let mut var_field1 = <String>::sse_decode(deserializer);
         return (var_field0, var_field1);
+    }
+}
+
+impl SseDecode for (bool, String, Vec<String>) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_field0 = <bool>::sse_decode(deserializer);
+        let mut var_field1 = <String>::sse_decode(deserializer);
+        let mut var_field2 = <Vec<String>>::sse_decode(deserializer);
+        return (var_field0, var_field1, var_field2);
+    }
+}
+
+impl SseDecode for (bool, String, Vec<crate::api::vtop::types::Timetable>) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_field0 = <bool>::sse_decode(deserializer);
+        let mut var_field1 = <String>::sse_decode(deserializer);
+        let mut var_field2 = <Vec<crate::api::vtop::types::Timetable>>::sse_decode(deserializer);
+        return (var_field0, var_field1, var_field2);
+    }
+}
+
+impl SseDecode for crate::api::vtop::types::Timetable {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_serial = <String>::sse_decode(deserializer);
+        let mut var_day = <String>::sse_decode(deserializer);
+        let mut var_slot = <String>::sse_decode(deserializer);
+        let mut var_courseCode = <String>::sse_decode(deserializer);
+        let mut var_courseType = <String>::sse_decode(deserializer);
+        let mut var_roomNo = <String>::sse_decode(deserializer);
+        let mut var_block = <String>::sse_decode(deserializer);
+        let mut var_startTime = <String>::sse_decode(deserializer);
+        let mut var_endTime = <String>::sse_decode(deserializer);
+        return crate::api::vtop::types::Timetable {
+            serial: var_serial,
+            day: var_day,
+            slot: var_slot,
+            course_code: var_courseCode,
+            course_type: var_courseType,
+            room_no: var_roomNo,
+            block: var_block,
+            start_time: var_startTime,
+            end_time: var_endTime,
+        };
     }
 }
 
@@ -2500,7 +2776,14 @@ fn pde_ffi_dispatcher_primary_impl(
         44 => {
             wire__crate__api__vtop__parsett__parse_timetable_impl(port, ptr, rust_vec_len, data_len)
         }
-        45 => {
+        45 => wire__crate__api__vtop_main__rust_timetable_impl(port, ptr, rust_vec_len, data_len),
+        46 => wire__crate__api__vtop_main__rust_timetable_semid_impl(
+            port,
+            ptr,
+            rust_vec_len,
+            data_len,
+        ),
+        47 => {
             wire__crate__api__vtop__wifi__wifi_login_logout_impl(port, ptr, rust_vec_len, data_len)
         }
         _ => unreachable!(),
@@ -2578,6 +2861,91 @@ impl flutter_rust_bridge::IntoIntoDart<FrbWrapper<Iclient>> for Iclient {
     }
 }
 
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::AtCourse {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.serial.into_into_dart().into_dart(),
+            self.category.into_into_dart().into_dart(),
+            self.course_name.into_into_dart().into_dart(),
+            self.course_code.into_into_dart().into_dart(),
+            self.course_type.into_into_dart().into_dart(),
+            self.faculty_detail.into_into_dart().into_dart(),
+            self.classes_attended.into_into_dart().into_dart(),
+            self.total_classes.into_into_dart().into_dart(),
+            self.attendance_percentage.into_into_dart().into_dart(),
+            self.attendence_fat_cat.into_into_dart().into_dart(),
+            self.debar_status.into_into_dart().into_dart(),
+            self.course_id.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::vtop::types::AtCourse
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::vtop::types::AtCourse>
+    for crate::api::vtop::types::AtCourse
+{
+    fn into_into_dart(self) -> crate::api::vtop::types::AtCourse {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::AttendanceList {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.serial.into_into_dart().into_dart(),
+            self.date.into_into_dart().into_dart(),
+            self.slot.into_into_dart().into_dart(),
+            self.day_time.into_into_dart().into_dart(),
+            self.status.into_into_dart().into_dart(),
+            self.remark.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::vtop::types::AttendanceList
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::vtop::types::AttendanceList>
+    for crate::api::vtop::types::AttendanceList
+{
+    fn into_into_dart(self) -> crate::api::vtop::types::AttendanceList {
+        self
+    }
+}
+// Codec=Dco (DartCObject based), see doc to use other codecs
+impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::Timetable {
+    fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
+        [
+            self.serial.into_into_dart().into_dart(),
+            self.day.into_into_dart().into_dart(),
+            self.slot.into_into_dart().into_dart(),
+            self.course_code.into_into_dart().into_dart(),
+            self.course_type.into_into_dart().into_dart(),
+            self.room_no.into_into_dart().into_dart(),
+            self.block.into_into_dart().into_dart(),
+            self.start_time.into_into_dart().into_dart(),
+            self.end_time.into_into_dart().into_dart(),
+        ]
+        .into_dart()
+    }
+}
+impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
+    for crate::api::vtop::types::Timetable
+{
+}
+impl flutter_rust_bridge::IntoIntoDart<crate::api::vtop::types::Timetable>
+    for crate::api::vtop::types::Timetable
+{
+    fn into_into_dart(self) -> crate::api::vtop::types::Timetable {
+        self
+    }
+}
+
 impl SseEncode for Iclient {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -2601,6 +2969,36 @@ impl SseEncode for String {
     }
 }
 
+impl SseEncode for crate::api::vtop::types::AtCourse {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.serial, serializer);
+        <String>::sse_encode(self.category, serializer);
+        <String>::sse_encode(self.course_name, serializer);
+        <String>::sse_encode(self.course_code, serializer);
+        <String>::sse_encode(self.course_type, serializer);
+        <String>::sse_encode(self.faculty_detail, serializer);
+        <String>::sse_encode(self.classes_attended, serializer);
+        <String>::sse_encode(self.total_classes, serializer);
+        <String>::sse_encode(self.attendance_percentage, serializer);
+        <String>::sse_encode(self.attendence_fat_cat, serializer);
+        <String>::sse_encode(self.debar_status, serializer);
+        <String>::sse_encode(self.course_id, serializer);
+    }
+}
+
+impl SseEncode for crate::api::vtop::types::AttendanceList {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.serial, serializer);
+        <String>::sse_encode(self.date, serializer);
+        <String>::sse_encode(self.slot, serializer);
+        <String>::sse_encode(self.day_time, serializer);
+        <String>::sse_encode(self.status, serializer);
+        <String>::sse_encode(self.remark, serializer);
+    }
+}
+
 impl SseEncode for bool {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -2615,12 +3013,52 @@ impl SseEncode for i32 {
     }
 }
 
+impl SseEncode for Vec<String> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <String>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for Vec<crate::api::vtop::types::AtCourse> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::api::vtop::types::AtCourse>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for Vec<crate::api::vtop::types::AttendanceList> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::api::vtop::types::AttendanceList>::sse_encode(item, serializer);
+        }
+    }
+}
+
 impl SseEncode for Vec<u8> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <i32>::sse_encode(self.len() as _, serializer);
         for item in self {
             <u8>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for Vec<crate::api::vtop::types::Timetable> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::api::vtop::types::Timetable>::sse_encode(item, serializer);
         }
     }
 }
@@ -2640,6 +3078,39 @@ impl SseEncode for (bool, String) {
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <bool>::sse_encode(self.0, serializer);
         <String>::sse_encode(self.1, serializer);
+    }
+}
+
+impl SseEncode for (bool, String, Vec<String>) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.0, serializer);
+        <String>::sse_encode(self.1, serializer);
+        <Vec<String>>::sse_encode(self.2, serializer);
+    }
+}
+
+impl SseEncode for (bool, String, Vec<crate::api::vtop::types::Timetable>) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.0, serializer);
+        <String>::sse_encode(self.1, serializer);
+        <Vec<crate::api::vtop::types::Timetable>>::sse_encode(self.2, serializer);
+    }
+}
+
+impl SseEncode for crate::api::vtop::types::Timetable {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <String>::sse_encode(self.serial, serializer);
+        <String>::sse_encode(self.day, serializer);
+        <String>::sse_encode(self.slot, serializer);
+        <String>::sse_encode(self.course_code, serializer);
+        <String>::sse_encode(self.course_type, serializer);
+        <String>::sse_encode(self.room_no, serializer);
+        <String>::sse_encode(self.block, serializer);
+        <String>::sse_encode(self.start_time, serializer);
+        <String>::sse_encode(self.end_time, serializer);
     }
 }
 

@@ -5,12 +5,13 @@
 
 import '../../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
+import 'types.dart';
 
-Future<String> parseSemidAttendance({required String html}) =>
+Future<List<String>> parseSemidAttendance({required String html}) =>
     RustLib.instance.api.crateApiVtopParseattnParseSemidAttendance(html: html);
 
-Future<String> parseAttendance({required String html}) =>
+Future<List<AtCourse>> parseAttendance({required String html}) =>
     RustLib.instance.api.crateApiVtopParseattnParseAttendance(html: html);
 
-Future<String> parseFullAttendance({required String html}) =>
+Future<List<AttendanceList>> parseFullAttendance({required String html}) =>
     RustLib.instance.api.crateApiVtopParseattnParseFullAttendance(html: html);

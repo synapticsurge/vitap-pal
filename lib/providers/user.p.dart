@@ -1,14 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vitapmate/models/vtopuser.dart';
 
-class UsertNotifer extends AsyncNotifier<VtopUser> {
+class UserNotifer extends AsyncNotifier<VtopUser> {
   @override
-  Future<VtopUser> build() async {
-    var k = await VtopUser.fromStorage();
-    return k;
+  FutureOr<VtopUser> build() async {
+    VtopUser user = VtopUser();
+    await user.fromStorage();
+    return user;
   }
 }
 
-final userProvider = AsyncNotifierProvider<UsertNotifer, VtopUser>(() {
-  return UsertNotifer();
+final userProvider = AsyncNotifierProvider<UserNotifer, VtopUser>(() {
+  return UserNotifer();
 });

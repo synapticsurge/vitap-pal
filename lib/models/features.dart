@@ -1,3 +1,9 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:vitapmate/secrets.dart';
+
 enum AppFeatures { timetable, attendance, coursepage, marks, examschedule }
 
 class FeatureFlags {
@@ -35,6 +41,20 @@ class FeatureFlags {
 class Features {
   final Map<AppFeatures, FeatureFlags> flags;
   Features(this.flags);
+  static fetchFromapi() async {
+    final resp = await http.get(Uri.parse(Secrets.featureAPI));
+    if (resp.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(resp.body);
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      return Features.fromJson(
+        data,
+        int.tryParse(packageInfo.buildNumber) ?? 0,
+      );
+    } else {
+      return Features.fromJson({}, 0);
+    }
+  }
+
   factory Features.fromJson(Map<String, dynamic> json, int buildnumber) {
     final featureJson = json["features"];
     Map<AppFeatures, FeatureFlags> flagsmap = {};

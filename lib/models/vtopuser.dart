@@ -8,7 +8,8 @@ class VtopUser {
   bool loading = true;
   bool isValid = false;
   bool initialLoad = false;
-
+  bool nocreds = false;
+  final storage = FlutterSecureStorage();
   VtopUser({
     this.username,
     this.password,
@@ -17,39 +18,29 @@ class VtopUser {
     this.initialLoad = false,
   });
 
-  static Future<VtopUser> fromStorage() async {
-    final storage = FlutterSecureStorage();
-    String? username = await storage.read(key: StorageKeys.vtopUsername);
-    String? password = await storage.read(key: StorageKeys.vtopPassword);
+  Future<void> fromStorage() async {
+    username = await storage.read(key: StorageKeys.vtopUsername);
+    password = await storage.read(key: StorageKeys.vtopPassword);
     String? isValidStr = await storage.read(key: StorageKeys.isValid);
-    bool isValid = isValidStr == "true";
-    bool initialLoad =
-        (username == null && password == null && isValidStr == null);
-    return VtopUser(
-      username: username,
-      password: password,
-      isValid: isValid,
-      initialLoad: initialLoad,
-      loading: false,
-    );
+    isValid = isValidStr == "true";
+    initialLoad = (username == null && password == null && isValidStr == null);
   }
 
   Future<(bool, String)> update(String username, String password) async {
     final (bool, String) k = await Client().loginWithCreds(username, password);
     if (k.$1) {
-      final storage = FlutterSecureStorage();
       await storage.write(key: StorageKeys.vtopUsername, value: username);
       await storage.write(key: StorageKeys.vtopPassword, value: password);
       await storage.write(key: StorageKeys.isValid, value: "true");
       this.username = username;
       this.password = password;
       isValid = true;
+      initialLoad = false;
     }
     return k;
   }
 
   Future<void> updateValidstate(bool k) async {
-    final storage = FlutterSecureStorage();
     await storage.write(key: StorageKeys.isValid, value: "$k");
     isValid = k;
   }

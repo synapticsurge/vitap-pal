@@ -1,4 +1,7 @@
-use super::vtop::client::Iclient;
+use super::vtop::{
+    client::Iclient,
+    parsett, types::Timetable,
+};
 use base64::{engine::general_purpose::URL_SAFE, Engine as _};
 
 async fn login_vtop(client: &mut Iclient) -> (bool, String) {
@@ -50,4 +53,57 @@ pub async fn onstart_run(
         k = login_vtop(iclient).await;
     }
     k
+}
+
+#[flutter_rust_bridge::frb()]
+pub async fn rust_timetable_semid(client: &mut Iclient) -> (bool, String,Vec<String> ) {
+    let mut result = (false, "".to_string(),vec![]);
+
+    let m = client.loginactive;
+    if !m {
+        let _check = login_vtop(client).await;
+        result = (_check.0,_check.1,vec![]);
+    }
+    let m = client.loginactive;
+    if m {
+        let html = client.get_timetable_page().await;
+        if html.0 {
+            let k = parsett::parse_semid_timetable(html.1);
+            if k.is_empty() {
+                result = (false, "".to_string(),k);
+            } else {
+                result = (true, "".to_string(),k)
+            }
+        } else {
+            result = (html.0,html.1,vec![]);
+        }
+    }
+
+    result
+}
+
+#[flutter_rust_bridge::frb()]
+pub async fn rust_timetable(client: &mut Iclient, semid: String) -> (bool, String,Vec<Timetable>) {
+    let mut result = (false, "".to_string(),vec![]);
+
+    let m = client.loginactive;
+    if !m {
+        let _check = login_vtop(client).await;
+        result = (_check.0,_check.1,vec![]);
+    }
+    let m = client.loginactive;
+    if m {
+        let res = client.get_timetable(semid).await;
+        if res.0 {
+            let k = parsett::parse_timetable(res.1);
+            if k.is_empty() {
+                result = (false, "".to_string(),k);
+            } else {
+                result = (true, "".to_string(),k)
+            }
+        } else {
+            result = (res.0,res.1,vec![]);
+        }
+    }
+    result
 }

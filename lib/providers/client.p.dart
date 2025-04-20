@@ -1,29 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vitapmate/models/client.dart';
+import 'package:vitapmate/models/vtopuser.dart';
 import 'package:vitapmate/providers/user.p.dart';
 
-class ClientNotifer extends AsyncNotifier<Client> {
+class ClientNotifier extends AsyncNotifier<Client> {
   @override
-  Future<Client> build() async {
-    final userAsync = ref.watch(userProvider);
-
-    return userAsync.when(
-      loading: () {
-        return Client();
-      },
-      error: (err, stack) {
-        throw Exception("Error loading user data: $err");
-      },
-
-      data: (user) {
-        var client = Client();
-        client.clientLogin(user);
-        return client;
-      },
-    );
+  FutureOr<Client> build() async {
+    Client client = Client();
+    VtopUser user = await ref.read(userProvider.future);
+    await client.clientLogin(user);
+    return client;
   }
 }
 
-final clientProvider = AsyncNotifierProvider<ClientNotifer, Client>(() {
-  return ClientNotifer();
+final clinetProvider = AsyncNotifierProvider<ClientNotifier, Client>(() {
+  return ClientNotifier();
 });
