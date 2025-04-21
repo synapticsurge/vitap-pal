@@ -1,6 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:vitapmate/constants.dart';
-import 'package:vitapmate/models/client.dart';
+import 'package:vitapmate/service/client.dart';
 
 class VtopUser {
   String? username;
@@ -27,7 +27,7 @@ class VtopUser {
   }
 
   Future<(bool, String)> update(String username, String password) async {
-    final (bool, String) k = await Client().loginWithCreds(username, password);
+    final (bool, String) k = await ClientService().loginWithCreds(username, password);
     if (k.$1) {
       await storage.write(key: StorageKeys.vtopUsername, value: username);
       await storage.write(key: StorageKeys.vtopPassword, value: password);

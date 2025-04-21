@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vitapmate/constants.dart';
-import 'package:vitapmate/providers/user.p.dart';
+import 'package:vitapmate/providers/user.dart';
 import 'package:vitapmate/router/route_names.dart';
 
 class Creds extends ConsumerStatefulWidget {

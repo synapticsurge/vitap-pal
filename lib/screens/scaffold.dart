@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vitapmate/pages/component/appbar.dart';
-import 'package:vitapmate/pages/component/navbar.dart';
+import 'package:vitapmate/screens/component/appbar.dart';
+import 'package:vitapmate/screens/component/navbar.dart';
 
 class ScaffoldWithNavBar extends StatelessWidget {
   final Widget child;
