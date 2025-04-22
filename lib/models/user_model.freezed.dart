@@ -13,7 +13,7 @@ part of 'user_model.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$UserModel {
+mixin _$UserModel implements DiagnosticableTreeMixin {
 
  String? get username; String? get password; bool get loading; bool get isValid; bool get initialLoad;
 /// Create a copy of UserModel
@@ -23,6 +23,12 @@ mixin _$UserModel {
 $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>(this as UserModel, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserModel'))
+    ..add(DiagnosticsProperty('username', username))..add(DiagnosticsProperty('password', password))..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('isValid', isValid))..add(DiagnosticsProperty('initialLoad', initialLoad));
+}
 
 @override
 bool operator ==(Object other) {
@@ -34,7 +40,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,username,password,loading,isValid,initialLoad);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserModel(username: $username, password: $password, loading: $loading, isValid: $isValid, initialLoad: $initialLoad)';
 }
 
@@ -80,7 +86,7 @@ as bool,
 /// @nodoc
 
 
-class _UserModel implements UserModel {
+class _UserModel with DiagnosticableTreeMixin implements UserModel {
    _UserModel({this.username, this.password, this.loading = true, this.isValid = false, this.initialLoad = false});
   
 
@@ -97,6 +103,12 @@ class _UserModel implements UserModel {
 _$UserModelCopyWith<_UserModel> get copyWith => __$UserModelCopyWithImpl<_UserModel>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'UserModel'))
+    ..add(DiagnosticsProperty('username', username))..add(DiagnosticsProperty('password', password))..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('isValid', isValid))..add(DiagnosticsProperty('initialLoad', initialLoad));
+}
 
 @override
 bool operator ==(Object other) {
@@ -108,7 +120,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,username,password,loading,isValid,initialLoad);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'UserModel(username: $username, password: $password, loading: $loading, isValid: $isValid, initialLoad: $initialLoad)';
 }
 

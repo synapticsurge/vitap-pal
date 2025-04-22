@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 part 'features_model.freezed.dart';
 
 enum AppFeatures { timetable, attendance, coursepage, marks, examschedule }

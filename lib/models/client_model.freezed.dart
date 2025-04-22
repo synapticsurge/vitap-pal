@@ -13,7 +13,7 @@ part of 'client_model.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$ClientModel {
+mixin _$ClientModel implements DiagnosticableTreeMixin {
 
  bool get isLogin; bool get isOnline; bool get isVtopDown;
 /// Create a copy of ClientModel
@@ -23,6 +23,12 @@ mixin _$ClientModel {
 $ClientModelCopyWith<ClientModel> get copyWith => _$ClientModelCopyWithImpl<ClientModel>(this as ClientModel, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'ClientModel'))
+    ..add(DiagnosticsProperty('isLogin', isLogin))..add(DiagnosticsProperty('isOnline', isOnline))..add(DiagnosticsProperty('isVtopDown', isVtopDown));
+}
 
 @override
 bool operator ==(Object other) {
@@ -34,7 +40,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,isLogin,isOnline,isVtopDown);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'ClientModel(isLogin: $isLogin, isOnline: $isOnline, isVtopDown: $isVtopDown)';
 }
 
@@ -78,7 +84,7 @@ as bool,
 /// @nodoc
 
 
-class _ClientModel implements ClientModel {
+class _ClientModel with DiagnosticableTreeMixin implements ClientModel {
    _ClientModel({this.isLogin = false, this.isOnline = false, this.isVtopDown = false});
   
 
@@ -93,6 +99,12 @@ class _ClientModel implements ClientModel {
 _$ClientModelCopyWith<_ClientModel> get copyWith => __$ClientModelCopyWithImpl<_ClientModel>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'ClientModel'))
+    ..add(DiagnosticsProperty('isLogin', isLogin))..add(DiagnosticsProperty('isOnline', isOnline))..add(DiagnosticsProperty('isVtopDown', isVtopDown));
+}
 
 @override
 bool operator ==(Object other) {
@@ -104,7 +116,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,isLogin,isOnline,isVtopDown);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'ClientModel(isLogin: $isLogin, isOnline: $isOnline, isVtopDown: $isVtopDown)';
 }
 

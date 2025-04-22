@@ -13,7 +13,7 @@ part of 'features_model.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$FeatureFlags {
+mixin _$FeatureFlags implements DiagnosticableTreeMixin {
 
  bool get enabled; String get reason; int get fixed; String get note;
 /// Create a copy of FeatureFlags
@@ -23,6 +23,12 @@ mixin _$FeatureFlags {
 $FeatureFlagsCopyWith<FeatureFlags> get copyWith => _$FeatureFlagsCopyWithImpl<FeatureFlags>(this as FeatureFlags, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'FeatureFlags'))
+    ..add(DiagnosticsProperty('enabled', enabled))..add(DiagnosticsProperty('reason', reason))..add(DiagnosticsProperty('fixed', fixed))..add(DiagnosticsProperty('note', note));
+}
 
 @override
 bool operator ==(Object other) {
@@ -34,7 +40,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,enabled,reason,fixed,note);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'FeatureFlags(enabled: $enabled, reason: $reason, fixed: $fixed, note: $note)';
 }
 
@@ -79,7 +85,7 @@ as String,
 /// @nodoc
 
 
-class _FeatureFlags implements FeatureFlags {
+class _FeatureFlags with DiagnosticableTreeMixin implements FeatureFlags {
    _FeatureFlags({required this.enabled, required this.reason, required this.fixed, required this.note});
   
 
@@ -95,6 +101,12 @@ class _FeatureFlags implements FeatureFlags {
 _$FeatureFlagsCopyWith<_FeatureFlags> get copyWith => __$FeatureFlagsCopyWithImpl<_FeatureFlags>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'FeatureFlags'))
+    ..add(DiagnosticsProperty('enabled', enabled))..add(DiagnosticsProperty('reason', reason))..add(DiagnosticsProperty('fixed', fixed))..add(DiagnosticsProperty('note', note));
+}
 
 @override
 bool operator ==(Object other) {
@@ -106,7 +118,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,enabled,reason,fixed,note);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'FeatureFlags(enabled: $enabled, reason: $reason, fixed: $fixed, note: $note)';
 }
 
@@ -149,7 +161,7 @@ as String,
 }
 
 /// @nodoc
-mixin _$FeaturesModel {
+mixin _$FeaturesModel implements DiagnosticableTreeMixin {
 
  Map<AppFeatures, FeatureFlags> get flags;
 /// Create a copy of FeaturesModel
@@ -159,6 +171,12 @@ mixin _$FeaturesModel {
 $FeaturesModelCopyWith<FeaturesModel> get copyWith => _$FeaturesModelCopyWithImpl<FeaturesModel>(this as FeaturesModel, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'FeaturesModel'))
+    ..add(DiagnosticsProperty('flags', flags));
+}
 
 @override
 bool operator ==(Object other) {
@@ -170,7 +188,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(flags));
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'FeaturesModel(flags: $flags)';
 }
 
@@ -212,7 +230,7 @@ as Map<AppFeatures, FeatureFlags>,
 /// @nodoc
 
 
-class _FeaturesModel implements FeaturesModel {
+class _FeaturesModel with DiagnosticableTreeMixin implements FeaturesModel {
    _FeaturesModel({required final  Map<AppFeatures, FeatureFlags> flags}): _flags = flags;
   
 
@@ -231,6 +249,12 @@ class _FeaturesModel implements FeaturesModel {
 _$FeaturesModelCopyWith<_FeaturesModel> get copyWith => __$FeaturesModelCopyWithImpl<_FeaturesModel>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'FeaturesModel'))
+    ..add(DiagnosticsProperty('flags', flags));
+}
 
 @override
 bool operator ==(Object other) {
@@ -242,7 +266,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_flags));
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'FeaturesModel(flags: $flags)';
 }
 

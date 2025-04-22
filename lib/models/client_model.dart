@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart'; 
 part 'client_model.freezed.dart';
+
 
 @freezed
 sealed class ClientModel with _$ClientModel {
