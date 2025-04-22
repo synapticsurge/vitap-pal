@@ -27,8 +27,9 @@ class _CredsState extends ConsumerState<Creds> {
       });
       String username = _usernameController.text;
       String password = _passwordController.text;
-      var c = await ref.read(userProvider.future);
-      var n = await c.update(username, password);
+      var n = await ref
+          .read(userProvider.notifier)
+          .updateCreds(username, password);
       if (!mounted) return;
       if (!n.$1) {
         if (n.$2 == "NE") {
@@ -59,7 +60,11 @@ class _CredsState extends ConsumerState<Creds> {
             content: Text("Sucessfully saved creds"),
           ),
         );
-        GoRouter.of(context).goNamed(RouteNames.timetablePageRoutename);
+        try {
+          GoRouter.of(context).goNamed(RouteNames.timetablePageRoutename);
+        } catch (e) {
+          print("go nav $e");
+        }
       }
     }
     setState(() {

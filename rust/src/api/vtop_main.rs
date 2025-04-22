@@ -4,6 +4,15 @@ use super::vtop::{
 };
 use base64::{engine::general_purpose::URL_SAFE, Engine as _};
 
+// (true or false, "msg")
+// msg:
+// (true)
+// SS = suceesfully
+// LA = loginactive
+// (false)
+// NE = networkerror {may be device offline}
+// VE = vtop error
+
 async fn login_vtop(client: &mut Iclient) -> (bool, String) {
     for _ in 0..4 {
         let login_pg = client.login_pageload().await;

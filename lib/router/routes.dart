@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -109,7 +108,7 @@ FutureOr<String?> redirect(
   Ref ref,
   GoRouterState state,
 ) async {
-  var user = await ref.watch(userProvider.future);
+  var user = await ref.read(userProvider.future);
   if (!user.isValid) {
     return "/settings/creds";
   } else if (user.initialLoad) {

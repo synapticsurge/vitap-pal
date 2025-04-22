@@ -6,11 +6,10 @@ import 'package:vitapmate/models/features_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'features.g.dart';
 
-
 @Riverpod(keepAlive: true)
 class Features extends _$Features {
   @override
-Future<FeaturesModel> build() async {
+  Future<FeaturesModel> build() async {
     final resp = await http.get(Uri.parse(Secrets.featureAPI));
     if (resp.statusCode == 200) {
       final Map<String, dynamic> data = jsonDecode(resp.body);
@@ -24,4 +23,3 @@ Future<FeaturesModel> build() async {
     }
   }
 }
-

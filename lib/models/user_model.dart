@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 part 'user_model.freezed.dart';
@@ -10,5 +11,6 @@ sealed class UserModel with _$UserModel {
     @Default(true) bool loading,
     @Default(false) bool isValid,
     @Default(false) bool initialLoad,
+    required final FlutterSecureStorage storage,
   }) = _UserModel;
 }

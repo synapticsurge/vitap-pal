@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel implements DiagnosticableTreeMixin {
 
- String? get username; String? get password; bool get loading; bool get isValid; bool get initialLoad;
+ String? get username; String? get password; bool get loading; bool get isValid; bool get initialLoad; FlutterSecureStorage get storage;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,21 +27,21 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'UserModel'))
-    ..add(DiagnosticsProperty('username', username))..add(DiagnosticsProperty('password', password))..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('isValid', isValid))..add(DiagnosticsProperty('initialLoad', initialLoad));
+    ..add(DiagnosticsProperty('username', username))..add(DiagnosticsProperty('password', password))..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('isValid', isValid))..add(DiagnosticsProperty('initialLoad', initialLoad))..add(DiagnosticsProperty('storage', storage));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.isValid, isValid) || other.isValid == isValid)&&(identical(other.initialLoad, initialLoad) || other.initialLoad == initialLoad));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.isValid, isValid) || other.isValid == isValid)&&(identical(other.initialLoad, initialLoad) || other.initialLoad == initialLoad)&&(identical(other.storage, storage) || other.storage == storage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,username,password,loading,isValid,initialLoad);
+int get hashCode => Object.hash(runtimeType,username,password,loading,isValid,initialLoad,storage);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'UserModel(username: $username, password: $password, loading: $loading, isValid: $isValid, initialLoad: $initialLoad)';
+  return 'UserModel(username: $username, password: $password, loading: $loading, isValid: $isValid, initialLoad: $initialLoad, storage: $storage)';
 }
 
 
@@ -52,7 +52,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String? username, String? password, bool loading, bool isValid, bool initialLoad
+ String? username, String? password, bool loading, bool isValid, bool initialLoad, FlutterSecureStorage storage
 });
 
 
@@ -69,14 +69,15 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? username = freezed,Object? password = freezed,Object? loading = null,Object? isValid = null,Object? initialLoad = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? username = freezed,Object? password = freezed,Object? loading = null,Object? isValid = null,Object? initialLoad = null,Object? storage = null,}) {
   return _then(_self.copyWith(
 username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String?,password: freezed == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String?,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,isValid: null == isValid ? _self.isValid : isValid // ignore: cast_nullable_to_non_nullable
 as bool,initialLoad: null == initialLoad ? _self.initialLoad : initialLoad // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,storage: null == storage ? _self.storage : storage // ignore: cast_nullable_to_non_nullable
+as FlutterSecureStorage,
   ));
 }
 
@@ -87,7 +88,7 @@ as bool,
 
 
 class _UserModel with DiagnosticableTreeMixin implements UserModel {
-   _UserModel({this.username, this.password, this.loading = true, this.isValid = false, this.initialLoad = false});
+   _UserModel({this.username, this.password, this.loading = true, this.isValid = false, this.initialLoad = false, required this.storage});
   
 
 @override final  String? username;
@@ -95,6 +96,7 @@ class _UserModel with DiagnosticableTreeMixin implements UserModel {
 @override@JsonKey() final  bool loading;
 @override@JsonKey() final  bool isValid;
 @override@JsonKey() final  bool initialLoad;
+@override final  FlutterSecureStorage storage;
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
@@ -107,21 +109,21 @@ _$UserModelCopyWith<_UserModel> get copyWith => __$UserModelCopyWithImpl<_UserMo
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'UserModel'))
-    ..add(DiagnosticsProperty('username', username))..add(DiagnosticsProperty('password', password))..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('isValid', isValid))..add(DiagnosticsProperty('initialLoad', initialLoad));
+    ..add(DiagnosticsProperty('username', username))..add(DiagnosticsProperty('password', password))..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('isValid', isValid))..add(DiagnosticsProperty('initialLoad', initialLoad))..add(DiagnosticsProperty('storage', storage));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.isValid, isValid) || other.isValid == isValid)&&(identical(other.initialLoad, initialLoad) || other.initialLoad == initialLoad));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.username, username) || other.username == username)&&(identical(other.password, password) || other.password == password)&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.isValid, isValid) || other.isValid == isValid)&&(identical(other.initialLoad, initialLoad) || other.initialLoad == initialLoad)&&(identical(other.storage, storage) || other.storage == storage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,username,password,loading,isValid,initialLoad);
+int get hashCode => Object.hash(runtimeType,username,password,loading,isValid,initialLoad,storage);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'UserModel(username: $username, password: $password, loading: $loading, isValid: $isValid, initialLoad: $initialLoad)';
+  return 'UserModel(username: $username, password: $password, loading: $loading, isValid: $isValid, initialLoad: $initialLoad, storage: $storage)';
 }
 
 
@@ -132,7 +134,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String? username, String? password, bool loading, bool isValid, bool initialLoad
+ String? username, String? password, bool loading, bool isValid, bool initialLoad, FlutterSecureStorage storage
 });
 
 
@@ -149,14 +151,15 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? username = freezed,Object? password = freezed,Object? loading = null,Object? isValid = null,Object? initialLoad = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? username = freezed,Object? password = freezed,Object? loading = null,Object? isValid = null,Object? initialLoad = null,Object? storage = null,}) {
   return _then(_UserModel(
 username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
 as String?,password: freezed == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String?,loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,isValid: null == isValid ? _self.isValid : isValid // ignore: cast_nullable_to_non_nullable
 as bool,initialLoad: null == initialLoad ? _self.initialLoad : initialLoad // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,storage: null == storage ? _self.storage : storage // ignore: cast_nullable_to_non_nullable
+as FlutterSecureStorage,
   ));
 }
 
