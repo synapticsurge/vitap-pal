@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../../providers/features.dart';
-import '../../../models/features.dart';
+import '../../../models/features_model.dart';
 
 class FeaturesStatus extends ConsumerWidget {
   FeaturesStatus({super.key});

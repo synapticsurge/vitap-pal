@@ -1,19 +1,18 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'features_model.freezed.dart';
 
 enum AppFeatures { timetable, attendance, coursepage, marks, examschedule }
 
-class FeatureFlags {
-  final bool enabled;
-  final String reason;
-  final int fixed;
-  final String note;
-  FeatureFlags({
-    required this.enabled,
-    required this.reason,
-    required this.fixed,
-    required this.note,
-  });
+@freezed 
+sealed class FeatureFlags with  _$FeatureFlags {
+  factory FeatureFlags({
+    required bool enabled,
+     required String reason,
+     required int fixed,
+     required String note,
+   })= _FeatureFlags;
 
-  factory FeatureFlags.fromJson(Map<String, dynamic> json, int buildnumber) {
+   factory FeatureFlags.fromJson(Map<String, dynamic> json, int buildnumber) {
     bool enabled = json["enabled"] ?? false;
     int fixed = json["fixedIn"] ?? 0;
     if (buildnumber < fixed) {
@@ -27,15 +26,15 @@ class FeatureFlags {
       note: json["note"] ?? "",
     );
   }
-
-  factory FeatureFlags.defaultFlags() {
+    factory FeatureFlags.defaultFlags() {
     return FeatureFlags(enabled: false, reason: "", fixed: 0, note: "");
   }
 }
 
-class FeaturesModel {
-  final Map<AppFeatures, FeatureFlags> flags;
-  FeaturesModel(this.flags);
+@freezed
+sealed class FeaturesModel with _$FeaturesModel {
+
+ factory  FeaturesModel({ required Map<AppFeatures, FeatureFlags> flags}) = _FeaturesModel;
 
   factory FeaturesModel.fromJson(Map<String, dynamic> json, int buildnumber) {
     final featureJson = json["features"];
@@ -51,6 +50,6 @@ class FeaturesModel {
         flagsmap[feature] = FeatureFlags.defaultFlags();
       }
     }
-    return FeaturesModel(flagsmap);
+    return FeaturesModel(flags: flagsmap);
   }
 }

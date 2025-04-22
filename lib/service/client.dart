@@ -1,14 +1,14 @@
 import 'package:vitapmate/constants.dart';
+import 'package:vitapmate/models/client_model.dart';
+import 'package:vitapmate/providers/client.dart';
 import 'package:vitapmate/service/vtopuser.dart';
 import 'package:vitapmate/src/rust/api/vtop/client.dart';
 import 'package:vitapmate/src/rust/api/vtop_main.dart';
 
 class ClientService {
   Iclient iclient = getClient();
-  bool isOnline = false;
-  bool isLogin = false;
-  bool isVtopDown = false;
-  ClientService();
+  ClientModel data ;
+  ClientService(this.data);
   Future<(bool, String)> clientLogin(VtopUser user) async {
     var login = await loginWithCreds(user.username, user.password);
     if (login.$2 == "NC") {
@@ -22,8 +22,8 @@ class ClientService {
       }
       _validateInternalState(login);
     } else {
-      isLogin = true;
-      isOnline = true;
+
+      data = data.copyWith(isLogin: true,isOnline: true);
     }
     return login;
   }
@@ -44,9 +44,9 @@ class ClientService {
   void _validateInternalState(dynamic state) {
     if (!state.$1) {
       if (state.$2 == "NE") {
-        isOnline = false;
+        data = data.copyWith(isOnline: false);
       } else if (state.$2 == "VE") {
-        isVtopDown = false;
+        data = data.copyWith(isVtopDown: true);
       }
     }
   }

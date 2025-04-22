@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:vitapmate/secrets.dart';
-import 'package:vitapmate/models/features.dart';
+import 'package:vitapmate/models/features_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'features.g.dart';
 
