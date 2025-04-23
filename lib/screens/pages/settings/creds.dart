@@ -60,11 +60,8 @@ class _CredsState extends ConsumerState<Creds> {
             content: Text("Sucessfully saved creds"),
           ),
         );
-        try {
-          GoRouter.of(context).goNamed(RouteNames.timetablePageRoutename);
-        } catch (e) {
-          print("go nav $e");
-        }
+
+        GoRouter.of(context).goNamed(RouteNames.timetablePageRoutename);
       }
     }
     setState(() {
@@ -151,7 +148,11 @@ class CredsDisp extends ConsumerWidget {
         },
         data: (data) {
           return Column(
-            children: [Text(data.username ?? ""), Text(data.password ?? "")],
+            children: [
+              Text(data.username ?? ""),
+              SizedBox(width: 20, height: 20),
+              Text(data.password ?? ""),
+            ],
           );
         },
         error: (error, stackTrace) {

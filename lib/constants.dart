@@ -17,3 +17,8 @@ class AppColors {
   static const backgroundblack = Color.fromARGB(250, 12, 12, 12);
   static const backgroundblack2 = Color.fromARGB(240, 12, 12, 12);
 }
+
+class DBNames {
+  static const semidTable = "semid_table";
+  static const timetableTable = "timetable_table";
+}
