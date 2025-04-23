@@ -2,7 +2,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/models/user_model.dart';
-import 'package:vitapmate/src/rust/api/vtop/client.dart';
 import 'package:vitapmate/src/rust/api/vtop_main.dart';
 part 'user.g.dart';
 
@@ -29,9 +28,8 @@ class User extends _$User {
 
   Future<(bool, String)> updateCreds(String username, String password) async {
     var data = await future;
-    Iclient newclient = getClient();
     final (bool, String) k = await onstartRun(
-      iclient: newclient,
+      iclient: getClient(),
       username: username,
       password: password,
     );

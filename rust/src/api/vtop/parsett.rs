@@ -1,7 +1,6 @@
 use scraper::{Html, Selector};
 use serde;
 use serde::Deserialize;
-use serde_json;
 
 use super::types::Timetable;
 

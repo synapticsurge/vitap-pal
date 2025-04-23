@@ -3,7 +3,6 @@ import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/models/client_model.dart';
 import 'package:vitapmate/models/user_model.dart';
 import 'package:vitapmate/providers/user.dart';
-import 'package:vitapmate/src/rust/api/vtop/client.dart';
 import 'package:vitapmate/src/rust/api/vtop_main.dart';
 part 'client.g.dart';
 
@@ -12,8 +11,10 @@ class Client extends _$Client {
   @override
   Future<ClientModel> build() async {
     ClientModel client = ClientModel(iclient: getClient());
+    UserModel user = await ref.watch(userProvider.future);
     Future.microtask(() async {
-      await clientLogin();
+      print("running  client build");
+      await clientLogin(user);
     });
     return client;
   }
@@ -32,8 +33,8 @@ class Client extends _$Client {
     return login;
   }
 
-  Future<(bool, String)> clientLogin() async {
-    UserModel user = await ref.read(userProvider.future);
+  Future<(bool, String)> clientLogin(UserModel user) async {
+    //UserModel user = await ref.read(userProvider.future);
     var data = await future;
     (bool, String) login = await loginWithCreds(user.username, user.password);
 
@@ -61,10 +62,11 @@ class Client extends _$Client {
     }
   }
 
-  updateClient(Iclient client) async {
-    var data = await future;
-    state = AsyncData(
-      data.copyWith(iclient: client, isLogin: client.loginactive),
-    );
-  }
+  //  Future<void> updateClient(Iclient client) async {
+  //   var data = await future;
+  //   state = AsyncData(
+  //     data.copyWith(iclient: client, isLogin: client.loginactive),
+
+  //   );
+  // }
 }

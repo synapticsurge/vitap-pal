@@ -3,18 +3,23 @@ import 'package:vitapmate/constants.dart';
 
 class TimetableService {
   static getTimetableSemIDs(Database db) async {
-    var sem = await db.query(DBNames.semidTable, columns: ['semId', 'semName']);
+    var sem = await db.query(
+      DBsemtable.semIDTable,
+      columns: ['semId', 'semName'],
+    );
     print(sem);
     return sem;
   }
 
-  static saveTimetableSemIDs(Database db, Map<String, String> semId) async {
-    //db.delete(DBNames.semidTable);
-    semId.forEach((key, value) async {
-      await db.insert(DBNames.semidTable, {
-        'semID': key,
-        'semName': value,
+  static saveTimetableSemIDs(
+    Database db,
+    List<Map<String, String>> semId,
+  ) async {
+    for (var id in semId) {
+      await db.insert(DBsemtable.semIDTable, {
+        'semID': id[DBsemtable.semIDrow],
+        'semName': id[DBsemtable.semNamerow],
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
-    });
+    }
   }
 }

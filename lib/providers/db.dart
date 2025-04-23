@@ -18,8 +18,8 @@ class DB extends _$DB {
       version: 1,
       onCreate: (Database db, int version) async {
         await db.execute("""
- CREATE TABLE ${DBNames.semidTable}(semId TEXT PRIMARY KEY , semName TEXT); 
- CREATE TABLE ${DBNames.timetableTable}(serial INTEGER,day TEXT,slot TEXT,courseCode TEXT , courseType TEXT , roomNo TEXT , block TEXT , startTime TEXT , endTime TEXT,semId TEXT FOREGIGN KEY );
+ CREATE TABLE ${DBsemtable.semIDTable}(${DBsemtable.semIDrow} TEXT PRIMARY KEY , ${DBsemtable.semNamerow} TEXT); 
+ CREATE TABLE ${DBtimetable.timetabelTable}(${DBtimetable.serialrow} INTEGER,${DBtimetable.dayrow}  TEXT,${DBtimetable.slotrow}  TEXT,${DBtimetable.courseCoderow}  TEXT , ${DBtimetable.courseTyperow}  TEXT , ${DBtimetable.roomNorow}  TEXT , ${DBtimetable.blockrow}  TEXT , ${DBtimetable.startTimerow}  TEXT , ${DBtimetable.endTimerow}  TEXT,${DBtimetable.semIdrow}  TEXT FOREGIGN KEY );
 """);
       },
     );

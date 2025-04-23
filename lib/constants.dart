@@ -18,7 +18,22 @@ class AppColors {
   static const backgroundblack2 = Color.fromARGB(240, 12, 12, 12);
 }
 
-class DBNames {
-  static const semidTable = "semid_table";
-  static const timetableTable = "timetable_table";
+class DBsemtable {
+  static const semIDTable = "semID_table";
+  static const semIDrow = 'semID';
+  static const semNamerow = 'semName';
+}
+
+class DBtimetable {
+  static const timetabelTable = "timetable_table";
+  static const serialrow = "serial";
+  static const dayrow = "day";
+  static const slotrow = "slot";
+  static const courseCoderow = "courseCode";
+  static const courseTyperow = "courseType";
+  static const roomNorow = "roomNo";
+  static const blockrow = "block";
+  static const startTimerow = "startTime";
+  static const endTimerow = "endTime";
+  static const semIdrow = "semId";
 }

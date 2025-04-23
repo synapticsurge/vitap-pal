@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/models/timetable_model.dart';
 import 'package:vitapmate/providers/client.dart';
 import 'package:vitapmate/providers/db.dart';
@@ -20,16 +21,20 @@ class Timetable extends _$Timetable {
     var client = await ref.read(clientProvider.future);
     if (!client.isLogin) return;
     var data = await rustTimetableSemid(client: client.iclient);
+
     if (!data.$1) return;
-    Map<String, String> maps = {};
+    List<Map<String, String>> semids = [];
     for (var i in data.$3) {
-      maps[i.split(":")[1]] = i.split(":")[0];
+      Map<String, String> map = {};
+      map[DBsemtable.semIDrow] = i.split(":")[1];
+      map[DBsemtable.semNamerow] = i.split(":")[1];
+      semids.add(map);
     }
-    TimetableService.saveTimetableSemIDs(db, maps);
+    TimetableService.saveTimetableSemIDs(db, semids);
   }
 
   Future<void> getfromstorage() async {
     var db = await ref.read(dBProvider.future);
-    await TimetableService.getTimetableSemIDs(db);
+    var k = await TimetableService.getTimetableSemIDs(db);
   }
 }
