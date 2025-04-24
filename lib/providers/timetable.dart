@@ -3,7 +3,9 @@ import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/models/timetable_model.dart';
 import 'package:vitapmate/providers/client.dart';
 import 'package:vitapmate/providers/db.dart';
+import 'package:vitapmate/providers/settings.dart';
 import 'package:vitapmate/service/timetable_service.dart';
+import 'package:vitapmate/src/rust/api/vtop/types.dart';
 import 'package:vitapmate/src/rust/api/vtop_main.dart';
 part 'timetable.g.dart';
 
@@ -16,7 +18,7 @@ class Timetable extends _$Timetable {
     print("running  timetable build");
     Future.microtask(() async {
       await updateSemids();
-      await getfromstorage();
+      await getSemidsfromstorage();
     });
     return TimetableModel(semid: [], timetable: []);
   }
@@ -40,11 +42,38 @@ class Timetable extends _$Timetable {
     state = AsyncData(data.copyWith(semid: semids));
   }
 
-  Future<void> getfromstorage() async {
+  Future<void> getSemidsfromstorage() async {
     var db = await ref.read(dBProvider.future);
     List<Map<String, String>> semids =
         await TimetableService.getTimetableSemIDs(db);
     var data = await future;
     state = AsyncData(data.copyWith(semid: semids));
+  }
+
+  Future<void> updateTimetable() async {
+    var db = await ref.read(dBProvider.future);
+    var settings = await ref.read(settingsProvider.future);
+    var client = await ref.read(clientProvider.future);
+    var data = await future;
+    if (!client.isLogin) return;
+    if (settings.selSemId == null) return;
+    var tt = await rustTimetable(
+      client: client.iclient,
+      semid: settings.selSemId!,
+    );
+    if (!tt.$1) return;
+    print(tt);
+    await TimetableService.saveTimetable(db, tt.$3, settings.selSemId!);
+    state = AsyncData(data.copyWith(timetable: tt.$3));
+  }
+
+  Future<void> getTimetablefromstorage() async {
+    var db = await ref.read(dBProvider.future);
+    var settings = await ref.read(settingsProvider.future);
+    if (settings.selSemId == null) return;
+    var semids = await TimetableService.getTimetable(db, settings.selSemId!);
+    print(semids);
+    var data = await future;
+    //state = AsyncData(data.copyWith());
   }
 }

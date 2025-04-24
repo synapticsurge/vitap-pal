@@ -2377,58 +2377,6 @@ impl SseDecode for String {
     }
 }
 
-impl SseDecode for crate::api::vtop::types::AtCourse {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_serial = <String>::sse_decode(deserializer);
-        let mut var_category = <String>::sse_decode(deserializer);
-        let mut var_courseName = <String>::sse_decode(deserializer);
-        let mut var_courseCode = <String>::sse_decode(deserializer);
-        let mut var_courseType = <String>::sse_decode(deserializer);
-        let mut var_facultyDetail = <String>::sse_decode(deserializer);
-        let mut var_classesAttended = <String>::sse_decode(deserializer);
-        let mut var_totalClasses = <String>::sse_decode(deserializer);
-        let mut var_attendancePercentage = <String>::sse_decode(deserializer);
-        let mut var_attendenceFatCat = <String>::sse_decode(deserializer);
-        let mut var_debarStatus = <String>::sse_decode(deserializer);
-        let mut var_courseId = <String>::sse_decode(deserializer);
-        return crate::api::vtop::types::AtCourse {
-            serial: var_serial,
-            category: var_category,
-            course_name: var_courseName,
-            course_code: var_courseCode,
-            course_type: var_courseType,
-            faculty_detail: var_facultyDetail,
-            classes_attended: var_classesAttended,
-            total_classes: var_totalClasses,
-            attendance_percentage: var_attendancePercentage,
-            attendence_fat_cat: var_attendenceFatCat,
-            debar_status: var_debarStatus,
-            course_id: var_courseId,
-        };
-    }
-}
-
-impl SseDecode for crate::api::vtop::types::AttendanceList {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_serial = <String>::sse_decode(deserializer);
-        let mut var_date = <String>::sse_decode(deserializer);
-        let mut var_slot = <String>::sse_decode(deserializer);
-        let mut var_dayTime = <String>::sse_decode(deserializer);
-        let mut var_status = <String>::sse_decode(deserializer);
-        let mut var_remark = <String>::sse_decode(deserializer);
-        return crate::api::vtop::types::AttendanceList {
-            serial: var_serial,
-            date: var_date,
-            slot: var_slot,
-            day_time: var_dayTime,
-            status: var_status,
-            remark: var_remark,
-        };
-    }
-}
-
 impl SseDecode for bool {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2455,34 +2403,6 @@ impl SseDecode for Vec<String> {
     }
 }
 
-impl SseDecode for Vec<crate::api::vtop::types::AtCourse> {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut len_ = <i32>::sse_decode(deserializer);
-        let mut ans_ = vec![];
-        for idx_ in 0..len_ {
-            ans_.push(<crate::api::vtop::types::AtCourse>::sse_decode(
-                deserializer,
-            ));
-        }
-        return ans_;
-    }
-}
-
-impl SseDecode for Vec<crate::api::vtop::types::AttendanceList> {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut len_ = <i32>::sse_decode(deserializer);
-        let mut ans_ = vec![];
-        for idx_ in 0..len_ {
-            ans_.push(<crate::api::vtop::types::AttendanceList>::sse_decode(
-                deserializer,
-            ));
-        }
-        return ans_;
-    }
-}
-
 impl SseDecode for Vec<u8> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
@@ -2495,13 +2415,41 @@ impl SseDecode for Vec<u8> {
     }
 }
 
-impl SseDecode for Vec<crate::api::vtop::types::Timetable> {
+impl SseDecode for Vec<crate::api::vtop::types::RAtCourse> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         let mut len_ = <i32>::sse_decode(deserializer);
         let mut ans_ = vec![];
         for idx_ in 0..len_ {
-            ans_.push(<crate::api::vtop::types::Timetable>::sse_decode(
+            ans_.push(<crate::api::vtop::types::RAtCourse>::sse_decode(
+                deserializer,
+            ));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for Vec<crate::api::vtop::types::RAttendanceList> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = vec![];
+        for idx_ in 0..len_ {
+            ans_.push(<crate::api::vtop::types::RAttendanceList>::sse_decode(
+                deserializer,
+            ));
+        }
+        return ans_;
+    }
+}
+
+impl SseDecode for Vec<crate::api::vtop::types::RTimetable> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut len_ = <i32>::sse_decode(deserializer);
+        let mut ans_ = vec![];
+        for idx_ in 0..len_ {
+            ans_.push(<crate::api::vtop::types::RTimetable>::sse_decode(
                 deserializer,
             ));
         }
@@ -2520,36 +2468,59 @@ impl SseDecode for Option<String> {
     }
 }
 
-impl SseDecode for (bool, String) {
+impl SseDecode for crate::api::vtop::types::RAtCourse {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_field0 = <bool>::sse_decode(deserializer);
-        let mut var_field1 = <String>::sse_decode(deserializer);
-        return (var_field0, var_field1);
+        let mut var_serial = <String>::sse_decode(deserializer);
+        let mut var_category = <String>::sse_decode(deserializer);
+        let mut var_courseName = <String>::sse_decode(deserializer);
+        let mut var_courseCode = <String>::sse_decode(deserializer);
+        let mut var_courseType = <String>::sse_decode(deserializer);
+        let mut var_facultyDetail = <String>::sse_decode(deserializer);
+        let mut var_classesAttended = <String>::sse_decode(deserializer);
+        let mut var_totalClasses = <String>::sse_decode(deserializer);
+        let mut var_attendancePercentage = <String>::sse_decode(deserializer);
+        let mut var_attendenceFatCat = <String>::sse_decode(deserializer);
+        let mut var_debarStatus = <String>::sse_decode(deserializer);
+        let mut var_courseId = <String>::sse_decode(deserializer);
+        return crate::api::vtop::types::RAtCourse {
+            serial: var_serial,
+            category: var_category,
+            course_name: var_courseName,
+            course_code: var_courseCode,
+            course_type: var_courseType,
+            faculty_detail: var_facultyDetail,
+            classes_attended: var_classesAttended,
+            total_classes: var_totalClasses,
+            attendance_percentage: var_attendancePercentage,
+            attendence_fat_cat: var_attendenceFatCat,
+            debar_status: var_debarStatus,
+            course_id: var_courseId,
+        };
     }
 }
 
-impl SseDecode for (bool, String, Vec<String>) {
+impl SseDecode for crate::api::vtop::types::RAttendanceList {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_field0 = <bool>::sse_decode(deserializer);
-        let mut var_field1 = <String>::sse_decode(deserializer);
-        let mut var_field2 = <Vec<String>>::sse_decode(deserializer);
-        return (var_field0, var_field1, var_field2);
+        let mut var_serial = <String>::sse_decode(deserializer);
+        let mut var_date = <String>::sse_decode(deserializer);
+        let mut var_slot = <String>::sse_decode(deserializer);
+        let mut var_dayTime = <String>::sse_decode(deserializer);
+        let mut var_status = <String>::sse_decode(deserializer);
+        let mut var_remark = <String>::sse_decode(deserializer);
+        return crate::api::vtop::types::RAttendanceList {
+            serial: var_serial,
+            date: var_date,
+            slot: var_slot,
+            day_time: var_dayTime,
+            status: var_status,
+            remark: var_remark,
+        };
     }
 }
 
-impl SseDecode for (bool, String, Vec<crate::api::vtop::types::Timetable>) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
-        let mut var_field0 = <bool>::sse_decode(deserializer);
-        let mut var_field1 = <String>::sse_decode(deserializer);
-        let mut var_field2 = <Vec<crate::api::vtop::types::Timetable>>::sse_decode(deserializer);
-        return (var_field0, var_field1, var_field2);
-    }
-}
-
-impl SseDecode for crate::api::vtop::types::Timetable {
+impl SseDecode for crate::api::vtop::types::RTimetable {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
         let mut var_serial = <String>::sse_decode(deserializer);
@@ -2561,7 +2532,7 @@ impl SseDecode for crate::api::vtop::types::Timetable {
         let mut var_block = <String>::sse_decode(deserializer);
         let mut var_startTime = <String>::sse_decode(deserializer);
         let mut var_endTime = <String>::sse_decode(deserializer);
-        return crate::api::vtop::types::Timetable {
+        return crate::api::vtop::types::RTimetable {
             serial: var_serial,
             day: var_day,
             slot: var_slot,
@@ -2572,6 +2543,35 @@ impl SseDecode for crate::api::vtop::types::Timetable {
             start_time: var_startTime,
             end_time: var_endTime,
         };
+    }
+}
+
+impl SseDecode for (bool, String) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_field0 = <bool>::sse_decode(deserializer);
+        let mut var_field1 = <String>::sse_decode(deserializer);
+        return (var_field0, var_field1);
+    }
+}
+
+impl SseDecode for (bool, String, Vec<crate::api::vtop::types::RTimetable>) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_field0 = <bool>::sse_decode(deserializer);
+        let mut var_field1 = <String>::sse_decode(deserializer);
+        let mut var_field2 = <Vec<crate::api::vtop::types::RTimetable>>::sse_decode(deserializer);
+        return (var_field0, var_field1, var_field2);
+    }
+}
+
+impl SseDecode for (bool, String, Vec<String>) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_decode(deserializer: &mut flutter_rust_bridge::for_generated::SseDeserializer) -> Self {
+        let mut var_field0 = <bool>::sse_decode(deserializer);
+        let mut var_field1 = <String>::sse_decode(deserializer);
+        let mut var_field2 = <Vec<String>>::sse_decode(deserializer);
+        return (var_field0, var_field1, var_field2);
     }
 }
 
@@ -2862,7 +2862,7 @@ impl flutter_rust_bridge::IntoIntoDart<FrbWrapper<Iclient>> for Iclient {
 }
 
 // Codec=Dco (DartCObject based), see doc to use other codecs
-impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::AtCourse {
+impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::RAtCourse {
     fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
         [
             self.serial.into_into_dart().into_dart(),
@@ -2882,18 +2882,18 @@ impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::AtCourse {
     }
 }
 impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
-    for crate::api::vtop::types::AtCourse
+    for crate::api::vtop::types::RAtCourse
 {
 }
-impl flutter_rust_bridge::IntoIntoDart<crate::api::vtop::types::AtCourse>
-    for crate::api::vtop::types::AtCourse
+impl flutter_rust_bridge::IntoIntoDart<crate::api::vtop::types::RAtCourse>
+    for crate::api::vtop::types::RAtCourse
 {
-    fn into_into_dart(self) -> crate::api::vtop::types::AtCourse {
+    fn into_into_dart(self) -> crate::api::vtop::types::RAtCourse {
         self
     }
 }
 // Codec=Dco (DartCObject based), see doc to use other codecs
-impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::AttendanceList {
+impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::RAttendanceList {
     fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
         [
             self.serial.into_into_dart().into_dart(),
@@ -2907,18 +2907,18 @@ impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::AttendanceList {
     }
 }
 impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
-    for crate::api::vtop::types::AttendanceList
+    for crate::api::vtop::types::RAttendanceList
 {
 }
-impl flutter_rust_bridge::IntoIntoDart<crate::api::vtop::types::AttendanceList>
-    for crate::api::vtop::types::AttendanceList
+impl flutter_rust_bridge::IntoIntoDart<crate::api::vtop::types::RAttendanceList>
+    for crate::api::vtop::types::RAttendanceList
 {
-    fn into_into_dart(self) -> crate::api::vtop::types::AttendanceList {
+    fn into_into_dart(self) -> crate::api::vtop::types::RAttendanceList {
         self
     }
 }
 // Codec=Dco (DartCObject based), see doc to use other codecs
-impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::Timetable {
+impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::RTimetable {
     fn into_dart(self) -> flutter_rust_bridge::for_generated::DartAbi {
         [
             self.serial.into_into_dart().into_dart(),
@@ -2935,13 +2935,13 @@ impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::Timetable {
     }
 }
 impl flutter_rust_bridge::for_generated::IntoDartExceptPrimitive
-    for crate::api::vtop::types::Timetable
+    for crate::api::vtop::types::RTimetable
 {
 }
-impl flutter_rust_bridge::IntoIntoDart<crate::api::vtop::types::Timetable>
-    for crate::api::vtop::types::Timetable
+impl flutter_rust_bridge::IntoIntoDart<crate::api::vtop::types::RTimetable>
+    for crate::api::vtop::types::RTimetable
 {
-    fn into_into_dart(self) -> crate::api::vtop::types::Timetable {
+    fn into_into_dart(self) -> crate::api::vtop::types::RTimetable {
         self
     }
 }
@@ -2969,36 +2969,6 @@ impl SseEncode for String {
     }
 }
 
-impl SseEncode for crate::api::vtop::types::AtCourse {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <String>::sse_encode(self.serial, serializer);
-        <String>::sse_encode(self.category, serializer);
-        <String>::sse_encode(self.course_name, serializer);
-        <String>::sse_encode(self.course_code, serializer);
-        <String>::sse_encode(self.course_type, serializer);
-        <String>::sse_encode(self.faculty_detail, serializer);
-        <String>::sse_encode(self.classes_attended, serializer);
-        <String>::sse_encode(self.total_classes, serializer);
-        <String>::sse_encode(self.attendance_percentage, serializer);
-        <String>::sse_encode(self.attendence_fat_cat, serializer);
-        <String>::sse_encode(self.debar_status, serializer);
-        <String>::sse_encode(self.course_id, serializer);
-    }
-}
-
-impl SseEncode for crate::api::vtop::types::AttendanceList {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <String>::sse_encode(self.serial, serializer);
-        <String>::sse_encode(self.date, serializer);
-        <String>::sse_encode(self.slot, serializer);
-        <String>::sse_encode(self.day_time, serializer);
-        <String>::sse_encode(self.status, serializer);
-        <String>::sse_encode(self.remark, serializer);
-    }
-}
-
 impl SseEncode for bool {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -3023,26 +2993,6 @@ impl SseEncode for Vec<String> {
     }
 }
 
-impl SseEncode for Vec<crate::api::vtop::types::AtCourse> {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <i32>::sse_encode(self.len() as _, serializer);
-        for item in self {
-            <crate::api::vtop::types::AtCourse>::sse_encode(item, serializer);
-        }
-    }
-}
-
-impl SseEncode for Vec<crate::api::vtop::types::AttendanceList> {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <i32>::sse_encode(self.len() as _, serializer);
-        for item in self {
-            <crate::api::vtop::types::AttendanceList>::sse_encode(item, serializer);
-        }
-    }
-}
-
 impl SseEncode for Vec<u8> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
@@ -3053,12 +3003,32 @@ impl SseEncode for Vec<u8> {
     }
 }
 
-impl SseEncode for Vec<crate::api::vtop::types::Timetable> {
+impl SseEncode for Vec<crate::api::vtop::types::RAtCourse> {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <i32>::sse_encode(self.len() as _, serializer);
         for item in self {
-            <crate::api::vtop::types::Timetable>::sse_encode(item, serializer);
+            <crate::api::vtop::types::RAtCourse>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for Vec<crate::api::vtop::types::RAttendanceList> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::api::vtop::types::RAttendanceList>::sse_encode(item, serializer);
+        }
+    }
+}
+
+impl SseEncode for Vec<crate::api::vtop::types::RTimetable> {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <i32>::sse_encode(self.len() as _, serializer);
+        for item in self {
+            <crate::api::vtop::types::RTimetable>::sse_encode(item, serializer);
         }
     }
 }
@@ -3073,33 +3043,37 @@ impl SseEncode for Option<String> {
     }
 }
 
-impl SseEncode for (bool, String) {
+impl SseEncode for crate::api::vtop::types::RAtCourse {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <bool>::sse_encode(self.0, serializer);
-        <String>::sse_encode(self.1, serializer);
+        <String>::sse_encode(self.serial, serializer);
+        <String>::sse_encode(self.category, serializer);
+        <String>::sse_encode(self.course_name, serializer);
+        <String>::sse_encode(self.course_code, serializer);
+        <String>::sse_encode(self.course_type, serializer);
+        <String>::sse_encode(self.faculty_detail, serializer);
+        <String>::sse_encode(self.classes_attended, serializer);
+        <String>::sse_encode(self.total_classes, serializer);
+        <String>::sse_encode(self.attendance_percentage, serializer);
+        <String>::sse_encode(self.attendence_fat_cat, serializer);
+        <String>::sse_encode(self.debar_status, serializer);
+        <String>::sse_encode(self.course_id, serializer);
     }
 }
 
-impl SseEncode for (bool, String, Vec<String>) {
+impl SseEncode for crate::api::vtop::types::RAttendanceList {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <bool>::sse_encode(self.0, serializer);
-        <String>::sse_encode(self.1, serializer);
-        <Vec<String>>::sse_encode(self.2, serializer);
+        <String>::sse_encode(self.serial, serializer);
+        <String>::sse_encode(self.date, serializer);
+        <String>::sse_encode(self.slot, serializer);
+        <String>::sse_encode(self.day_time, serializer);
+        <String>::sse_encode(self.status, serializer);
+        <String>::sse_encode(self.remark, serializer);
     }
 }
 
-impl SseEncode for (bool, String, Vec<crate::api::vtop::types::Timetable>) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
-        <bool>::sse_encode(self.0, serializer);
-        <String>::sse_encode(self.1, serializer);
-        <Vec<crate::api::vtop::types::Timetable>>::sse_encode(self.2, serializer);
-    }
-}
-
-impl SseEncode for crate::api::vtop::types::Timetable {
+impl SseEncode for crate::api::vtop::types::RTimetable {
     // Codec=Sse (Serialization based), see doc to use other codecs
     fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
         <String>::sse_encode(self.serial, serializer);
@@ -3111,6 +3085,32 @@ impl SseEncode for crate::api::vtop::types::Timetable {
         <String>::sse_encode(self.block, serializer);
         <String>::sse_encode(self.start_time, serializer);
         <String>::sse_encode(self.end_time, serializer);
+    }
+}
+
+impl SseEncode for (bool, String) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.0, serializer);
+        <String>::sse_encode(self.1, serializer);
+    }
+}
+
+impl SseEncode for (bool, String, Vec<crate::api::vtop::types::RTimetable>) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.0, serializer);
+        <String>::sse_encode(self.1, serializer);
+        <Vec<crate::api::vtop::types::RTimetable>>::sse_encode(self.2, serializer);
+    }
+}
+
+impl SseEncode for (bool, String, Vec<String>) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    fn sse_encode(self, serializer: &mut flutter_rust_bridge::for_generated::SseSerializer) {
+        <bool>::sse_encode(self.0, serializer);
+        <String>::sse_encode(self.1, serializer);
+        <Vec<String>>::sse_encode(self.2, serializer);
     }
 }
 

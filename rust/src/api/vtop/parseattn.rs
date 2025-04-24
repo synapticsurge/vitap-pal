@@ -1,6 +1,6 @@
 use scraper::{Html, Selector};
 
-use super::types::{AtCourse, AttendanceList};
+use super::types::{RAtCourse, RAttendanceList};
 
 pub fn parse_semid_attendance(html: String) -> Vec<String> {
     let mut sem_names_ids = vec![];
@@ -20,11 +20,11 @@ pub fn parse_semid_attendance(html: String) -> Vec<String> {
     return sem_names_ids;
 }
 
-pub fn parse_attendance(html: String) -> Vec<AtCourse> {
+pub fn parse_attendance(html: String) -> Vec<RAtCourse> {
 
     let document = Html::parse_document(&html);
     let rows_selector = Selector::parse("tr").unwrap();
-    let mut courses: Vec<AtCourse> = Vec::new();
+    let mut courses: Vec<RAtCourse> = Vec::new();
     for row in document.select(&rows_selector).skip(1) {
         let cells: Vec<_> = row.select(&Selector::parse("td").unwrap()).collect();
         if cells.len() > 10 {
@@ -34,7 +34,7 @@ pub fn parse_attendance(html: String) -> Vec<AtCourse> {
             let course_type: String = infocell[3].split(")").collect::<Vec<_>>()[0]
                 .to_string()
                 .replace("'", "");
-            let course = AtCourse {
+            let course = RAtCourse {
                 serial: cells[0]
                     .text()
                     .collect::<Vec<_>>()
@@ -116,15 +116,15 @@ pub fn parse_attendance(html: String) -> Vec<AtCourse> {
     return courses;
 }
 
-pub fn parse_full_attendance(html: String) -> Vec<AttendanceList> {
+pub fn parse_full_attendance(html: String) -> Vec<RAttendanceList> {
    
     let document = Html::parse_document(&html);
     let rows_selector = Selector::parse("tr").unwrap();
-    let mut attendance_lists: Vec<AttendanceList> = Vec::new();
+    let mut attendance_lists: Vec<RAttendanceList> = Vec::new();
     for row in document.select(&rows_selector).skip(1) {
         let cells: Vec<_> = row.select(&Selector::parse("td").unwrap()).collect();
         if cells.len() > 5 {
-            let attendance_list = AttendanceList {
+            let attendance_list = RAttendanceList {
                 serial: cells[0]
                     .text()
                     .collect::<Vec<_>>()

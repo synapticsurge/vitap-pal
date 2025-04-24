@@ -1,6 +1,6 @@
 use super::vtop::{
     client::Iclient,
-    parsett, types::Timetable,
+    parsett, types::RTimetable,
 };
 use base64::{engine::general_purpose::URL_SAFE, Engine as _};
 
@@ -92,7 +92,7 @@ pub async fn rust_timetable_semid(client: &mut Iclient) -> (bool, String,Vec<Str
 }
 
 #[flutter_rust_bridge::frb()]
-pub async fn rust_timetable(client: &mut Iclient, semid: String) -> (bool, String,Vec<Timetable>) {
+pub async fn rust_timetable(client: &mut Iclient, semid: String) -> (bool, String,Vec<RTimetable>) {
     let mut result = (false, "".to_string(),vec![]);
 
     let m = client.loginactive;

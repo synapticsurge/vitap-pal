@@ -1,5 +1,5 @@
 
-pub struct AtCourse {
+pub struct RAtCourse {
     pub serial: String,
     pub  category: String,
     pub  course_name: String,
@@ -14,7 +14,7 @@ pub struct AtCourse {
     pub  course_id: String,
 }
 
-pub struct AttendanceList {
+pub struct RAttendanceList {
   pub  serial: String,
   pub date: String,
   pub  slot: String,
@@ -23,7 +23,7 @@ pub struct AttendanceList {
   pub  remark: String,
 }
 
-pub struct Timetable {
+pub struct RTimetable {
   pub  serial: String,
  pub   day: String,
  pub   slot: String,

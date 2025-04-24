@@ -15,20 +15,29 @@ class _TimetableState extends ConsumerState<Timetable> {
   }
 
   _getfromstorage() async {
-    ref.read(timetableProvider.notifier).getfromstorage();
+    ref.read(timetableProvider.notifier).getSemidsfromstorage();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ElevatedButton(
-          onPressed: _fetchsemid,
-          child: Text("run semid fetching "),
-        ),
+        ElevatedButton(onPressed: _fetchsemid, child: Text("run semid vtop ")),
         ElevatedButton(
           onPressed: _getfromstorage,
           child: Text("get from staorage"),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            ref.read(timetableProvider.notifier).updateTimetable();
+          },
+          child: Text("run from vtop"),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            ref.read(timetableProvider.notifier).getTimetablefromstorage();
+          },
+          child: Text("get from timetable from storage"),
         ),
       ],
     );

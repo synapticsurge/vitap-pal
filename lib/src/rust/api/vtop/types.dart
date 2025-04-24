@@ -6,7 +6,7 @@
 import '../../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
-class AtCourse {
+class RAtCourse {
   final String serial;
   final String category;
   final String courseName;
@@ -20,7 +20,7 @@ class AtCourse {
   final String debarStatus;
   final String courseId;
 
-  const AtCourse({
+  const RAtCourse({
     required this.serial,
     required this.category,
     required this.courseName,
@@ -53,7 +53,7 @@ class AtCourse {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AtCourse &&
+      other is RAtCourse &&
           runtimeType == other.runtimeType &&
           serial == other.serial &&
           category == other.category &&
@@ -69,7 +69,7 @@ class AtCourse {
           courseId == other.courseId;
 }
 
-class AttendanceList {
+class RAttendanceList {
   final String serial;
   final String date;
   final String slot;
@@ -77,7 +77,7 @@ class AttendanceList {
   final String status;
   final String remark;
 
-  const AttendanceList({
+  const RAttendanceList({
     required this.serial,
     required this.date,
     required this.slot,
@@ -98,7 +98,7 @@ class AttendanceList {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AttendanceList &&
+      other is RAttendanceList &&
           runtimeType == other.runtimeType &&
           serial == other.serial &&
           date == other.date &&
@@ -108,7 +108,7 @@ class AttendanceList {
           remark == other.remark;
 }
 
-class Timetable {
+class RTimetable {
   final String serial;
   final String day;
   final String slot;
@@ -119,7 +119,7 @@ class Timetable {
   final String startTime;
   final String endTime;
 
-  const Timetable({
+  const RTimetable({
     required this.serial,
     required this.day,
     required this.slot,
@@ -146,7 +146,7 @@ class Timetable {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Timetable &&
+      other is RTimetable &&
           runtimeType == other.runtimeType &&
           serial == other.serial &&
           day == other.day &&

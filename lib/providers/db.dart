@@ -17,10 +17,12 @@ class DB extends _$DB {
       path,
       version: 1,
       onCreate: (Database db, int version) async {
-        await db.execute("""
- CREATE TABLE ${DBsemtable.semIDTable}(${DBsemtable.semIDrow} TEXT PRIMARY KEY , ${DBsemtable.semNamerow} TEXT); 
- CREATE TABLE ${DBtimetable.timetabelTable}(${DBtimetable.serialrow} INTEGER,${DBtimetable.dayrow}  TEXT,${DBtimetable.slotrow}  TEXT,${DBtimetable.courseCoderow}  TEXT , ${DBtimetable.courseTyperow}  TEXT , ${DBtimetable.roomNorow}  TEXT , ${DBtimetable.blockrow}  TEXT , ${DBtimetable.startTimerow}  TEXT , ${DBtimetable.endTimerow}  TEXT,${DBtimetable.semIdrow}  TEXT FOREGIGN KEY );
-""");
+        await db.execute(
+          "CREATE TABLE ${DBsemtable.semIDTable}(${DBsemtable.semIDrow} TEXT PRIMARY KEY , ${DBsemtable.semNamerow} TEXT)",
+        );
+        await db.execute(
+          " CREATE TABLE ${DBtimetable.timetabelTable}(${DBtimetable.serialrow} INTEGER,${DBtimetable.dayrow}  TEXT,${DBtimetable.slotrow}  TEXT,${DBtimetable.courseCoderow}  TEXT , ${DBtimetable.courseTyperow}  TEXT , ${DBtimetable.roomNorow}  TEXT , ${DBtimetable.blockrow}  TEXT , ${DBtimetable.startTimerow}  TEXT , ${DBtimetable.endTimerow}  TEXT, ${DBtimetable.semIdrow}  TEXT , FOREIGN KEY (${DBtimetable.semIdrow}) REFERENCES ${DBsemtable.semIDTable}(${DBsemtable.semIDrow}), UNIQUE (${DBtimetable.semIdrow} , ${DBtimetable.startTimerow} , ${DBtimetable.dayrow} ) )",
+        );
       },
     );
     return database;

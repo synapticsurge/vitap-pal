@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TimetableModel implements DiagnosticableTreeMixin {
 
- List<Timetable> get timetable; List<Map<String, String>> get semid;
+ List<RTimetable> get timetable; List<Map<String, String>> get semid;
 /// Create a copy of TimetableModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -52,7 +52,7 @@ abstract mixin class $TimetableModelCopyWith<$Res>  {
   factory $TimetableModelCopyWith(TimetableModel value, $Res Function(TimetableModel) _then) = _$TimetableModelCopyWithImpl;
 @useResult
 $Res call({
- List<Timetable> timetable, List<Map<String, String>> semid
+ List<RTimetable> timetable, List<Map<String, String>> semid
 });
 
 
@@ -72,7 +72,7 @@ class _$TimetableModelCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? timetable = null,Object? semid = null,}) {
   return _then(_self.copyWith(
 timetable: null == timetable ? _self.timetable : timetable // ignore: cast_nullable_to_non_nullable
-as List<Timetable>,semid: null == semid ? _self.semid : semid // ignore: cast_nullable_to_non_nullable
+as List<RTimetable>,semid: null == semid ? _self.semid : semid // ignore: cast_nullable_to_non_nullable
 as List<Map<String, String>>,
   ));
 }
@@ -84,11 +84,11 @@ as List<Map<String, String>>,
 
 
 class _TimetableState with DiagnosticableTreeMixin implements TimetableModel {
-   _TimetableState({required final  List<Timetable> timetable, required final  List<Map<String, String>> semid}): _timetable = timetable,_semid = semid;
+   _TimetableState({required final  List<RTimetable> timetable, required final  List<Map<String, String>> semid}): _timetable = timetable,_semid = semid;
   
 
- final  List<Timetable> _timetable;
-@override List<Timetable> get timetable {
+ final  List<RTimetable> _timetable;
+@override List<RTimetable> get timetable {
   if (_timetable is EqualUnmodifiableListView) return _timetable;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_timetable);
@@ -138,7 +138,7 @@ abstract mixin class _$TimetableStateCopyWith<$Res> implements $TimetableModelCo
   factory _$TimetableStateCopyWith(_TimetableState value, $Res Function(_TimetableState) _then) = __$TimetableStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<Timetable> timetable, List<Map<String, String>> semid
+ List<RTimetable> timetable, List<Map<String, String>> semid
 });
 
 
@@ -158,7 +158,7 @@ class __$TimetableStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? timetable = null,Object? semid = null,}) {
   return _then(_TimetableState(
 timetable: null == timetable ? _self._timetable : timetable // ignore: cast_nullable_to_non_nullable
-as List<Timetable>,semid: null == semid ? _self._semid : semid // ignore: cast_nullable_to_non_nullable
+as List<RTimetable>,semid: null == semid ? _self._semid : semid // ignore: cast_nullable_to_non_nullable
 as List<Map<String, String>>,
   ));
 }

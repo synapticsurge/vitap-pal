@@ -6,7 +6,7 @@ part 'timetable_model.freezed.dart';
 @freezed
 sealed class TimetableModel with _$TimetableModel {
   factory TimetableModel({
-    required List<Timetable> timetable,
+    required List<RTimetable> timetable,
     required List<Map<String, String>> semid,
   }) = _TimetableState;
 }

@@ -2,9 +2,9 @@ use scraper::{Html, Selector};
 use serde;
 use serde::Deserialize;
 
-use super::types::Timetable;
+use super::types::RTimetable;
 
-pub fn parse_timetable(html: String) -> Vec<Timetable> {
+pub fn parse_timetable(html: String) -> Vec<RTimetable> {
     #[derive(serde::Serialize, Deserialize)]
     struct Timeing {
         serial: String,
@@ -14,7 +14,7 @@ pub fn parse_timetable(html: String) -> Vec<Timetable> {
  
     let document = Html::parse_document(&html);
     let rows_selector = Selector::parse("tr").unwrap();
-    let mut timetables: Vec<Timetable> = Vec::new();
+    let mut timetables: Vec<RTimetable> = Vec::new();
     let mut timeings_temp: Vec<Timeing> = Vec::new();
     let mut count_for_offset = 0;
     let mut day = "".to_string();
@@ -73,7 +73,7 @@ pub fn parse_timetable(html: String) -> Vec<Timetable> {
                             .collect::<Vec<_>>();
                         if cle.len() > 2 {
                             let mut cl = class_name.split("-");
-                            let class = Timetable {
+                            let class = RTimetable {
                                 serial: index.to_string(),
                                 day: day.clone(),
                                 slot: cl.next().unwrap_or("").trim().to_string(),

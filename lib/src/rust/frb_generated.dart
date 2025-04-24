@@ -222,7 +222,7 @@ abstract class RustLibApi extends BaseApi {
     required String password,
   });
 
-  Future<List<AtCourse>> crateApiVtopParseattnParseAttendance({
+  Future<List<RAtCourse>> crateApiVtopParseattnParseAttendance({
     required String html,
   });
 
@@ -232,7 +232,7 @@ abstract class RustLibApi extends BaseApi {
 
   Future<String> crateApiVtopParsecoursepgParseDlist({required String html});
 
-  Future<List<AttendanceList>> crateApiVtopParseattnParseFullAttendance({
+  Future<List<RAttendanceList>> crateApiVtopParseattnParseFullAttendance({
     required String html,
   });
 
@@ -256,11 +256,11 @@ abstract class RustLibApi extends BaseApi {
     required String html,
   });
 
-  Future<List<Timetable>> crateApiVtopParsettParseTimetable({
+  Future<List<RTimetable>> crateApiVtopParsettParseTimetable({
     required String html,
   });
 
-  Future<(bool, String, List<Timetable>)> crateApiVtopMainRustTimetable({
+  Future<(bool, String, List<RTimetable>)> crateApiVtopMainRustTimetable({
     required Iclient client,
     required String semid,
   });
@@ -1375,7 +1375,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   );
 
   @override
-  Future<List<AtCourse>> crateApiVtopParseattnParseAttendance({
+  Future<List<RAtCourse>> crateApiVtopParseattnParseAttendance({
     required String html,
   }) {
     return handler.executeNormal(
@@ -1391,7 +1391,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_list_at_course,
+          decodeSuccessData: sse_decode_list_r_at_course,
           decodeErrorData: null,
         ),
         constMeta: kCrateApiVtopParseattnParseAttendanceConstMeta,
@@ -1489,7 +1489,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       const TaskConstMeta(debugName: "parse_dlist", argNames: ["html"]);
 
   @override
-  Future<List<AttendanceList>> crateApiVtopParseattnParseFullAttendance({
+  Future<List<RAttendanceList>> crateApiVtopParseattnParseFullAttendance({
     required String html,
   }) {
     return handler.executeNormal(
@@ -1505,7 +1505,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_list_attendance_list,
+          decodeSuccessData: sse_decode_list_r_attendance_list,
           decodeErrorData: null,
         ),
         constMeta: kCrateApiVtopParseattnParseFullAttendanceConstMeta,
@@ -1733,7 +1733,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<List<Timetable>> crateApiVtopParsettParseTimetable({
+  Future<List<RTimetable>> crateApiVtopParsettParseTimetable({
     required String html,
   }) {
     return handler.executeNormal(
@@ -1749,7 +1749,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_list_timetable,
+          decodeSuccessData: sse_decode_list_r_timetable,
           decodeErrorData: null,
         ),
         constMeta: kCrateApiVtopParsettParseTimetableConstMeta,
@@ -1763,7 +1763,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       const TaskConstMeta(debugName: "parse_timetable", argNames: ["html"]);
 
   @override
-  Future<(bool, String, List<Timetable>)> crateApiVtopMainRustTimetable({
+  Future<(bool, String, List<RTimetable>)> crateApiVtopMainRustTimetable({
     required Iclient client,
     required String semid,
   }) {
@@ -1784,7 +1784,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_record_bool_string_list_timetable,
+          decodeSuccessData: sse_decode_record_bool_string_list_r_timetable,
           decodeErrorData: null,
         ),
         constMeta: kCrateApiVtopMainRustTimetableConstMeta,
@@ -1924,44 +1924,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  AtCourse dco_decode_at_course(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 12)
-      throw Exception('unexpected arr length: expect 12 but see ${arr.length}');
-    return AtCourse(
-      serial: dco_decode_String(arr[0]),
-      category: dco_decode_String(arr[1]),
-      courseName: dco_decode_String(arr[2]),
-      courseCode: dco_decode_String(arr[3]),
-      courseType: dco_decode_String(arr[4]),
-      facultyDetail: dco_decode_String(arr[5]),
-      classesAttended: dco_decode_String(arr[6]),
-      totalClasses: dco_decode_String(arr[7]),
-      attendancePercentage: dco_decode_String(arr[8]),
-      attendenceFatCat: dco_decode_String(arr[9]),
-      debarStatus: dco_decode_String(arr[10]),
-      courseId: dco_decode_String(arr[11]),
-    );
-  }
-
-  @protected
-  AttendanceList dco_decode_attendance_list(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 6)
-      throw Exception('unexpected arr length: expect 6 but see ${arr.length}');
-    return AttendanceList(
-      serial: dco_decode_String(arr[0]),
-      date: dco_decode_String(arr[1]),
-      slot: dco_decode_String(arr[2]),
-      dayTime: dco_decode_String(arr[3]),
-      status: dco_decode_String(arr[4]),
-      remark: dco_decode_String(arr[5]),
-    );
-  }
-
-  @protected
   bool dco_decode_bool(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as bool;
@@ -1980,33 +1942,90 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  List<AtCourse> dco_decode_list_at_course(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return (raw as List<dynamic>).map(dco_decode_at_course).toList();
-  }
-
-  @protected
-  List<AttendanceList> dco_decode_list_attendance_list(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    return (raw as List<dynamic>).map(dco_decode_attendance_list).toList();
-  }
-
-  @protected
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw as Uint8List;
   }
 
   @protected
-  List<Timetable> dco_decode_list_timetable(dynamic raw) {
+  List<RAtCourse> dco_decode_list_r_at_course(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return (raw as List<dynamic>).map(dco_decode_timetable).toList();
+    return (raw as List<dynamic>).map(dco_decode_r_at_course).toList();
+  }
+
+  @protected
+  List<RAttendanceList> dco_decode_list_r_attendance_list(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_r_attendance_list).toList();
+  }
+
+  @protected
+  List<RTimetable> dco_decode_list_r_timetable(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_r_timetable).toList();
   }
 
   @protected
   String? dco_decode_opt_String(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return raw == null ? null : dco_decode_String(raw);
+  }
+
+  @protected
+  RAtCourse dco_decode_r_at_course(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 12)
+      throw Exception('unexpected arr length: expect 12 but see ${arr.length}');
+    return RAtCourse(
+      serial: dco_decode_String(arr[0]),
+      category: dco_decode_String(arr[1]),
+      courseName: dco_decode_String(arr[2]),
+      courseCode: dco_decode_String(arr[3]),
+      courseType: dco_decode_String(arr[4]),
+      facultyDetail: dco_decode_String(arr[5]),
+      classesAttended: dco_decode_String(arr[6]),
+      totalClasses: dco_decode_String(arr[7]),
+      attendancePercentage: dco_decode_String(arr[8]),
+      attendenceFatCat: dco_decode_String(arr[9]),
+      debarStatus: dco_decode_String(arr[10]),
+      courseId: dco_decode_String(arr[11]),
+    );
+  }
+
+  @protected
+  RAttendanceList dco_decode_r_attendance_list(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 6)
+      throw Exception('unexpected arr length: expect 6 but see ${arr.length}');
+    return RAttendanceList(
+      serial: dco_decode_String(arr[0]),
+      date: dco_decode_String(arr[1]),
+      slot: dco_decode_String(arr[2]),
+      dayTime: dco_decode_String(arr[3]),
+      status: dco_decode_String(arr[4]),
+      remark: dco_decode_String(arr[5]),
+    );
+  }
+
+  @protected
+  RTimetable dco_decode_r_timetable(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 9)
+      throw Exception('unexpected arr length: expect 9 but see ${arr.length}');
+    return RTimetable(
+      serial: dco_decode_String(arr[0]),
+      day: dco_decode_String(arr[1]),
+      slot: dco_decode_String(arr[2]),
+      courseCode: dco_decode_String(arr[3]),
+      courseType: dco_decode_String(arr[4]),
+      roomNo: dco_decode_String(arr[5]),
+      block: dco_decode_String(arr[6]),
+      startTime: dco_decode_String(arr[7]),
+      endTime: dco_decode_String(arr[8]),
+    );
   }
 
   @protected
@@ -2017,6 +2036,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       throw Exception('Expected 2 elements, got ${arr.length}');
     }
     return (dco_decode_bool(arr[0]), dco_decode_String(arr[1]));
+  }
+
+  @protected
+  (bool, String, List<RTimetable>)
+  dco_decode_record_bool_string_list_r_timetable(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3) {
+      throw Exception('Expected 3 elements, got ${arr.length}');
+    }
+    return (
+      dco_decode_bool(arr[0]),
+      dco_decode_String(arr[1]),
+      dco_decode_list_r_timetable(arr[2]),
+    );
   }
 
   @protected
@@ -2032,41 +2066,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       dco_decode_bool(arr[0]),
       dco_decode_String(arr[1]),
       dco_decode_list_String(arr[2]),
-    );
-  }
-
-  @protected
-  (bool, String, List<Timetable>) dco_decode_record_bool_string_list_timetable(
-    dynamic raw,
-  ) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 3) {
-      throw Exception('Expected 3 elements, got ${arr.length}');
-    }
-    return (
-      dco_decode_bool(arr[0]),
-      dco_decode_String(arr[1]),
-      dco_decode_list_timetable(arr[2]),
-    );
-  }
-
-  @protected
-  Timetable dco_decode_timetable(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 9)
-      throw Exception('unexpected arr length: expect 9 but see ${arr.length}');
-    return Timetable(
-      serial: dco_decode_String(arr[0]),
-      day: dco_decode_String(arr[1]),
-      slot: dco_decode_String(arr[2]),
-      courseCode: dco_decode_String(arr[3]),
-      courseType: dco_decode_String(arr[4]),
-      roomNo: dco_decode_String(arr[5]),
-      block: dco_decode_String(arr[6]),
-      startTime: dco_decode_String(arr[7]),
-      endTime: dco_decode_String(arr[8]),
     );
   }
 
@@ -2144,56 +2143,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  AtCourse sse_decode_at_course(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_serial = sse_decode_String(deserializer);
-    var var_category = sse_decode_String(deserializer);
-    var var_courseName = sse_decode_String(deserializer);
-    var var_courseCode = sse_decode_String(deserializer);
-    var var_courseType = sse_decode_String(deserializer);
-    var var_facultyDetail = sse_decode_String(deserializer);
-    var var_classesAttended = sse_decode_String(deserializer);
-    var var_totalClasses = sse_decode_String(deserializer);
-    var var_attendancePercentage = sse_decode_String(deserializer);
-    var var_attendenceFatCat = sse_decode_String(deserializer);
-    var var_debarStatus = sse_decode_String(deserializer);
-    var var_courseId = sse_decode_String(deserializer);
-    return AtCourse(
-      serial: var_serial,
-      category: var_category,
-      courseName: var_courseName,
-      courseCode: var_courseCode,
-      courseType: var_courseType,
-      facultyDetail: var_facultyDetail,
-      classesAttended: var_classesAttended,
-      totalClasses: var_totalClasses,
-      attendancePercentage: var_attendancePercentage,
-      attendenceFatCat: var_attendenceFatCat,
-      debarStatus: var_debarStatus,
-      courseId: var_courseId,
-    );
-  }
-
-  @protected
-  AttendanceList sse_decode_attendance_list(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_serial = sse_decode_String(deserializer);
-    var var_date = sse_decode_String(deserializer);
-    var var_slot = sse_decode_String(deserializer);
-    var var_dayTime = sse_decode_String(deserializer);
-    var var_status = sse_decode_String(deserializer);
-    var var_remark = sse_decode_String(deserializer);
-    return AttendanceList(
-      serial: var_serial,
-      date: var_date,
-      slot: var_slot,
-      dayTime: var_dayTime,
-      status: var_status,
-      remark: var_remark,
-    );
-  }
-
-  @protected
   bool sse_decode_bool(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     return deserializer.buffer.getUint8() != 0;
@@ -2218,32 +2167,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  List<AtCourse> sse_decode_list_at_course(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    var len_ = sse_decode_i_32(deserializer);
-    var ans_ = <AtCourse>[];
-    for (var idx_ = 0; idx_ < len_; ++idx_) {
-      ans_.add(sse_decode_at_course(deserializer));
-    }
-    return ans_;
-  }
-
-  @protected
-  List<AttendanceList> sse_decode_list_attendance_list(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    var len_ = sse_decode_i_32(deserializer);
-    var ans_ = <AttendanceList>[];
-    for (var idx_ = 0; idx_ < len_; ++idx_) {
-      ans_.add(sse_decode_attendance_list(deserializer));
-    }
-    return ans_;
-  }
-
-  @protected
   Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var len_ = sse_decode_i_32(deserializer);
@@ -2251,13 +2174,39 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  List<Timetable> sse_decode_list_timetable(SseDeserializer deserializer) {
+  List<RAtCourse> sse_decode_list_r_at_course(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
     var len_ = sse_decode_i_32(deserializer);
-    var ans_ = <Timetable>[];
+    var ans_ = <RAtCourse>[];
     for (var idx_ = 0; idx_ < len_; ++idx_) {
-      ans_.add(sse_decode_timetable(deserializer));
+      ans_.add(sse_decode_r_at_course(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  List<RAttendanceList> sse_decode_list_r_attendance_list(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <RAttendanceList>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_r_attendance_list(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  List<RTimetable> sse_decode_list_r_timetable(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <RTimetable>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_r_timetable(deserializer));
     }
     return ans_;
   }
@@ -2274,11 +2223,96 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  RAtCourse sse_decode_r_at_course(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_serial = sse_decode_String(deserializer);
+    var var_category = sse_decode_String(deserializer);
+    var var_courseName = sse_decode_String(deserializer);
+    var var_courseCode = sse_decode_String(deserializer);
+    var var_courseType = sse_decode_String(deserializer);
+    var var_facultyDetail = sse_decode_String(deserializer);
+    var var_classesAttended = sse_decode_String(deserializer);
+    var var_totalClasses = sse_decode_String(deserializer);
+    var var_attendancePercentage = sse_decode_String(deserializer);
+    var var_attendenceFatCat = sse_decode_String(deserializer);
+    var var_debarStatus = sse_decode_String(deserializer);
+    var var_courseId = sse_decode_String(deserializer);
+    return RAtCourse(
+      serial: var_serial,
+      category: var_category,
+      courseName: var_courseName,
+      courseCode: var_courseCode,
+      courseType: var_courseType,
+      facultyDetail: var_facultyDetail,
+      classesAttended: var_classesAttended,
+      totalClasses: var_totalClasses,
+      attendancePercentage: var_attendancePercentage,
+      attendenceFatCat: var_attendenceFatCat,
+      debarStatus: var_debarStatus,
+      courseId: var_courseId,
+    );
+  }
+
+  @protected
+  RAttendanceList sse_decode_r_attendance_list(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_serial = sse_decode_String(deserializer);
+    var var_date = sse_decode_String(deserializer);
+    var var_slot = sse_decode_String(deserializer);
+    var var_dayTime = sse_decode_String(deserializer);
+    var var_status = sse_decode_String(deserializer);
+    var var_remark = sse_decode_String(deserializer);
+    return RAttendanceList(
+      serial: var_serial,
+      date: var_date,
+      slot: var_slot,
+      dayTime: var_dayTime,
+      status: var_status,
+      remark: var_remark,
+    );
+  }
+
+  @protected
+  RTimetable sse_decode_r_timetable(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_serial = sse_decode_String(deserializer);
+    var var_day = sse_decode_String(deserializer);
+    var var_slot = sse_decode_String(deserializer);
+    var var_courseCode = sse_decode_String(deserializer);
+    var var_courseType = sse_decode_String(deserializer);
+    var var_roomNo = sse_decode_String(deserializer);
+    var var_block = sse_decode_String(deserializer);
+    var var_startTime = sse_decode_String(deserializer);
+    var var_endTime = sse_decode_String(deserializer);
+    return RTimetable(
+      serial: var_serial,
+      day: var_day,
+      slot: var_slot,
+      courseCode: var_courseCode,
+      courseType: var_courseType,
+      roomNo: var_roomNo,
+      block: var_block,
+      startTime: var_startTime,
+      endTime: var_endTime,
+    );
+  }
+
+  @protected
   (bool, String) sse_decode_record_bool_string(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var var_field0 = sse_decode_bool(deserializer);
     var var_field1 = sse_decode_String(deserializer);
     return (var_field0, var_field1);
+  }
+
+  @protected
+  (bool, String, List<RTimetable>)
+  sse_decode_record_bool_string_list_r_timetable(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_field0 = sse_decode_bool(deserializer);
+    var var_field1 = sse_decode_String(deserializer);
+    var var_field2 = sse_decode_list_r_timetable(deserializer);
+    return (var_field0, var_field1, var_field2);
   }
 
   @protected
@@ -2290,42 +2324,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var var_field1 = sse_decode_String(deserializer);
     var var_field2 = sse_decode_list_String(deserializer);
     return (var_field0, var_field1, var_field2);
-  }
-
-  @protected
-  (bool, String, List<Timetable>) sse_decode_record_bool_string_list_timetable(
-    SseDeserializer deserializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_field0 = sse_decode_bool(deserializer);
-    var var_field1 = sse_decode_String(deserializer);
-    var var_field2 = sse_decode_list_timetable(deserializer);
-    return (var_field0, var_field1, var_field2);
-  }
-
-  @protected
-  Timetable sse_decode_timetable(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_serial = sse_decode_String(deserializer);
-    var var_day = sse_decode_String(deserializer);
-    var var_slot = sse_decode_String(deserializer);
-    var var_courseCode = sse_decode_String(deserializer);
-    var var_courseType = sse_decode_String(deserializer);
-    var var_roomNo = sse_decode_String(deserializer);
-    var var_block = sse_decode_String(deserializer);
-    var var_startTime = sse_decode_String(deserializer);
-    var var_endTime = sse_decode_String(deserializer);
-    return Timetable(
-      serial: var_serial,
-      day: var_day,
-      slot: var_slot,
-      courseCode: var_courseCode,
-      courseType: var_courseType,
-      roomNo: var_roomNo,
-      block: var_block,
-      startTime: var_startTime,
-      endTime: var_endTime,
-    );
   }
 
   @protected
@@ -2404,37 +2402,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_at_course(AtCourse self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_String(self.serial, serializer);
-    sse_encode_String(self.category, serializer);
-    sse_encode_String(self.courseName, serializer);
-    sse_encode_String(self.courseCode, serializer);
-    sse_encode_String(self.courseType, serializer);
-    sse_encode_String(self.facultyDetail, serializer);
-    sse_encode_String(self.classesAttended, serializer);
-    sse_encode_String(self.totalClasses, serializer);
-    sse_encode_String(self.attendancePercentage, serializer);
-    sse_encode_String(self.attendenceFatCat, serializer);
-    sse_encode_String(self.debarStatus, serializer);
-    sse_encode_String(self.courseId, serializer);
-  }
-
-  @protected
-  void sse_encode_attendance_list(
-    AttendanceList self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_String(self.serial, serializer);
-    sse_encode_String(self.date, serializer);
-    sse_encode_String(self.slot, serializer);
-    sse_encode_String(self.dayTime, serializer);
-    sse_encode_String(self.status, serializer);
-    sse_encode_String(self.remark, serializer);
-  }
-
-  @protected
   void sse_encode_bool(bool self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     serializer.buffer.putUint8(self ? 1 : 0);
@@ -2456,30 +2423,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_list_at_course(
-    List<AtCourse> self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_i_32(self.length, serializer);
-    for (final item in self) {
-      sse_encode_at_course(item, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_list_attendance_list(
-    List<AttendanceList> self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_i_32(self.length, serializer);
-    for (final item in self) {
-      sse_encode_attendance_list(item, serializer);
-    }
-  }
-
-  @protected
   void sse_encode_list_prim_u_8_strict(
     Uint8List self,
     SseSerializer serializer,
@@ -2490,14 +2433,38 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_list_timetable(
-    List<Timetable> self,
+  void sse_encode_list_r_at_course(
+    List<RAtCourse> self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
     for (final item in self) {
-      sse_encode_timetable(item, serializer);
+      sse_encode_r_at_course(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_r_attendance_list(
+    List<RAttendanceList> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_r_attendance_list(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_r_timetable(
+    List<RTimetable> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_r_timetable(item, serializer);
     }
   }
 
@@ -2512,6 +2479,51 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_r_at_course(RAtCourse self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.serial, serializer);
+    sse_encode_String(self.category, serializer);
+    sse_encode_String(self.courseName, serializer);
+    sse_encode_String(self.courseCode, serializer);
+    sse_encode_String(self.courseType, serializer);
+    sse_encode_String(self.facultyDetail, serializer);
+    sse_encode_String(self.classesAttended, serializer);
+    sse_encode_String(self.totalClasses, serializer);
+    sse_encode_String(self.attendancePercentage, serializer);
+    sse_encode_String(self.attendenceFatCat, serializer);
+    sse_encode_String(self.debarStatus, serializer);
+    sse_encode_String(self.courseId, serializer);
+  }
+
+  @protected
+  void sse_encode_r_attendance_list(
+    RAttendanceList self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.serial, serializer);
+    sse_encode_String(self.date, serializer);
+    sse_encode_String(self.slot, serializer);
+    sse_encode_String(self.dayTime, serializer);
+    sse_encode_String(self.status, serializer);
+    sse_encode_String(self.remark, serializer);
+  }
+
+  @protected
+  void sse_encode_r_timetable(RTimetable self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.serial, serializer);
+    sse_encode_String(self.day, serializer);
+    sse_encode_String(self.slot, serializer);
+    sse_encode_String(self.courseCode, serializer);
+    sse_encode_String(self.courseType, serializer);
+    sse_encode_String(self.roomNo, serializer);
+    sse_encode_String(self.block, serializer);
+    sse_encode_String(self.startTime, serializer);
+    sse_encode_String(self.endTime, serializer);
+  }
+
+  @protected
   void sse_encode_record_bool_string(
     (bool, String) self,
     SseSerializer serializer,
@@ -2519,6 +2531,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_bool(self.$1, serializer);
     sse_encode_String(self.$2, serializer);
+  }
+
+  @protected
+  void sse_encode_record_bool_string_list_r_timetable(
+    (bool, String, List<RTimetable>) self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_bool(self.$1, serializer);
+    sse_encode_String(self.$2, serializer);
+    sse_encode_list_r_timetable(self.$3, serializer);
   }
 
   @protected
@@ -2530,31 +2553,6 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_bool(self.$1, serializer);
     sse_encode_String(self.$2, serializer);
     sse_encode_list_String(self.$3, serializer);
-  }
-
-  @protected
-  void sse_encode_record_bool_string_list_timetable(
-    (bool, String, List<Timetable>) self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_bool(self.$1, serializer);
-    sse_encode_String(self.$2, serializer);
-    sse_encode_list_timetable(self.$3, serializer);
-  }
-
-  @protected
-  void sse_encode_timetable(Timetable self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_String(self.serial, serializer);
-    sse_encode_String(self.day, serializer);
-    sse_encode_String(self.slot, serializer);
-    sse_encode_String(self.courseCode, serializer);
-    sse_encode_String(self.courseType, serializer);
-    sse_encode_String(self.roomNo, serializer);
-    sse_encode_String(self.block, serializer);
-    sse_encode_String(self.startTime, serializer);
-    sse_encode_String(self.endTime, serializer);
   }
 
   @protected

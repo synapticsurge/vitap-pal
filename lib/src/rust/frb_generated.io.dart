@@ -58,12 +58,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   String dco_decode_String(dynamic raw);
 
   @protected
-  AtCourse dco_decode_at_course(dynamic raw);
-
-  @protected
-  AttendanceList dco_decode_attendance_list(dynamic raw);
-
-  @protected
   bool dco_decode_bool(dynamic raw);
 
   @protected
@@ -73,35 +67,40 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   List<String> dco_decode_list_String(dynamic raw);
 
   @protected
-  List<AtCourse> dco_decode_list_at_course(dynamic raw);
-
-  @protected
-  List<AttendanceList> dco_decode_list_attendance_list(dynamic raw);
-
-  @protected
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw);
 
   @protected
-  List<Timetable> dco_decode_list_timetable(dynamic raw);
+  List<RAtCourse> dco_decode_list_r_at_course(dynamic raw);
+
+  @protected
+  List<RAttendanceList> dco_decode_list_r_attendance_list(dynamic raw);
+
+  @protected
+  List<RTimetable> dco_decode_list_r_timetable(dynamic raw);
 
   @protected
   String? dco_decode_opt_String(dynamic raw);
 
   @protected
+  RAtCourse dco_decode_r_at_course(dynamic raw);
+
+  @protected
+  RAttendanceList dco_decode_r_attendance_list(dynamic raw);
+
+  @protected
+  RTimetable dco_decode_r_timetable(dynamic raw);
+
+  @protected
   (bool, String) dco_decode_record_bool_string(dynamic raw);
+
+  @protected
+  (bool, String, List<RTimetable>)
+  dco_decode_record_bool_string_list_r_timetable(dynamic raw);
 
   @protected
   (bool, String, List<String>) dco_decode_record_bool_string_list_string(
     dynamic raw,
   );
-
-  @protected
-  (bool, String, List<Timetable>) dco_decode_record_bool_string_list_timetable(
-    dynamic raw,
-  );
-
-  @protected
-  Timetable dco_decode_timetable(dynamic raw);
 
   @protected
   int dco_decode_u_8(dynamic raw);
@@ -140,12 +139,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   String sse_decode_String(SseDeserializer deserializer);
 
   @protected
-  AtCourse sse_decode_at_course(SseDeserializer deserializer);
-
-  @protected
-  AttendanceList sse_decode_attendance_list(SseDeserializer deserializer);
-
-  @protected
   bool sse_decode_bool(SseDeserializer deserializer);
 
   @protected
@@ -155,37 +148,42 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   List<String> sse_decode_list_String(SseDeserializer deserializer);
 
   @protected
-  List<AtCourse> sse_decode_list_at_course(SseDeserializer deserializer);
+  Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer);
 
   @protected
-  List<AttendanceList> sse_decode_list_attendance_list(
+  List<RAtCourse> sse_decode_list_r_at_course(SseDeserializer deserializer);
+
+  @protected
+  List<RAttendanceList> sse_decode_list_r_attendance_list(
     SseDeserializer deserializer,
   );
 
   @protected
-  Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer);
-
-  @protected
-  List<Timetable> sse_decode_list_timetable(SseDeserializer deserializer);
+  List<RTimetable> sse_decode_list_r_timetable(SseDeserializer deserializer);
 
   @protected
   String? sse_decode_opt_String(SseDeserializer deserializer);
 
   @protected
+  RAtCourse sse_decode_r_at_course(SseDeserializer deserializer);
+
+  @protected
+  RAttendanceList sse_decode_r_attendance_list(SseDeserializer deserializer);
+
+  @protected
+  RTimetable sse_decode_r_timetable(SseDeserializer deserializer);
+
+  @protected
   (bool, String) sse_decode_record_bool_string(SseDeserializer deserializer);
+
+  @protected
+  (bool, String, List<RTimetable>)
+  sse_decode_record_bool_string_list_r_timetable(SseDeserializer deserializer);
 
   @protected
   (bool, String, List<String>) sse_decode_record_bool_string_list_string(
     SseDeserializer deserializer,
   );
-
-  @protected
-  (bool, String, List<Timetable>) sse_decode_record_bool_string_list_timetable(
-    SseDeserializer deserializer,
-  );
-
-  @protected
-  Timetable sse_decode_timetable(SseDeserializer deserializer);
 
   @protected
   int sse_decode_u_8(SseDeserializer deserializer);
@@ -228,15 +226,6 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_String(String self, SseSerializer serializer);
 
   @protected
-  void sse_encode_at_course(AtCourse self, SseSerializer serializer);
-
-  @protected
-  void sse_encode_attendance_list(
-    AttendanceList self,
-    SseSerializer serializer,
-  );
-
-  @protected
   void sse_encode_bool(bool self, SseSerializer serializer);
 
   @protected
@@ -246,28 +235,43 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_list_String(List<String> self, SseSerializer serializer);
 
   @protected
-  void sse_encode_list_at_course(List<AtCourse> self, SseSerializer serializer);
-
-  @protected
-  void sse_encode_list_attendance_list(
-    List<AttendanceList> self,
-    SseSerializer serializer,
-  );
-
-  @protected
   void sse_encode_list_prim_u_8_strict(
     Uint8List self,
     SseSerializer serializer,
   );
 
   @protected
-  void sse_encode_list_timetable(
-    List<Timetable> self,
+  void sse_encode_list_r_at_course(
+    List<RAtCourse> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_r_attendance_list(
+    List<RAttendanceList> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_r_timetable(
+    List<RTimetable> self,
     SseSerializer serializer,
   );
 
   @protected
   void sse_encode_opt_String(String? self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_r_at_course(RAtCourse self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_r_attendance_list(
+    RAttendanceList self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_r_timetable(RTimetable self, SseSerializer serializer);
 
   @protected
   void sse_encode_record_bool_string(
@@ -276,19 +280,16 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_record_bool_string_list_r_timetable(
+    (bool, String, List<RTimetable>) self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_record_bool_string_list_string(
     (bool, String, List<String>) self,
     SseSerializer serializer,
   );
-
-  @protected
-  void sse_encode_record_bool_string_list_timetable(
-    (bool, String, List<Timetable>) self,
-    SseSerializer serializer,
-  );
-
-  @protected
-  void sse_encode_timetable(Timetable self, SseSerializer serializer);
 
   @protected
   void sse_encode_u_8(int self, SseSerializer serializer);

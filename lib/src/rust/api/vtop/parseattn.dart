@@ -10,8 +10,8 @@ import 'types.dart';
 Future<List<String>> parseSemidAttendance({required String html}) =>
     RustLib.instance.api.crateApiVtopParseattnParseSemidAttendance(html: html);
 
-Future<List<AtCourse>> parseAttendance({required String html}) =>
+Future<List<RAtCourse>> parseAttendance({required String html}) =>
     RustLib.instance.api.crateApiVtopParseattnParseAttendance(html: html);
 
-Future<List<AttendanceList>> parseFullAttendance({required String html}) =>
+Future<List<RAttendanceList>> parseFullAttendance({required String html}) =>
     RustLib.instance.api.crateApiVtopParseattnParseFullAttendance(html: html);

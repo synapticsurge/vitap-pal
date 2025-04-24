@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/providers/client.dart';
 import 'package:vitapmate/providers/settings.dart';
 import 'package:vitapmate/providers/timetable.dart';
 import 'package:vitapmate/providers/user.dart';
+import 'package:vitapmate/router/route_names.dart';
 
 final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
@@ -83,8 +85,6 @@ class _CredsInputState extends ConsumerState<CredsInput> {
             content: Text("Sucessfully saved creds"),
           ),
         );
-
-        //GoRouter.of(context).goNamed(RouteNames.timetablePageRoutename);
       }
     }
     setState(() {
@@ -156,8 +156,7 @@ class _CredsInputState extends ConsumerState<CredsInput> {
                     return null;
                   },
                 ),
-                SizedBox(height: 10,)
-        ,
+                SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: _running ? null : _submitForm,
                   style: ElevatedButton.styleFrom(
@@ -237,7 +236,7 @@ class _CredsDispState extends ConsumerState<CredsDisp> {
                         showPass = !showPass;
                       });
                     },
-                    icon: Icon(showPass ? Icons.lock : Icons.lock_open),
+                    icon: Icon(!showPass ? Icons.lock : Icons.lock_open),
                   ),
                 ],
               ),
@@ -325,10 +324,18 @@ class _SemidSelectionState extends ConsumerState<SemidSelection> {
                       width: 300,
                       hintText: "Select semester",
                       onSelected: (value) async {
-                        print(value);
+                        var ni = settings.value?.selSemId;
+
                         await ref
                             .read(settingsProvider.notifier)
                             .changeSemId(value);
+                        if (!mounted) return;
+                        if (ni == null) {
+                          GoRouter.of(
+                            // ignore: use_build_context_synchronously
+                            context,
+                          ).goNamed(RouteNames.timetablePageRoutename);
+                        }
                       },
                     ),
                   ],

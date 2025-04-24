@@ -36,7 +36,7 @@ Future<(bool, String, List<String>)> rustTimetableSemid({
   required Iclient client,
 }) => RustLib.instance.api.crateApiVtopMainRustTimetableSemid(client: client);
 
-Future<(bool, String, List<Timetable>)> rustTimetable({
+Future<(bool, String, List<RTimetable>)> rustTimetable({
   required Iclient client,
   required String semid,
 }) => RustLib.instance.api.crateApiVtopMainRustTimetable(
