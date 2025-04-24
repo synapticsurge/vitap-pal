@@ -1,20 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:vitapmate/constants.dart';
+import 'package:vitapmate/providers/client.dart';
+import 'package:vitapmate/providers/settings.dart';
+import 'package:vitapmate/providers/timetable.dart';
 import 'package:vitapmate/providers/user.dart';
-import 'package:vitapmate/router/route_names.dart';
 
-class Creds extends ConsumerStatefulWidget {
+final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
+class Creds extends ConsumerWidget {
   const Creds({super.key});
 
   @override
-  ConsumerState<Creds> createState() => _CredsState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ScaffoldMessenger(
+      key: _scaffoldMessengerKey,
+
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text(
+            "Credentials",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        body: Column(children: [CredsInput(), SemidSelection(), CredsDisp()]),
+      ),
+    );
+  }
 }
 
-class _CredsState extends ConsumerState<Creds> {
-  final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+class CredsInput extends ConsumerStatefulWidget {
+  const CredsInput({super.key});
 
+  @override
+  ConsumerState<CredsInput> createState() => _CredsInputState();
+}
+
+class _CredsInputState extends ConsumerState<CredsInput> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -61,7 +84,7 @@ class _CredsState extends ConsumerState<Creds> {
           ),
         );
 
-        GoRouter.of(context).goNamed(RouteNames.timetablePageRoutename);
+        //GoRouter.of(context).goNamed(RouteNames.timetablePageRoutename);
       }
     }
     setState(() {
@@ -69,94 +92,250 @@ class _CredsState extends ConsumerState<Creds> {
     });
   }
 
+  bool obscure = true;
+
   @override
   Widget build(BuildContext context) {
-    return ScaffoldMessenger(
-      key: _scaffoldMessengerKey,
-
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Credentials",
-            style: TextStyle(fontWeight: FontWeight.bold),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundblack,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.backgroundblack2, width: 20),
+      ),
+      child: Column(
+        children: [
+          Text(
+            "Enter your Vtop credentials",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-        ),
-        body: Column(
-          children: [
-            Text(
-              "Enter your Vtop credentials",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    controller: _usernameController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your Vtop username',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your username';
-                      }
-                      return null;
-                    },
+          SizedBox(height: 10),
+          Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  controller: _usernameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.supervised_user_circle_sharp),
+                    hintText: 'Enter your Vtop username',
                   ),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your Vtop password',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your username';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  autocorrect: false,
+                  enableSuggestions: false,
+                  obscureText: obscure,
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    prefixIcon: const Icon(Icons.password_outlined),
+                    suffixIcon: IconButton(
+                      icon: Icon(obscure ? Icons.lock : Icons.lock_open),
+                      onPressed: () {
+                        setState(() {
+                          obscure = !obscure;
+                        });
+                      },
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
+                    hintText: 'Enter your Vtop password',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
 
-                      return null;
-                    },
+                    return null;
+                  },
+                ),
+                SizedBox(height: 10,)
+        ,
+                ElevatedButton(
+                  onPressed: _running ? null : _submitForm,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        !_running ? AppColors.primary : Colors.grey,
                   ),
-                  ElevatedButton(
-                    onPressed: _running ? null : _submitForm,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          !_running ? AppColors.primary : Colors.grey,
-                    ),
-                    child: Text('Submit'),
-                  ),
-                  CredsDisp(),
-                ],
-              ),
+                  child: Text('Submit'),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class CredsDisp extends ConsumerWidget {
+class CredsDisp extends ConsumerStatefulWidget {
   const CredsDisp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CredsDisp> createState() => _CredsDispState();
+}
+
+class _CredsDispState extends ConsumerState<CredsDisp> {
+  bool showPass = false;
+  @override
+  Widget build(BuildContext context) {
     final user = ref.watch(userProvider);
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundblack,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.backgroundblack2, width: 20),
+      ),
       child: user.when(
         loading: () {
           return Text("loading");
         },
         data: (data) {
           return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            spacing: 10,
             children: [
-              Text(data.username ?? ""),
-              SizedBox(width: 20, height: 20),
-              Text(data.password ?? ""),
+              Text(
+                "Saved Data ",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+              ),
+              Row(
+                children: [
+                  Text(
+                    data.password == null ? "No Username" : "Username ",
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    data.password == null ? "" : ": ${data.username}",
+                    style: TextStyle(fontWeight: FontWeight.w200),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      data.password == null
+                          ? "No Password"
+                          : "Password : ${showPass ? data.password : " ************"}",
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        showPass = !showPass;
+                      });
+                    },
+                    icon: Icon(showPass ? Icons.lock : Icons.lock_open),
+                  ),
+                ],
+              ),
             ],
           );
         },
         error: (error, stackTrace) {
           return Text("something went worng $error");
+        },
+      ),
+    );
+  }
+}
+
+class SemidSelection extends ConsumerStatefulWidget {
+  const SemidSelection({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _SemidSelectionState();
+}
+
+class _SemidSelectionState extends ConsumerState<SemidSelection> {
+  @override
+  Widget build(BuildContext context) {
+    var settings = ref.watch(settingsProvider);
+    var c = ref.watch(userProvider);
+    var client = ref.watch(clientProvider);
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundblack,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.backgroundblack2, width: 20),
+      ),
+      child: c.when(
+        error: (error, stackTrace) => Text("error $error"),
+        loading: () => CircularProgressIndicator(),
+        data: (value) {
+          if (value.username == null && value.password == null) {
+            return Text("Enter your VTOP credentials above to continue.");
+          } else if ((client.value == null || client.value?.isLogin == false) &&
+              settings.value?.selSemId == null) {
+            return CircularProgressIndicator();
+          }
+          var tt = ref.watch(timetableProvider);
+          return tt.when(
+            loading: () => CircularProgressIndicator(),
+            error: (error, stackTrace) => Text("error $error"),
+            data: (value) {
+              List<DropdownMenuEntry> menu = [];
+              for (var val in value.semid) {
+                menu.add(
+                  DropdownMenuEntry(
+                    value: val[DBsemtable.semIDrow],
+                    label: val[DBsemtable.semNamerow]!,
+                  ),
+                );
+              }
+
+              return Container(
+                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundblack,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: AppColors.backgroundblack2,
+                    width: 20,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      "Select Semester ",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    DropdownMenu(
+                      dropdownMenuEntries: menu,
+                      initialSelection: settings.value?.selSemId,
+                      label: const Text('Default Semester'),
+                      width: 300,
+                      hintText: "Select semester",
+                      onSelected: (value) async {
+                        print(value);
+                        await ref
+                            .read(settingsProvider.notifier)
+                            .changeSemId(value);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
         },
       ),
     );

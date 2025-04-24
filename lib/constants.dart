@@ -7,6 +7,7 @@ class VtopMsgConstants {
 class StorageKeys {
   static const vtopUsername = 'VTOP_USERNAME';
   static const vtopPassword = 'VTOP_PASSWORD';
+  static const selectedSem = 'SELECTED_SEM';
   static const isValid = 'IS_VALID';
 }
 

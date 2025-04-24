@@ -13,28 +13,38 @@ class Timetable extends _$Timetable {
   Future<TimetableModel> build() async {
     var db = await ref.watch(dBProvider.future);
     await TimetableService.getTimetableSemIDs(db);
-    return TimetableModel(semid: {}, timetable: []);
+    print("running  timetable build");
+    Future.microtask(() async {
+      await updateSemids();
+      await getfromstorage();
+    });
+    return TimetableModel(semid: [], timetable: []);
   }
 
   Future<void> updateSemids() async {
     var db = await ref.read(dBProvider.future);
     var client = await ref.read(clientProvider.future);
+    var data = await future;
     if (!client.isLogin) return;
-    var data = await rustTimetableSemid(client: client.iclient);
-
-    if (!data.$1) return;
+    var semdata = await rustTimetableSemid(client: client.iclient);
+    if (!semdata.$1) return;
     List<Map<String, String>> semids = [];
-    for (var i in data.$3) {
+    for (var i in semdata.$3) {
       Map<String, String> map = {};
       map[DBsemtable.semIDrow] = i.split(":")[1];
-      map[DBsemtable.semNamerow] = i.split(":")[1];
+      map[DBsemtable.semNamerow] = i.split(":")[0];
       semids.add(map);
     }
-    TimetableService.saveTimetableSemIDs(db, semids);
+
+    await TimetableService.saveTimetableSemIDs(db, semids);
+    state = AsyncData(data.copyWith(semid: semids));
   }
 
   Future<void> getfromstorage() async {
     var db = await ref.read(dBProvider.future);
-    var k = await TimetableService.getTimetableSemIDs(db);
+    List<Map<String, String>> semids =
+        await TimetableService.getTimetableSemIDs(db);
+    var data = await future;
+    state = AsyncData(data.copyWith(semid: semids));
   }
 }

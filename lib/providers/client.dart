@@ -13,9 +13,9 @@ class Client extends _$Client {
     ClientModel client = ClientModel(iclient: getClient());
     UserModel user = await ref.watch(userProvider.future);
     Future.microtask(() async {
-      print("running  client build");
-      await clientLogin(user);
+      await clientLogin(user.username, user.password);
     });
+    print("new client");
     return client;
   }
 
@@ -33,14 +33,14 @@ class Client extends _$Client {
     return login;
   }
 
-  Future<(bool, String)> clientLogin(UserModel user) async {
+  Future<(bool, String)> clientLogin(String? username, String? password) async {
     //UserModel user = await ref.read(userProvider.future);
     var data = await future;
-    (bool, String) login = await loginWithCreds(user.username, user.password);
+    (bool, String) login = await loginWithCreds(username, password);
 
     if (!login.$1) {
-      if (user.username != null &&
-          user.password != null &&
+      if (username != null &&
+          password != null &&
           login.$2 == VtopMsgConstants.invalidCredsNameMsg) {
         await ref.read(userProvider.notifier).updateValidstate(false);
       }

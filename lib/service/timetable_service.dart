@@ -5,9 +5,12 @@ class TimetableService {
   static getTimetableSemIDs(Database db) async {
     var sem = await db.query(
       DBsemtable.semIDTable,
-      columns: ['semId', 'semName'],
+      columns: [DBsemtable.semIDrow, DBsemtable.semNamerow],
     );
-    print(sem);
+    sem =
+        sem.map((row) {
+          return row.map((key, value) => MapEntry(key, value.toString()));
+        }).toList();
     return sem;
   }
 
@@ -17,8 +20,8 @@ class TimetableService {
   ) async {
     for (var id in semId) {
       await db.insert(DBsemtable.semIDTable, {
-        'semID': id[DBsemtable.semIDrow],
-        'semName': id[DBsemtable.semNamerow],
+        DBsemtable.semIDrow: id[DBsemtable.semIDrow],
+        DBsemtable.semNamerow: id[DBsemtable.semNamerow],
       }, conflictAlgorithm: ConflictAlgorithm.ignore);
     }
   }

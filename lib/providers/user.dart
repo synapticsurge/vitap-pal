@@ -9,6 +9,7 @@ part 'user.g.dart';
 class User extends _$User {
   @override
   FutureOr<UserModel> build() async {
+    print("running  user build");
     UserModel user = UserModel(storage: FlutterSecureStorage());
     var username = await user.storage.read(key: StorageKeys.vtopUsername);
     var password = await user.storage.read(key: StorageKeys.vtopPassword);

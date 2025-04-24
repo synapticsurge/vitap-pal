@@ -8,7 +8,7 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> items = ['features', 'credentials'];
+    final List<String> items = ['credentials', 'features'];
     return Scaffold(
       appBar: AppBar(title: Text("Settings")),
       body: ListView.builder(
