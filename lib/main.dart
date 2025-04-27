@@ -28,7 +28,7 @@ class MyApp extends ConsumerWidget {
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: AppColors.backgroundDark,
 
         colorScheme: ColorScheme.dark(
           primary: primaryBlue,
@@ -36,11 +36,19 @@ class MyApp extends ConsumerWidget {
         ),
 
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.white,
+          backgroundColor: AppColors.backgroundDark,
+          foregroundColor: AppColors.foregroundColor,
           elevation: 0,
         ),
-        textTheme: GoogleFonts.podkovaTextTheme(ThemeData.dark().textTheme),
+        navigationBarTheme: NavigationBarThemeData(
+          backgroundColor: AppColors.backgroundDark,
+          elevation: 0,
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: AppColors.backgroundDark,
+          elevation: 0,
+        ),
+        textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
         iconTheme: IconThemeData(color: primaryBlue),
 
         floatingActionButtonTheme: FloatingActionButtonThemeData(

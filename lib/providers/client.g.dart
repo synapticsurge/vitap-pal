@@ -6,11 +6,11 @@ part of 'client.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$clientHash() => r'6382f8180772782030a1aa06474a8eff5728f766';
+String _$clientHash() => r'efc58509e46e8e65eb576ffaaf1230a41ae1d2dc';
 
 /// See also [Client].
 @ProviderFor(Client)
-final clientProvider = AsyncNotifierProvider<Client, ClientModel>.internal(
+final clientProvider = AsyncNotifierProvider<Client, Iclient>.internal(
   Client.new,
   name: r'clientProvider',
   debugGetCreateSourceHash:
@@ -19,6 +19,6 @@ final clientProvider = AsyncNotifierProvider<Client, ClientModel>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _$Client = AsyncNotifier<ClientModel>;
+typedef _$Client = AsyncNotifier<Iclient>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

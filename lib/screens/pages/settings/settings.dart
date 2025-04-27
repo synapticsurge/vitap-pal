@@ -19,9 +19,9 @@ class Settings extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppColors.backgroundblack,
+              color: AppColors.backgroundDark,
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: AppColors.backgroundblack2, width: 20),
+              border: Border.all(color: AppColors.backgroundDark, width: 20),
             ),
             child: ListTile(
               title: Text(

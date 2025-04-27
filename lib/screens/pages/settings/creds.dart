@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vitapmate/constants.dart';
+import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/providers/client.dart';
+import 'package:vitapmate/providers/semid.dart';
 import 'package:vitapmate/providers/settings.dart';
-import 'package:vitapmate/providers/timetable.dart';
 import 'package:vitapmate/providers/user.dart';
 import 'package:vitapmate/router/route_names.dart';
 
@@ -100,9 +101,9 @@ class _CredsInputState extends ConsumerState<CredsInput> {
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: AppColors.backgroundblack,
+        color: AppColors.backgroundDark,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.backgroundblack2, width: 20),
+        border: Border.all(color: AppColors.backgroundDark, width: 20),
       ),
       child: Column(
         children: [
@@ -190,9 +191,9 @@ class _CredsDispState extends ConsumerState<CredsDisp> {
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.backgroundblack,
+        color: AppColors.backgroundDark,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.backgroundblack2, width: 20),
+        border: Border.all(color: AppColors.backgroundDark, width: 20),
       ),
       child: user.when(
         loading: () {
@@ -264,13 +265,14 @@ class _SemidSelectionState extends ConsumerState<SemidSelection> {
     var settings = ref.watch(settingsProvider);
     var c = ref.watch(userProvider);
     var client = ref.watch(clientProvider);
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: AppColors.backgroundblack,
+        color: AppColors.backgroundDark,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.backgroundblack2, width: 20),
+        border: Border.all(color: AppColors.backgroundDark, width: 20),
       ),
       child: c.when(
         error: (error, stackTrace) => Text("error $error"),
@@ -278,17 +280,18 @@ class _SemidSelectionState extends ConsumerState<SemidSelection> {
         data: (value) {
           if (value.username == null && value.password == null) {
             return Text("Enter your VTOP credentials above to continue.");
-          } else if ((client.value == null || client.value?.isLogin == false) &&
+          } else if ((client.value == null ||
+                  ref.read(appStateProvider).isLogin == false) &&
               settings.value?.selSemId == null) {
             return CircularProgressIndicator();
           }
-          var tt = ref.watch(timetableProvider);
+          var tt = ref.watch(semidsProvider);
           return tt.when(
             loading: () => CircularProgressIndicator(),
             error: (error, stackTrace) => Text("error $error"),
             data: (value) {
               List<DropdownMenuEntry> menu = [];
-              for (var val in value.semid) {
+              for (var val in value) {
                 menu.add(
                   DropdownMenuEntry(
                     value: val[DBsemtable.semIDrow],
@@ -297,49 +300,35 @@ class _SemidSelectionState extends ConsumerState<SemidSelection> {
                 );
               }
 
-              return Container(
-                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundblack,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: AppColors.backgroundblack2,
-                    width: 20,
+              return Column(
+                children: [
+                  Text(
+                    "Select Semester ",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
                   ),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      "Select Semester ",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                    DropdownMenu(
-                      dropdownMenuEntries: menu,
-                      initialSelection: settings.value?.selSemId,
-                      label: const Text('Default Semester'),
-                      width: 300,
-                      hintText: "Select semester",
-                      onSelected: (value) async {
-                        var ni = settings.value?.selSemId;
+                  DropdownMenu(
+                    dropdownMenuEntries: menu,
+                    initialSelection: settings.value?.selSemId,
+                    label: const Text('Default Semester'),
+                    width: 300,
+                    hintText: "Select semester",
+                    onSelected: (value) async {
+                      var ni = settings.value?.selSemId;
 
-                        await ref
-                            .read(settingsProvider.notifier)
-                            .changeSemId(value);
-                        if (!mounted) return;
-                        if (ni == null) {
-                          GoRouter.of(
-                            // ignore: use_build_context_synchronously
-                            context,
-                          ).goNamed(RouteNames.timetablePageRoutename);
-                        }
-                      },
-                    ),
-                  ],
-                ),
+                      await ref
+                          .read(settingsProvider.notifier)
+                          .changeSemId(value);
+                      //ref.invalidate(timetableProvider);
+                      if (!mounted) return;
+                      if (ni == null) {
+                        GoRouter.of(
+                          // ignore: use_build_context_synchronously
+                          context,
+                        ).goNamed(RouteNames.timetablePageRoutename);
+                      }
+                    },
+                  ),
+                ],
               );
             },
           );

@@ -1,72 +1,41 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:vitapmate/constants.dart';
-import 'package:vitapmate/models/client_model.dart';
 import 'package:vitapmate/models/user_model.dart';
+import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/providers/user.dart';
+import 'package:vitapmate/src/rust/api/vtop/client.dart';
 import 'package:vitapmate/src/rust/api/vtop_main.dart';
 part 'client.g.dart';
 
 @Riverpod(keepAlive: true)
 class Client extends _$Client {
   @override
-  Future<ClientModel> build() async {
-    ClientModel client = ClientModel(iclient: getClient());
+  Future<Iclient> build() async {
     UserModel user = await ref.watch(userProvider.future);
-    Future.microtask(() async {
-      await clientLogin(user.username, user.password);
-    });
+    Iclient client = getClient();
+    if (user.isValid) {
+      var login = await onstartRun(
+        iclient: client,
+        username: user.username ?? "ooo",
+        password: user.password ?? "ooo",
+      );
+      if (!login.$1) {
+        var k = login.$2;
+        if (k == "NE") {
+          ref.read(appStateProvider.notifier).updatenetwork(false);
+        } else if (user.username != null &&
+            user.password != null &&
+            k == VtopMsgConstants.invalidCredsNameMsg) {
+          await ref.read(userProvider.notifier).updateValidstate(false);
+        } else if (k == "VE") {
+          ref.read(appStateProvider.notifier).updatevtopDown(false);
+        }
+      } else {
+        ref.read(appStateProvider.notifier).updatesucess();
+      }
+    }
     print("new client");
+    print(client.loginactive);
     return client;
   }
-
-  Future<(bool, String)> loginWithCreds(username, password) async {
-    var data = await future;
-    if (username == null || password == null) {
-      return (false, "NC");
-    }
-    var login = await onstartRun(
-      iclient: data.iclient,
-      username: username,
-      password: password,
-    );
-
-    return login;
-  }
-
-  Future<(bool, String)> clientLogin(String? username, String? password) async {
-    //UserModel user = await ref.read(userProvider.future);
-    var data = await future;
-    (bool, String) login = await loginWithCreds(username, password);
-
-    if (!login.$1) {
-      if (username != null &&
-          password != null &&
-          login.$2 == VtopMsgConstants.invalidCredsNameMsg) {
-        await ref.read(userProvider.notifier).updateValidstate(false);
-      }
-    } else {
-      state = AsyncData(data.copyWith(isLogin: true, isOnline: true));
-    }
-    await _validateInternalState(login);
-    return login;
-  }
-
-  Future<void> _validateInternalState(dynamic value) async {
-    var data = await future;
-    if (!value.$1) {
-      if (value.$2 == "NE") {
-        state = AsyncData(data.copyWith(isOnline: false));
-      } else if (value.$2 == "VE") {
-        state = AsyncData(data.copyWith(isVtopDown: true));
-      }
-    }
-  }
-
-  //  Future<void> updateClient(Iclient client) async {
-  //   var data = await future;
-  //   state = AsyncData(
-  //     data.copyWith(iclient: client, isLogin: client.loginactive),
-
-  //   );
-  // }
 }

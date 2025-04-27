@@ -10,9 +10,15 @@ class ScaffoldWithNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [TopAppBar(), SliverToBoxAdapter(child: child)],
-      ),
+      body: child,
+      appBar: TopAppBar(),
+      //     body: CustomScrollView(
+
+      //       slivers: [TopAppBar(), SliverToBoxAdapter(child:  SizedBox(
+      //   height: MediaQuery.of(context).size.height -200,
+      //   child: child,
+      // ),)],
+      //     ),
       bottomNavigationBar: BottomNavBar(),
     );
   }

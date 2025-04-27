@@ -8,11 +8,12 @@ class TimetableService {
       DBsemtable.semIDTable,
       columns: [DBsemtable.semIDrow, DBsemtable.semNamerow],
     );
-    sem =
+    List<Map<String, String>> sems =
         sem.map((row) {
           return row.map((key, value) => MapEntry(key, value.toString()));
         }).toList();
-    return sem;
+    // print(sems);
+    return sems;
   }
 
   static saveTimetableSemIDs(
@@ -30,7 +31,11 @@ class TimetableService {
     await batch.commit(noResult: true);
   }
 
-  static getTimetable(Database db, String semid) async {
+  static getTimetable({
+    required Database db,
+    required String semid,
+    String? days,
+  }) async {
     var timetable = await db.query(
       DBtimetable.timetabelTable,
       columns: [
@@ -47,10 +52,31 @@ class TimetableService {
       ],
       where: '${DBtimetable.semIdrow} = ?',
       whereArgs: [semid],
+      orderBy: '${DBtimetable.startTimerow} ASC',
     );
-  
+    List<Map<String, String>> timetables =
+        timetable.map((row) {
+          return row.map((key, value) => MapEntry(key, value.toString()));
+        }).toList();
+    //print(timetables);
+    return timetables;
+  }
 
-    return timetable;
+  static getUniquedays(Database db, String semid) async {
+    var day = await db.query(
+      DBtimetable.timetabelTable,
+      columns: [DBtimetable.dayrow],
+      where: '${DBtimetable.semIdrow} = ?',
+      whereArgs: [semid],
+      distinct: true,
+    );
+    List<Map<String, String>> days =
+        day.map((row) {
+          return row.map((key, value) => MapEntry(key, value.toString()));
+        }).toList();
+    //print(days);
+
+    return days;
   }
 
   static saveTimetable(
@@ -73,7 +99,7 @@ class TimetableService {
         DBtimetable.semIdrow: semID,
       }, conflictAlgorithm: ConflictAlgorithm.replace);
     }
-      await db.delete(
+    await db.delete(
       DBtimetable.timetabelTable,
       where: '${DBtimetable.semIdrow} = ?',
       whereArgs: [semID],

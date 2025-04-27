@@ -3,14 +3,17 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vitapmate/router/route_names.dart';
 
-class TopAppBar extends StatelessWidget {
-  const TopAppBar({super.key});
+class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
+  @override
+  final Size preferredSize;
+
+  TopAppBar({super.key}) : preferredSize = Size.fromHeight(56.0);
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      expandedHeight: 10,
-      floating: true,
+    return AppBar(
+      // expandedHeight: 10,
+      // floating: true,
       title: Text(
         "Vitap Mate",
         style: GoogleFonts.bungeeSpice(

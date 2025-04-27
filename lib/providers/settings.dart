@@ -8,6 +8,7 @@ class Settings extends _$Settings {
   @override
   Future<SettingsModel> build() async {
     var prefs = await SharedPreferences.getInstance();
+    print("build from settings");
     return SettingsModel(prefs: prefs, selSemId: prefs.getString("selSemId"));
   }
 
@@ -15,5 +16,7 @@ class Settings extends _$Settings {
     var data = await future;
     await data.prefs.setString("selSemId", semid);
     state = AsyncData(data.copyWith(selSemId: semid));
+    var data1 = await future;
+    print(data1.selSemId);
   }
 }

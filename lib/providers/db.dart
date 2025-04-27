@@ -25,6 +25,7 @@ class DB extends _$DB {
         );
       },
     );
+    print("build db");
     return database;
   }
 }

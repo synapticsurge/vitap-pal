@@ -1,11 +1,13 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sqflite/sqlite_api.dart';
 import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/models/timetable_model.dart';
 import 'package:vitapmate/providers/client.dart';
 import 'package:vitapmate/providers/db.dart';
 import 'package:vitapmate/providers/settings.dart';
+import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/service/timetable_service.dart';
-import 'package:vitapmate/src/rust/api/vtop/types.dart';
+import 'package:vitapmate/src/rust/api/vtop/client.dart';
 import 'package:vitapmate/src/rust/api/vtop_main.dart';
 part 'timetable.g.dart';
 
@@ -14,21 +16,30 @@ class Timetable extends _$Timetable {
   @override
   Future<TimetableModel> build() async {
     var db = await ref.watch(dBProvider.future);
+    ref.watch(appStateProvider);
+    var settings = await ref.watch(settingsProvider.future);
     await TimetableService.getTimetableSemIDs(db);
-    print("running  timetable build");
+    ref.watch(clientProvider);
+    print("semid in settings ${settings.selSemId}");
     Future.microtask(() async {
-      await updateSemids();
-      await getSemidsfromstorage();
+      await completeUpdate();
+      // if (appState.isLogin && settings.selSemId != null) {
+      //   print("tt update in task ");
+      //   var client = await ref.watch(clientProvider.future);
+      //   await updateSemids(client, db);
+      //   await updateTimetable(client, db, settings.selSemId!);
+      //   print("done");
+      // }
     });
-    return TimetableModel(semid: [], timetable: []);
+    var semid = await getSemidsfromstorage(db);
+    var tt = await getTimetablefromstorage(db, settings.selSemId!);
+    var days = await getUniqueDaysfromstorage(db, settings.selSemId!);
+    print("running  timetable build");
+    return TimetableModel(semid: semid, timetable: tt, uniquedays: days);
   }
 
-  Future<void> updateSemids() async {
-    var db = await ref.read(dBProvider.future);
-    var client = await ref.read(clientProvider.future);
-    var data = await future;
-    if (!client.isLogin) return;
-    var semdata = await rustTimetableSemid(client: client.iclient);
+  Future<void> updateSemids(Iclient client, Database db) async {
+    var semdata = await rustTimetableSemid(client: client);
     if (!semdata.$1) return;
     List<Map<String, String>> semids = [];
     for (var i in semdata.$3) {
@@ -37,43 +48,65 @@ class Timetable extends _$Timetable {
       map[DBsemtable.semNamerow] = i.split(":")[0];
       semids.add(map);
     }
-
+    print("updates semids in timetable");
     await TimetableService.saveTimetableSemIDs(db, semids);
-    state = AsyncData(data.copyWith(semid: semids));
+    var sem = await getSemidsfromstorage(db);
+    var data = await future;
+    if (data.semid != sem) {
+      state = AsyncData(data.copyWith(semid: sem));
+    }
   }
 
-  Future<void> getSemidsfromstorage() async {
-    var db = await ref.read(dBProvider.future);
+  Future<List<Map<String, String>>> getSemidsfromstorage(Database db) async {
     List<Map<String, String>> semids =
         await TimetableService.getTimetableSemIDs(db);
-    var data = await future;
-    state = AsyncData(data.copyWith(semid: semids));
+    return semids;
   }
 
-  Future<void> updateTimetable() async {
-    var db = await ref.read(dBProvider.future);
-    var settings = await ref.read(settingsProvider.future);
-    var client = await ref.read(clientProvider.future);
-    var data = await future;
-    if (!client.isLogin) return;
-    if (settings.selSemId == null) return;
-    var tt = await rustTimetable(
-      client: client.iclient,
-      semid: settings.selSemId!,
-    );
+  Future<void> updateTimetable(
+    Iclient client,
+    Database db,
+    String semid,
+  ) async {
+    var tt = await rustTimetable(client: client, semid: semid);
     if (!tt.$1) return;
-    print(tt);
-    await TimetableService.saveTimetable(db, tt.$3, settings.selSemId!);
-    state = AsyncData(data.copyWith(timetable: tt.$3));
+    await TimetableService.saveTimetable(db, tt.$3, semid);
+    print("updates timtables");
+    var timet = await getTimetablefromstorage(db, semid);
+    var day = await getUniqueDaysfromstorage(db, semid);
+    var data = await future;
+    if (data.timetable != timet && data.uniquedays != day) {
+      state = AsyncData(data.copyWith(timetable: timet, uniquedays: day));
+    }
   }
 
-  Future<void> getTimetablefromstorage() async {
-    var db = await ref.read(dBProvider.future);
-    var settings = await ref.read(settingsProvider.future);
-    if (settings.selSemId == null) return;
-    var semids = await TimetableService.getTimetable(db, settings.selSemId!);
-    print(semids);
-    var data = await future;
-    //state = AsyncData(data.copyWith());
+  Future<List<Map<String, String>>> getTimetablefromstorage(
+    Database db,
+    String semid,
+  ) async {
+    var timetable = await TimetableService.getTimetable(db: db, semid: semid);
+    return timetable;
+  }
+
+  Future<List<Map<String, String>>> getUniqueDaysfromstorage(
+    Database db,
+    String semid,
+  ) async {
+    var days = await TimetableService.getUniquedays(db, semid);
+
+    return days;
+  }
+
+  Future completeUpdate() async {
+    var db = await ref.watch(dBProvider.future);
+    var appState = ref.watch(appStateProvider);
+    var settings = await ref.watch(settingsProvider.future);
+    var client = await ref.watch(clientProvider.future);
+    if (appState.isLogin && settings.selSemId != null) {
+      print("tt update in task ");
+      await updateSemids(client, db);
+      await updateTimetable(client, db, settings.selSemId!);
+      print("done");
+    }
   }
 }

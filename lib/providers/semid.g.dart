@@ -1,24 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'db.dart';
+part of 'semid.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dBHash() => r'450fc9f8aba64498b15cf76718ce2eab6212fab9';
+String _$semidsHash() => r'517811d208be1d20cd840d6a2c73c20141bf2f81';
 
-/// See also [DB].
-@ProviderFor(DB)
-final dBProvider = AsyncNotifierProvider<DB, Database>.internal(
-  DB.new,
-  name: r'dBProvider',
+/// See also [Semids].
+@ProviderFor(Semids)
+final semidsProvider = AutoDisposeAsyncNotifierProvider<
+  Semids,
+  List<Map<String, String>>
+>.internal(
+  Semids.new,
+  name: r'semidsProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$dBHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$semidsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$DB = AsyncNotifier<Database>;
+typedef _$Semids = AutoDisposeAsyncNotifier<List<Map<String, String>>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

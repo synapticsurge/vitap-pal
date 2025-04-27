@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/router/route_names.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -75,7 +76,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               width: 48,
               height: 30,
               decoration: BoxDecoration(
-                color: Color(0xFFFF6B6B).withValues(alpha: 0.2),
+                color: AppColors.secondary.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
