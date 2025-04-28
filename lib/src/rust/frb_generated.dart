@@ -2013,8 +2013,8 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   RTimetable dco_decode_r_timetable(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
-    if (arr.length != 9)
-      throw Exception('unexpected arr length: expect 9 but see ${arr.length}');
+    if (arr.length != 10)
+      throw Exception('unexpected arr length: expect 10 but see ${arr.length}');
     return RTimetable(
       serial: dco_decode_String(arr[0]),
       day: dco_decode_String(arr[1]),
@@ -2025,6 +2025,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       block: dco_decode_String(arr[6]),
       startTime: dco_decode_String(arr[7]),
       endTime: dco_decode_String(arr[8]),
+      name: dco_decode_String(arr[9]),
     );
   }
 
@@ -2284,6 +2285,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var var_block = sse_decode_String(deserializer);
     var var_startTime = sse_decode_String(deserializer);
     var var_endTime = sse_decode_String(deserializer);
+    var var_name = sse_decode_String(deserializer);
     return RTimetable(
       serial: var_serial,
       day: var_day,
@@ -2294,6 +2296,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       block: var_block,
       startTime: var_startTime,
       endTime: var_endTime,
+      name: var_name,
     );
   }
 
@@ -2521,6 +2524,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_String(self.block, serializer);
     sse_encode_String(self.startTime, serializer);
     sse_encode_String(self.endTime, serializer);
+    sse_encode_String(self.name, serializer);
   }
 
   @protected

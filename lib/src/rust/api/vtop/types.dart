@@ -118,6 +118,7 @@ class RTimetable {
   final String block;
   final String startTime;
   final String endTime;
+  final String name;
 
   const RTimetable({
     required this.serial,
@@ -129,6 +130,7 @@ class RTimetable {
     required this.block,
     required this.startTime,
     required this.endTime,
+    required this.name,
   });
 
   @override
@@ -141,7 +143,8 @@ class RTimetable {
       roomNo.hashCode ^
       block.hashCode ^
       startTime.hashCode ^
-      endTime.hashCode;
+      endTime.hashCode ^
+      name.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -156,5 +159,6 @@ class RTimetable {
           roomNo == other.roomNo &&
           block == other.block &&
           startTime == other.startTime &&
-          endTime == other.endTime;
+          endTime == other.endTime &&
+          name == other.name;
 }

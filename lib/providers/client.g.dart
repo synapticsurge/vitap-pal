@@ -6,7 +6,7 @@ part of 'client.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$clientHash() => r'efc58509e46e8e65eb576ffaaf1230a41ae1d2dc';
+String _$clientHash() => r'498bac6db632b6232f750045e6df3d40ed358137';
 
 /// See also [Client].
 @ProviderFor(Client)

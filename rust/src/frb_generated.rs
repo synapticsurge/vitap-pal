@@ -2532,6 +2532,7 @@ impl SseDecode for crate::api::vtop::types::RTimetable {
         let mut var_block = <String>::sse_decode(deserializer);
         let mut var_startTime = <String>::sse_decode(deserializer);
         let mut var_endTime = <String>::sse_decode(deserializer);
+        let mut var_name = <String>::sse_decode(deserializer);
         return crate::api::vtop::types::RTimetable {
             serial: var_serial,
             day: var_day,
@@ -2542,6 +2543,7 @@ impl SseDecode for crate::api::vtop::types::RTimetable {
             block: var_block,
             start_time: var_startTime,
             end_time: var_endTime,
+            name: var_name,
         };
     }
 }
@@ -2930,6 +2932,7 @@ impl flutter_rust_bridge::IntoDart for crate::api::vtop::types::RTimetable {
             self.block.into_into_dart().into_dart(),
             self.start_time.into_into_dart().into_dart(),
             self.end_time.into_into_dart().into_dart(),
+            self.name.into_into_dart().into_dart(),
         ]
         .into_dart()
     }
@@ -3085,6 +3088,7 @@ impl SseEncode for crate::api::vtop::types::RTimetable {
         <String>::sse_encode(self.block, serializer);
         <String>::sse_encode(self.start_time, serializer);
         <String>::sse_encode(self.end_time, serializer);
+        <String>::sse_encode(self.name, serializer);
     }
 }
 

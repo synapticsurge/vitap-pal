@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/providers/timetable.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 final key = GlobalKey();
 
@@ -29,7 +31,7 @@ class _TimetableState extends ConsumerState<Timetable>
 
     return timetable.when(
       data: (data) {
-        if (data.semid.isEmpty || data.timetable.isEmpty) {
+        if (data.timetable.isEmpty) {
           return Loadingsket();
         }
         var pdayslist = [for (var i in data.uniquedays) i[DBtimetable.dayrow]];
@@ -64,162 +66,175 @@ class _TimetableState extends ConsumerState<Timetable>
 
         var tabbarview = [for (var i in days) addFreeSlots(daycourse[i] ?? [])];
         Widget tabview(List val) {
+          val.add({DBtimetable.serialrow: "-2"});
           return ListView.builder(
             padding: EdgeInsets.zero,
             itemCount: val.length,
-            //shrinkWrap: true,
+
             itemBuilder: (context, index) {
               var k = val[index];
+              if (index == val.length - 1) {
+                return Text(
+                  "Data updated on ${DateFormat('MMM dd, yyyy hh:mm a').format(DateTime.fromMillisecondsSinceEpoch(int.parse(val[index - 1][DBtimetable.timeRow]) * 1000))}",
+                  textAlign: TextAlign.center,
+                );
+              }
               bool freeslot = k[DBtimetable.serialrow] == "-1";
               bool islab = !k[DBtimetable.courseTyperow].endsWith("TH");
-              return SingleChildScrollView(
-                child:
-                    freeslot
-                        ? Card(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              color: AppColors.green, // Border color
-                              width: 2.0, // Border width
-                            ),
-                            borderRadius: BorderRadius.circular(
-                              10.0,
-                            ), // Border radius for rounded corners
-                          ),
+              return freeslot
+                  ? Card(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(width: 2.0),
 
-                          child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.access_time,
-                                      color: AppColors.backgroundLight,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Expanded(
-                                      child: Text(
-                                        "Free Time",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      int.parse(k[DBtimetable.slotrow]) == 1
-                                          ? "1 Slot"
-                                          : "${k[DBtimetable.slotrow]} Slots",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 2),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "${to12H(val[index - 1][DBtimetable.endTimerow])} - ${to12H(val[index + 1][DBtimetable.startTimerow])} ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 2),
-                              ],
-                            ),
-                          ),
-                        )
-                        : Card(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              color:
-                                  islab
-                                      ? AppColors.secondary
-                                      : AppColors.primary, // Border color
-                              width: 2.0, // Border width
-                            ),
-                            borderRadius: BorderRadius.circular(
-                              10.0,
-                            ), // Border radius for rounded corners
-                          ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    elevation: 0,
+                    color: AppColors.green.withValues(alpha: 0.2),
 
-                          child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(
-                                      islab ? Icons.science : Icons.school,
-                                      color: AppColors.backgroundLight,
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/freetime.svg',
+                                height: 30,
+                                width: 30,
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: Text(
+                                  "Free Time",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 18,
+                                    color: AppColors.green.withValues(
+                                      alpha: 0.8,
                                     ),
-                                    SizedBox(width: 5),
-                                    Flexible(
-                                      child: Text(
-                                        '${k[DBtimetable.courseCoderow]}',
-                                        maxLines: 2,
-                                        textAlign: TextAlign.start,
-                                        overflow: TextOverflow.fade,
-
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                                SizedBox(height: 1),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "Room no : ${k[DBtimetable.roomNorow]}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      " ${k[DBtimetable.blockrow]}",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                  ],
+                              ),
+                              Text(
+                                int.parse(k[DBtimetable.slotrow]) == 1
+                                    ? "1 Slot"
+                                    : "${k[DBtimetable.slotrow]} Slots",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 18,
                                 ),
-                                SizedBox(height: 1),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "${to12H(k[DBtimetable.startTimerow])} - ${to12H(k[DBtimetable.endTimerow])}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      k[DBtimetable.courseCoderow],
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ),
-              );
+                          SizedBox(height: 2),
+                          Row(
+                            children: [
+                              Text(
+                                "${to12H(val[index - 1][DBtimetable.endTimerow])} - ${to12H(val[index + 1][DBtimetable.startTimerow])} ",
+                                style: TextStyle(fontWeight: FontWeight.w900),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 2),
+                        ],
+                      ),
+                    ),
+                  )
+                  : Card(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        //color: islab?AppColors.stext : AppColors.ptext,
+                        width: 2.0,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    elevation: 0,
+                    color:
+                        islab
+                            ? AppColors.secondary.withValues(alpha: 0.3)
+                            : AppColors.primary.withValues(alpha: 0.3),
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
+                            children: [
+                              islab
+                                  ? SvgPicture.asset(
+                                    'assets/icons/lab.svg',
+                                    height: 30,
+                                    width: 30,
+                                  )
+                                  : SvgPicture.asset(
+                                    'assets/icons/theory.svg',
+                                    height: 30,
+                                    width: 30,
+                                  ),
+
+                              SizedBox(width: 5),
+                              Flexible(
+                                child: Text(
+                                  '${k[DBtimetable.courseName]}',
+                                  maxLines: 1,
+                                  textAlign: TextAlign.start,
+                                  overflow: TextOverflow.ellipsis,
+
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 18,
+                                    color:
+                                        islab
+                                            ? AppColors.secondary
+                                            : AppColors.primary.withValues(
+                                              blue: 4,
+                                            ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 1),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "${k[DBtimetable.blockrow]} - ${k[DBtimetable.roomNorow]}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                " ${k[DBtimetable.slotrow]}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 1),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "${to12H(k[DBtimetable.startTimerow])} - ${to12H(k[DBtimetable.endTimerow])}",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Text(
+                                k[DBtimetable.courseCoderow],
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
             },
           );
         }
@@ -248,7 +263,6 @@ class _TimetableState extends ConsumerState<Timetable>
                   for (var val in tabbarview)
                     RefreshIndicator(
                       onRefresh: () async {
-                        print("refresh in tt");
                         await ref
                             .read(timetableProvider.notifier)
                             .completeUpdate();
@@ -295,6 +309,8 @@ String to12H(String time) {
   int hours = int.parse(list[0]);
   if (hours > 12) {
     hours -= 12;
+    list.add("PM");
+  } else if (hours == 12) {
     list.add("PM");
   } else {
     list.add("AM");

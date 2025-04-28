@@ -48,7 +48,7 @@ class MyApp extends ConsumerWidget {
           backgroundColor: AppColors.backgroundDark,
           elevation: 0,
         ),
-        textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
+        textTheme: GoogleFonts.workSansTextTheme(ThemeData.dark().textTheme),
         iconTheme: IconThemeData(color: primaryBlue),
 
         floatingActionButtonTheme: FloatingActionButtonThemeData(

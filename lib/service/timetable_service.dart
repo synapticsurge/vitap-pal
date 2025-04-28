@@ -44,11 +44,13 @@ class TimetableService {
         DBtimetable.slotrow,
         DBtimetable.courseCoderow,
         DBtimetable.courseTyperow,
+        DBtimetable.courseName,
         DBtimetable.roomNorow,
         DBtimetable.blockrow,
         DBtimetable.startTimerow,
         DBtimetable.endTimerow,
         DBtimetable.semIdrow,
+        DBtimetable.timeRow,
       ],
       where: '${DBtimetable.semIdrow} = ?',
       whereArgs: [semid],
@@ -84,6 +86,7 @@ class TimetableService {
     List<RTimetable> timetable,
     String semID,
   ) async {
+    int unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     final batch = db.batch();
     for (var id in timetable) {
       batch.insert(DBtimetable.timetabelTable, {
@@ -92,11 +95,13 @@ class TimetableService {
         DBtimetable.slotrow: id.slot,
         DBtimetable.courseCoderow: id.courseCode,
         DBtimetable.courseTyperow: id.courseType,
+        DBtimetable.courseName: id.name,
         DBtimetable.roomNorow: id.roomNo,
         DBtimetable.blockrow: id.block,
         DBtimetable.startTimerow: id.startTime,
         DBtimetable.endTimerow: id.endTime,
         DBtimetable.semIdrow: semID,
+        DBtimetable.timeRow: unixTime,
       }, conflictAlgorithm: ConflictAlgorithm.replace);
     }
     await db.delete(

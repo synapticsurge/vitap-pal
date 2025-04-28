@@ -33,5 +33,6 @@ pub struct RTimetable {
   pub  block: String,
 pub    start_time: String,
   pub  end_time: String,
+  pub name : String,
 }
 
