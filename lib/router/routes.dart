@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vitapmate/providers/settings.dart' as psettings;
 import 'package:vitapmate/screens/pages/others/others.dart';
 import 'package:vitapmate/screens/pages/settings/about.dart';
 import 'package:vitapmate/screens/component/attendance.dart';
@@ -109,7 +110,8 @@ FutureOr<String?> redirect(
   GoRouterState state,
 ) async {
   var user = await ref.read(userProvider.future);
-  if (!user.isValid) {
+  var settings = await ref.read(psettings.settingsProvider.future);
+  if (!user.isValid || settings.selSemId == null) {
     return "/settings/creds";
   } else if (user.initialLoad) {
     return "/settings/creds";

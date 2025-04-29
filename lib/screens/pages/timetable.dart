@@ -100,8 +100,8 @@ class _TimetableState extends ConsumerState<Timetable>
                             children: [
                               SvgPicture.asset(
                                 'assets/icons/freetime.svg',
-                                height: 30,
-                                width: 30,
+                                height: 22,
+                                width: 22,
                               ),
                               SizedBox(width: 5),
                               Expanded(
@@ -164,13 +164,13 @@ class _TimetableState extends ConsumerState<Timetable>
                               islab
                                   ? SvgPicture.asset(
                                     'assets/icons/lab.svg',
-                                    height: 30,
-                                    width: 30,
+                                    height: 25,
+                                    width: 25,
                                   )
                                   : SvgPicture.asset(
                                     'assets/icons/theory.svg',
-                                    height: 30,
-                                    width: 30,
+                                    height: 22,
+                                    width: 22,
                                   ),
 
                               SizedBox(width: 5),
@@ -202,7 +202,7 @@ class _TimetableState extends ConsumerState<Timetable>
                                 child: Text(
                                   "${k[DBtimetable.blockrow]} - ${k[DBtimetable.roomNorow]}",
                                   style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w700,
                                     fontSize: 15,
                                   ),
                                 ),
@@ -222,7 +222,7 @@ class _TimetableState extends ConsumerState<Timetable>
                               Expanded(
                                 child: Text(
                                   "${to12H(k[DBtimetable.startTimerow])} - ${to12H(k[DBtimetable.endTimerow])}",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontWeight: FontWeight.w700),
                                 ),
                               ),
                               Text(

@@ -11,22 +11,6 @@ class StorageKeys {
   static const isValid = 'IS_VALID';
 }
 
-// class AppColors {
-//   static const primary = Color(0xFF5F7FFF); // Steel Blue (muted blue)
-//   static const secondary = Color(0xFFFF6B6B); // Light Gray
-//   static const tertiary = Color.fromARGB(255, 245, 124, 0); // Orange (for accents and highlights)
-//   static const backgroundDark = Color.fromARGB(255, 15, 15, 15); // Very dark background
-//   static const backgroundDark = Color.fromARGB(250, 16, 16, 16);
-//   static const backgroundcards = Color.fromARGB(255, 88, 101, 242);
-//   static const foregroundColor = Colors.white; // Main text color (white)
-//   static const accentColor = Color.fromARGB(255, 255, 193, 7); // Bright Yellow (for highlights or buttons)
-//   static const errorColor = Color.fromARGB(255, 239, 83, 80); // Soft Red (for error messages)
-//   static const successColor = Color.fromARGB(255, 76, 175, 80); // Soft Green (for success messages)
-//   static const disabledColor = Color.fromARGB(255, 158, 158, 158); // Light Gray for disabled elements
-//   static const textColor = Color.fromARGB(255, 238, 238, 238); // Soft off-white for text
-//   static const textSecondary = Color.fromARGB(255, 189, 189, 189); // Slightly muted secondary text
-// }
-
 class AppColors {
   static const primary = Color.fromARGB(255, 67, 81, 233);
   static const secondary = Color(0xFFFF4D4D);
@@ -64,4 +48,35 @@ class DBtimetable {
   static const semIdrow = "semId";
   static const timeRow = "update_time";
   static const courseName = "name";
+}
+
+class DBattendance {
+  static const table = "attendance_table";
+  static const serialRow = "serial";
+  static const categoryRow = "category";
+  static const courseNameRow = "courseName";
+  static const courseCodeRow = "courseCode";
+  static const courseTypeRow = "courseType";
+  static const facultyDetailRow = "facultyDetail";
+  static const classesAttendedRow = "classesAttended";
+  static const totalClassesRow = "totalClasses";
+  static const attendancePercentageRow = "attendancePercentage";
+  static const attendenceFatCatRow = "attendenceFatCat";
+  static const debarStatusRow = "debarStatus";
+  static const courseIdRow = "courseId";
+  static const semIdRow = "semId";
+  static const timeRow = "update_time";
+}
+
+class DBfullattendance {
+  static const table = "fullattendance_table";
+  static const serialRow = "serial";
+  static const dateRow = "date";
+  static const slotRowRow = "slot";
+  static const dayTimeRow = "dayTime";
+  static const statusRow = "status";
+  static const remarkRow = "remark";
+  static const semIdRow = "semId";
+  static const timeRow = "update_time";
+  static const classIdRow = "class_id";
 }
