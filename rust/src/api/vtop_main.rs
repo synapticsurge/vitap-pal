@@ -1,6 +1,5 @@
 use super::vtop::{
-    client::Iclient,
-    parsett, types::RTimetable,
+    client::Iclient, parseattn, parsett, types::{RAtCourse, RAttendanceList, RTimetable}
 };
 use base64::{engine::general_purpose::URL_SAFE, Engine as _};
 
@@ -115,4 +114,68 @@ pub async fn rust_timetable(client: &mut Iclient, semid: String) -> (bool, Strin
         }
     }
     result
+}
+
+#[flutter_rust_bridge::frb()]
+pub async fn rust_attendance(
+    client: &mut Iclient,
+    semid: String,
+) ->(bool, String,Vec<RAtCourse>){
+    let mut result = (false, "".to_string(),vec![]);
+
+    let m = client.loginactive;
+    if !m {
+        let _check = login_vtop(client).await;
+        result = (_check.0,_check.1,vec![]);
+    }
+    let m = client.loginactive;
+    if m {
+        let html = client.get_attendance(semid).await;
+        if html.0 {
+            let k = parseattn::parse_attendance(html.1);
+            if k.is_empty() {
+                result = (false,"".to_string(), k);
+            } else {
+                result = (true,"".to_string(), k)
+            }
+        } else {
+            result = (html.0,html.1,vec![]);
+        }
+    }
+
+    result
+}
+
+#[flutter_rust_bridge::frb()]
+pub async fn rust_full_attendance(
+client: &mut Iclient,
+    semid: String,
+    course_id: String,
+    course_type: String,
+) -> (bool, String,Vec<RAttendanceList>){
+    let mut result = (false, "".to_string(),vec![]);
+
+    let m = client.loginactive;
+    if !m {
+        let _check = login_vtop(client).await;
+        result = (_check.0,_check.1,vec![]);
+    }
+    let m = client.loginactive;
+    if m {
+        let html = client
+            .get_full_attendance(course_id, semid, course_type)
+            .await;
+        if html.0 {
+            let k = parseattn::parse_full_attendance(html.1);
+            if k.is_empty() {
+                result = (false,"".to_string() ,k);
+            } else {
+                result = (true,"".to_string(), k)
+            }
+        } else {
+            result = (html.0,html.1,vec![]);
+        }
+    }
+
+ result
 }

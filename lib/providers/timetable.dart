@@ -16,7 +16,7 @@ class Timetable extends _$Timetable {
   Future<TimetableModel> build() async {
     var db = await ref.watch(dBProvider.future);
     var settings = await ref.watch(settingsProvider.future);
-    await TimetableService.getTimetableSemIDs(db);
+    //await TimetableService.getTimetableSemIDs(db);
     print("semid in settings ${settings.selSemId}");
     Future.microtask(() async {
       await completeUpdate();

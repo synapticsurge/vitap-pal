@@ -73,7 +73,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.9.0';
 
   @override
-  int get rustContentHash => -336472996;
+  int get rustContentHash => 1759655570;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -258,6 +258,19 @@ abstract class RustLibApi extends BaseApi {
 
   Future<List<RTimetable>> crateApiVtopParsettParseTimetable({
     required String html,
+  });
+
+  Future<(bool, String, List<RAtCourse>)> crateApiVtopMainRustAttendance({
+    required Iclient client,
+    required String semid,
+  });
+
+  Future<(bool, String, List<RAttendanceList>)>
+  crateApiVtopMainRustFullAttendance({
+    required Iclient client,
+    required String semid,
+    required String courseId,
+    required String courseType,
   });
 
   Future<(bool, String, List<RTimetable>)> crateApiVtopMainRustTimetable({
@@ -1763,7 +1776,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       const TaskConstMeta(debugName: "parse_timetable", argNames: ["html"]);
 
   @override
-  Future<(bool, String, List<RTimetable>)> crateApiVtopMainRustTimetable({
+  Future<(bool, String, List<RAtCourse>)> crateApiVtopMainRustAttendance({
     required Iclient client,
     required String semid,
   }) {
@@ -1780,6 +1793,88 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
             generalizedFrbRustBinding,
             serializer,
             funcId: 45,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string_list_r_at_course,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopMainRustAttendanceConstMeta,
+        argValues: [client, semid],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopMainRustAttendanceConstMeta =>
+      const TaskConstMeta(
+        debugName: "rust_attendance",
+        argNames: ["client", "semid"],
+      );
+
+  @override
+  Future<(bool, String, List<RAttendanceList>)>
+  crateApiVtopMainRustFullAttendance({
+    required Iclient client,
+    required String semid,
+    required String courseId,
+    required String courseType,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            client,
+            serializer,
+          );
+          sse_encode_String(semid, serializer);
+          sse_encode_String(courseId, serializer);
+          sse_encode_String(courseType, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 46,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData:
+              sse_decode_record_bool_string_list_r_attendance_list,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopMainRustFullAttendanceConstMeta,
+        argValues: [client, semid, courseId, courseType],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopMainRustFullAttendanceConstMeta =>
+      const TaskConstMeta(
+        debugName: "rust_full_attendance",
+        argNames: ["client", "semid", "courseId", "courseType"],
+      );
+
+  @override
+  Future<(bool, String, List<RTimetable>)> crateApiVtopMainRustTimetable({
+    required Iclient client,
+    required String semid,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            client,
+            serializer,
+          );
+          sse_encode_String(semid, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 47,
             port: port_,
           );
         },
@@ -1815,7 +1910,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 46,
+            funcId: 48,
             port: port_,
           );
         },
@@ -1852,7 +1947,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 47,
+            funcId: 49,
             port: port_,
           );
         },
@@ -2037,6 +2132,36 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       throw Exception('Expected 2 elements, got ${arr.length}');
     }
     return (dco_decode_bool(arr[0]), dco_decode_String(arr[1]));
+  }
+
+  @protected
+  (bool, String, List<RAtCourse>)
+  dco_decode_record_bool_string_list_r_at_course(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3) {
+      throw Exception('Expected 3 elements, got ${arr.length}');
+    }
+    return (
+      dco_decode_bool(arr[0]),
+      dco_decode_String(arr[1]),
+      dco_decode_list_r_at_course(arr[2]),
+    );
+  }
+
+  @protected
+  (bool, String, List<RAttendanceList>)
+  dco_decode_record_bool_string_list_r_attendance_list(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3) {
+      throw Exception('Expected 3 elements, got ${arr.length}');
+    }
+    return (
+      dco_decode_bool(arr[0]),
+      dco_decode_String(arr[1]),
+      dco_decode_list_r_attendance_list(arr[2]),
+    );
   }
 
   @protected
@@ -2309,6 +2434,28 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  (bool, String, List<RAtCourse>)
+  sse_decode_record_bool_string_list_r_at_course(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_field0 = sse_decode_bool(deserializer);
+    var var_field1 = sse_decode_String(deserializer);
+    var var_field2 = sse_decode_list_r_at_course(deserializer);
+    return (var_field0, var_field1, var_field2);
+  }
+
+  @protected
+  (bool, String, List<RAttendanceList>)
+  sse_decode_record_bool_string_list_r_attendance_list(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_field0 = sse_decode_bool(deserializer);
+    var var_field1 = sse_decode_String(deserializer);
+    var var_field2 = sse_decode_list_r_attendance_list(deserializer);
+    return (var_field0, var_field1, var_field2);
+  }
+
+  @protected
   (bool, String, List<RTimetable>)
   sse_decode_record_bool_string_list_r_timetable(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
@@ -2535,6 +2682,28 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_bool(self.$1, serializer);
     sse_encode_String(self.$2, serializer);
+  }
+
+  @protected
+  void sse_encode_record_bool_string_list_r_at_course(
+    (bool, String, List<RAtCourse>) self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_bool(self.$1, serializer);
+    sse_encode_String(self.$2, serializer);
+    sse_encode_list_r_at_course(self.$3, serializer);
+  }
+
+  @protected
+  void sse_encode_record_bool_string_list_r_attendance_list(
+    (bool, String, List<RAttendanceList>) self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_bool(self.$1, serializer);
+    sse_encode_String(self.$2, serializer);
+    sse_encode_list_r_attendance_list(self.$3, serializer);
   }
 
   @protected

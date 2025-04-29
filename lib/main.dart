@@ -42,13 +42,15 @@ class MyApp extends ConsumerWidget {
         ),
         navigationBarTheme: NavigationBarThemeData(
           backgroundColor: AppColors.backgroundDark,
+
           elevation: 0,
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: AppColors.backgroundDark,
+          selectedItemColor: AppColors.backgroundLight,
           elevation: 0,
         ),
-        textTheme: GoogleFonts.workSansTextTheme(ThemeData.dark().textTheme),
+        textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
         iconTheme: IconThemeData(color: primaryBlue),
 
         floatingActionButtonTheme: FloatingActionButtonThemeData(

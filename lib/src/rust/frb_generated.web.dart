@@ -96,6 +96,14 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   (bool, String) dco_decode_record_bool_string(dynamic raw);
 
   @protected
+  (bool, String, List<RAtCourse>)
+  dco_decode_record_bool_string_list_r_at_course(dynamic raw);
+
+  @protected
+  (bool, String, List<RAttendanceList>)
+  dco_decode_record_bool_string_list_r_attendance_list(dynamic raw);
+
+  @protected
   (bool, String, List<RTimetable>)
   dco_decode_record_bool_string_list_r_timetable(dynamic raw);
 
@@ -177,6 +185,16 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   (bool, String) sse_decode_record_bool_string(SseDeserializer deserializer);
+
+  @protected
+  (bool, String, List<RAtCourse>)
+  sse_decode_record_bool_string_list_r_at_course(SseDeserializer deserializer);
+
+  @protected
+  (bool, String, List<RAttendanceList>)
+  sse_decode_record_bool_string_list_r_attendance_list(
+    SseDeserializer deserializer,
+  );
 
   @protected
   (bool, String, List<RTimetable>)
@@ -278,6 +296,18 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   @protected
   void sse_encode_record_bool_string(
     (bool, String) self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_record_bool_string_list_r_at_course(
+    (bool, String, List<RAtCourse>) self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_record_bool_string_list_r_attendance_list(
+    (bool, String, List<RAttendanceList>) self,
     SseSerializer serializer,
   );
 

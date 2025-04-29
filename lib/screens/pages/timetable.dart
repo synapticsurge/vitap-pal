@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/providers/timetable.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 final key = GlobalKey();
@@ -84,13 +84,13 @@ class _TimetableState extends ConsumerState<Timetable>
               return freeslot
                   ? Card(
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(width: 2.0),
-
+                      side: BorderSide(width: 2.0, color: AppColors.textColor),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     elevation: 0,
-                    color: AppColors.green.withValues(alpha: 0.2),
+                    color: AppColors.backgroundDark,
 
+                    // color: AppColors.green.withValues(alpha: 0.2,),
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Column(
@@ -98,21 +98,14 @@ class _TimetableState extends ConsumerState<Timetable>
                         children: [
                           Row(
                             children: [
-                              SvgPicture.asset(
-                                'assets/icons/freetime.svg',
-                                height: 22,
-                                width: 22,
-                              ),
+                              Icon(Icons.timelapse, color: AppColors.green),
                               SizedBox(width: 5),
                               Expanded(
                                 child: Text(
                                   "Free Time",
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w900,
                                     fontSize: 18,
-                                    color: AppColors.green.withValues(
-                                      alpha: 0.8,
-                                    ),
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
@@ -122,7 +115,8 @@ class _TimetableState extends ConsumerState<Timetable>
                                     : "${k[DBtimetable.slotrow]} Slots",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w900,
-                                  fontSize: 18,
+                                  fontSize: 15,
+                                  color: Colors.grey.shade400,
                                 ),
                               ),
                             ],
@@ -132,7 +126,10 @@ class _TimetableState extends ConsumerState<Timetable>
                             children: [
                               Text(
                                 "${to12H(val[index - 1][DBtimetable.endTimerow])} - ${to12H(val[index + 1][DBtimetable.startTimerow])} ",
-                                style: TextStyle(fontWeight: FontWeight.w900),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
                             ],
                           ),
@@ -143,17 +140,15 @@ class _TimetableState extends ConsumerState<Timetable>
                   )
                   : Card(
                     shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        //color: islab?AppColors.stext : AppColors.ptext,
-                        width: 2.0,
-                      ),
+                      side: BorderSide(color: AppColors.textColor, width: 2.0),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     elevation: 0,
                     color:
                         islab
-                            ? AppColors.secondary.withValues(alpha: 0.3)
-                            : AppColors.primary.withValues(alpha: 0.3),
+                            ? AppColors.backgroundDark
+                            : AppColors.backgroundDark,
+
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Column(
@@ -161,17 +156,13 @@ class _TimetableState extends ConsumerState<Timetable>
                         children: [
                           Row(
                             children: [
-                              islab
-                                  ? SvgPicture.asset(
-                                    'assets/icons/lab.svg',
-                                    height: 25,
-                                    width: 25,
-                                  )
-                                  : SvgPicture.asset(
-                                    'assets/icons/theory.svg',
-                                    height: 22,
-                                    width: 22,
-                                  ),
+                              Icon(
+                                islab ? Icons.science : Icons.account_balance,
+                                color:
+                                    islab
+                                        ? AppColors.secondary
+                                        : AppColors.primary,
+                              ),
 
                               SizedBox(width: 5),
                               Flexible(
@@ -182,14 +173,9 @@ class _TimetableState extends ConsumerState<Timetable>
                                   overflow: TextOverflow.ellipsis,
 
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 18,
-                                    color:
-                                        islab
-                                            ? AppColors.secondary
-                                            : AppColors.primary.withValues(
-                                              blue: 4,
-                                            ),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.grey.shade400,
                                   ),
                                 ),
                               ),
@@ -200,10 +186,10 @@ class _TimetableState extends ConsumerState<Timetable>
                             children: [
                               Expanded(
                                 child: Text(
-                                  "${k[DBtimetable.blockrow]} - ${k[DBtimetable.roomNorow]}",
+                                  "${k[DBtimetable.blockrow].replaceFirst("ALL", "")} - ${k[DBtimetable.roomNorow]}",
                                   style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 15,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 18,
                                   ),
                                 ),
                               ),
@@ -212,6 +198,7 @@ class _TimetableState extends ConsumerState<Timetable>
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
+                                  color: Colors.grey.shade500,
                                 ),
                               ),
                             ],
@@ -222,12 +209,18 @@ class _TimetableState extends ConsumerState<Timetable>
                               Expanded(
                                 child: Text(
                                   "${to12H(k[DBtimetable.startTimerow])} - ${to12H(k[DBtimetable.endTimerow])}",
-                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
                               Text(
                                 k[DBtimetable.courseCoderow],
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey.shade500,
+                                ),
                               ),
                             ],
                           ),
@@ -243,6 +236,8 @@ class _TimetableState extends ConsumerState<Timetable>
           children: [
             TabBar(
               dividerColor: Colors.transparent,
+              labelColor: Colors.white,
+              indicatorColor: Colors.white,
               controller: _tabController,
               isScrollable: true,
               tabAlignment: TabAlignment.center,

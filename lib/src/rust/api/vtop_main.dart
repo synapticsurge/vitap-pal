@@ -43,3 +43,23 @@ Future<(bool, String, List<RTimetable>)> rustTimetable({
   client: client,
   semid: semid,
 );
+
+Future<(bool, String, List<RAtCourse>)> rustAttendance({
+  required Iclient client,
+  required String semid,
+}) => RustLib.instance.api.crateApiVtopMainRustAttendance(
+  client: client,
+  semid: semid,
+);
+
+Future<(bool, String, List<RAttendanceList>)> rustFullAttendance({
+  required Iclient client,
+  required String semid,
+  required String courseId,
+  required String courseType,
+}) => RustLib.instance.api.crateApiVtopMainRustFullAttendance(
+  client: client,
+  semid: semid,
+  courseId: courseId,
+  courseType: courseType,
+);

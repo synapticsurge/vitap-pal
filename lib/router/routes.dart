@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:vitapmate/providers/settings.dart' as psettings;
 import 'package:vitapmate/screens/pages/others/others.dart';
 import 'package:vitapmate/screens/pages/settings/about.dart';
-import 'package:vitapmate/screens/component/attendance.dart';
+import 'package:vitapmate/screens/pages/attendance.dart';
 import 'package:vitapmate/screens/pages/settings/creds.dart';
 import 'package:vitapmate/screens/pages/settings/features_status.dart';
 import 'package:vitapmate/screens/scaffold.dart';

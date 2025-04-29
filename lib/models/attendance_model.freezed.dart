@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AttendanceModel implements DiagnosticableTreeMixin {
 
- List<RAtCourse> get attendance; Map<String, List<RAttendanceList>> get fullAttendance;
+ List<Map<String, String>> get attendance; Map<String, List<Map<String, String>>> get fullAttendance;
 /// Create a copy of AttendanceModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -52,7 +52,7 @@ abstract mixin class $AttendanceModelCopyWith<$Res>  {
   factory $AttendanceModelCopyWith(AttendanceModel value, $Res Function(AttendanceModel) _then) = _$AttendanceModelCopyWithImpl;
 @useResult
 $Res call({
- List<RAtCourse> attendance, Map<String, List<RAttendanceList>> fullAttendance
+ List<Map<String, String>> attendance, Map<String, List<Map<String, String>>> fullAttendance
 });
 
 
@@ -72,8 +72,8 @@ class _$AttendanceModelCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? attendance = null,Object? fullAttendance = null,}) {
   return _then(_self.copyWith(
 attendance: null == attendance ? _self.attendance : attendance // ignore: cast_nullable_to_non_nullable
-as List<RAtCourse>,fullAttendance: null == fullAttendance ? _self.fullAttendance : fullAttendance // ignore: cast_nullable_to_non_nullable
-as Map<String, List<RAttendanceList>>,
+as List<Map<String, String>>,fullAttendance: null == fullAttendance ? _self.fullAttendance : fullAttendance // ignore: cast_nullable_to_non_nullable
+as Map<String, List<Map<String, String>>>,
   ));
 }
 
@@ -84,18 +84,18 @@ as Map<String, List<RAttendanceList>>,
 
 
 class _AttendanceModel with DiagnosticableTreeMixin implements AttendanceModel {
-   _AttendanceModel({required final  List<RAtCourse> attendance, required final  Map<String, List<RAttendanceList>> fullAttendance}): _attendance = attendance,_fullAttendance = fullAttendance;
+   _AttendanceModel({required final  List<Map<String, String>> attendance, required final  Map<String, List<Map<String, String>>> fullAttendance}): _attendance = attendance,_fullAttendance = fullAttendance;
   
 
- final  List<RAtCourse> _attendance;
-@override List<RAtCourse> get attendance {
+ final  List<Map<String, String>> _attendance;
+@override List<Map<String, String>> get attendance {
   if (_attendance is EqualUnmodifiableListView) return _attendance;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_attendance);
 }
 
- final  Map<String, List<RAttendanceList>> _fullAttendance;
-@override Map<String, List<RAttendanceList>> get fullAttendance {
+ final  Map<String, List<Map<String, String>>> _fullAttendance;
+@override Map<String, List<Map<String, String>>> get fullAttendance {
   if (_fullAttendance is EqualUnmodifiableMapView) return _fullAttendance;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableMapView(_fullAttendance);
@@ -138,7 +138,7 @@ abstract mixin class _$AttendanceModelCopyWith<$Res> implements $AttendanceModel
   factory _$AttendanceModelCopyWith(_AttendanceModel value, $Res Function(_AttendanceModel) _then) = __$AttendanceModelCopyWithImpl;
 @override @useResult
 $Res call({
- List<RAtCourse> attendance, Map<String, List<RAttendanceList>> fullAttendance
+ List<Map<String, String>> attendance, Map<String, List<Map<String, String>>> fullAttendance
 });
 
 
@@ -158,8 +158,8 @@ class __$AttendanceModelCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? attendance = null,Object? fullAttendance = null,}) {
   return _then(_AttendanceModel(
 attendance: null == attendance ? _self._attendance : attendance // ignore: cast_nullable_to_non_nullable
-as List<RAtCourse>,fullAttendance: null == fullAttendance ? _self._fullAttendance : fullAttendance // ignore: cast_nullable_to_non_nullable
-as Map<String, List<RAttendanceList>>,
+as List<Map<String, String>>,fullAttendance: null == fullAttendance ? _self._fullAttendance : fullAttendance // ignore: cast_nullable_to_non_nullable
+as Map<String, List<Map<String, String>>>,
   ));
 }
 

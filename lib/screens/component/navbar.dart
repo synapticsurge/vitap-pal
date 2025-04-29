@@ -76,7 +76,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               width: 48,
               height: 30,
               decoration: BoxDecoration(
-                color: AppColors.secondary.withValues(alpha: 0.2),
+                color: AppColors.backgroundLight.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(15),
               ),
             ),

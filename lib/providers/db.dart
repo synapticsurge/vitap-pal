@@ -23,6 +23,12 @@ class DB extends _$DB {
         await db.execute(
           " CREATE TABLE ${DBtimetable.timetabelTable}(${DBtimetable.serialrow} INTEGER,${DBtimetable.dayrow}  TEXT,${DBtimetable.slotrow}  TEXT,${DBtimetable.courseCoderow}  TEXT , ${DBtimetable.courseTyperow}  TEXT , ${DBtimetable.courseName}  TEXT , ${DBtimetable.roomNorow}  TEXT , ${DBtimetable.blockrow}  TEXT , ${DBtimetable.startTimerow}  TEXT , ${DBtimetable.endTimerow}  TEXT, ${DBtimetable.semIdrow}  TEXT , ${DBtimetable.timeRow} INT,FOREIGN KEY (${DBtimetable.semIdrow}) REFERENCES ${DBsemtable.semIDTable}(${DBsemtable.semIDrow}), UNIQUE (${DBtimetable.semIdrow} , ${DBtimetable.startTimerow} , ${DBtimetable.dayrow} ) )",
         );
+        await db.execute(
+          " CREATE TABLE ${DBattendance.table}(${DBattendance.serialRow} INTEGER,${DBattendance.categoryRow}  TEXT,${DBattendance.courseNameRow}  TEXT,${DBattendance.courseTypeRow}  TEXT , ${DBattendance.facultyDetailRow}  TEXT , ${DBattendance.classesAttendedRow}  TEXT , ${DBattendance.totalClassesRow}  TEXT , ${DBattendance.attendancePercentageRow}  TEXT , ${DBattendance.attendenceFatCatRow}  TEXT , ${DBattendance.debarStatusRow}  TEXT, ${DBattendance.classidRow}  TEXT ,${DBattendance.semIdRow} TEXT , ${DBattendance.timeRow} INT,FOREIGN KEY (${DBattendance.semIdRow}) REFERENCES ${DBsemtable.semIDTable}(${DBsemtable.semIDrow}), UNIQUE (${DBattendance.semIdRow} , ${DBattendance.classidRow}) )",
+        );
+        await db.execute(
+          "CREATE TABLE ${DBfullattendance.table}(${DBfullattendance.serialRow} INTEGER  , ${DBfullattendance.dateRow} TEXT,${DBfullattendance.slotRowRow} TEXT  , ${DBfullattendance.dayTimeRow} TEXT,${DBfullattendance.statusRow} TEXT  ,${DBfullattendance.remarkRow} TEXT  , ${DBfullattendance.semIdRow} TEXT,${DBfullattendance.timeRow} INT  , ${DBfullattendance.classidRow} TEXT,FOREIGN KEY (${DBfullattendance.semIdRow}) REFERENCES ${DBsemtable.semIDTable}(${DBsemtable.semIDrow}), UNIQUE (${DBfullattendance.semIdRow} ,${DBfullattendance.dateRow},${DBfullattendance.timeRow}, ${DBfullattendance.classidRow}))",
+        );
       },
     );
     print("build db");

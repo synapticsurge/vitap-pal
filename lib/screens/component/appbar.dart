@@ -14,12 +14,16 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       // expandedHeight: 10,
       // floating: true,
-      title: Text(
-        "Vitap Mate",
-        style: GoogleFonts.bungeeSpice(
-          fontSize: 28,
-          fontWeight: FontWeight.bold,
-        ),
+      title: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Vitap Mate',
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+          ),
+          Text('', style: TextStyle(fontSize: 14.0, color: Colors.grey)),
+        ],
       ),
       actions: [
         IconButton(
