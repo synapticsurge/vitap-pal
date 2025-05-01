@@ -1,20 +1,73 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/providers/client.dart';
+import 'package:vitapmate/providers/semid.dart';
 import 'package:vitapmate/src/rust/api/vtop/client.dart';
 import 'package:vitapmate/src/rust/api/vtop_main.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-var cookieManager = WebViewCookieManager();
-
-class VtopWeb extends ConsumerStatefulWidget {
+class VtopWeb extends ConsumerWidget {
   const VtopWeb({super.key});
-
   @override
-  ConsumerState<VtopWeb> createState() => _VtopWebState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    var k = ref.watch(appStateProvider);
+    if (!k.networkUp) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('VTOP', style: TextStyle(fontSize: 15)),
+        ),
+        body: Center(
+          child: Column(
+            children: [
+              Text("No Internet"),
+              ElevatedButton(
+                onPressed: () {
+                  var _ = ref.refresh(semidsProvider);
+                },
+                child: Text("retry"),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else if (k.isLogin) {
+      return VtopWebPage();
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('VTOP', style: TextStyle(fontSize: 15)),
+        ),
+        body: Center(
+          child: Column(
+            children: [
+              Text("It looks like login attempt failed"),
+              ElevatedButton(
+                onPressed: () {
+                  var _ = ref.refresh(semidsProvider);
+                },
+                child: Text("retry"),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+  }
 }
 
-class _VtopWebState extends ConsumerState<VtopWeb> {
+var cookieManager = WebViewCookieManager();
+
+class VtopWebPage extends ConsumerStatefulWidget {
+  const VtopWebPage({super.key});
+
+  @override
+  ConsumerState<VtopWebPage> createState() => _VtopWebPageState();
+}
+
+class _VtopWebPageState extends ConsumerState<VtopWebPage> {
   late final WebViewController _controller;
   bool _isInitialized = false;
 

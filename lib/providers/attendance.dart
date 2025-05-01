@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vitapmate/models/attendance_model.dart';
+import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/providers/client.dart';
 import 'package:vitapmate/providers/db.dart';
 import 'package:vitapmate/providers/settings.dart';
@@ -49,6 +50,7 @@ class Attendance extends _$Attendance {
     var client = await ref.watch(clientProvider.future);
     if (settings.selSemId != null) {
       var c = await rustAttendance(client: client, semid: settings.selSemId!);
+      ref.read(appStateProvider.notifier).updatestate(c);
       if (!c.$1) return;
       await AttendanceService.saveAttendace(db, settings.selSemId!, c.$3);
       var k = await getAttendancefromstorage(db, settings.selSemId!);
@@ -71,6 +73,7 @@ class Attendance extends _$Attendance {
         courseId: classid,
         courseType: courseType,
       );
+      ref.read(appStateProvider.notifier).updatestate(c);
       if (c.$1) {
         await AttendanceService.saveFullAttendace(
           db,

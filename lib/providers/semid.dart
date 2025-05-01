@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vitapmate/constants.dart';
+import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/providers/client.dart';
 import 'package:vitapmate/providers/db.dart';
 import 'package:vitapmate/service/timetable_service.dart';
@@ -28,6 +29,7 @@ class Semids extends _$Semids {
 
   Future<void> updateSemids(Iclient client, Database db) async {
     var semdata = await rustTimetableSemid(client: client);
+    ref.read(appStateProvider.notifier).updatestate(semdata);
     if (!semdata.$1) return;
     List<Map<String, String>> semids = [];
     for (var i in semdata.$3) {
