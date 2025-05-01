@@ -5,9 +5,10 @@
 
 import '../../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
+import 'types.dart';
 
 Future<String> parseSemidMarks({required String html}) =>
     RustLib.instance.api.crateApiVtopParsemarksParseSemidMarks(html: html);
 
-Future<String> parseMarks({required String html}) =>
+Future<List<RMarksCourse>> parseMarks({required String html}) =>
     RustLib.instance.api.crateApiVtopParsemarksParseMarks(html: html);

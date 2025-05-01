@@ -78,7 +78,16 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   List<RAttendanceList> dco_decode_list_r_attendance_list(dynamic raw);
 
   @protected
+  List<RMarksCourse> dco_decode_list_r_marks_course(dynamic raw);
+
+  @protected
   List<RTimetable> dco_decode_list_r_timetable(dynamic raw);
+
+  @protected
+  List<RscheduleCourse> dco_decode_list_rschedule_course(dynamic raw);
+
+  @protected
+  List<RscheduleExam> dco_decode_list_rschedule_exam(dynamic raw);
 
   @protected
   String? dco_decode_opt_String(dynamic raw);
@@ -88,6 +97,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   RAttendanceList dco_decode_r_attendance_list(dynamic raw);
+
+  @protected
+  RMarksCourse dco_decode_r_marks_course(dynamic raw);
 
   @protected
   RTimetable dco_decode_r_timetable(dynamic raw);
@@ -104,13 +116,27 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   dco_decode_record_bool_string_list_r_attendance_list(dynamic raw);
 
   @protected
+  (bool, String, List<RMarksCourse>)
+  dco_decode_record_bool_string_list_r_marks_course(dynamic raw);
+
+  @protected
   (bool, String, List<RTimetable>)
   dco_decode_record_bool_string_list_r_timetable(dynamic raw);
+
+  @protected
+  (bool, String, List<RscheduleExam>)
+  dco_decode_record_bool_string_list_rschedule_exam(dynamic raw);
 
   @protected
   (bool, String, List<String>) dco_decode_record_bool_string_list_string(
     dynamic raw,
   );
+
+  @protected
+  RscheduleCourse dco_decode_rschedule_course(dynamic raw);
+
+  @protected
+  RscheduleExam dco_decode_rschedule_exam(dynamic raw);
 
   @protected
   int dco_decode_u_8(dynamic raw);
@@ -169,7 +195,22 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  List<RMarksCourse> sse_decode_list_r_marks_course(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   List<RTimetable> sse_decode_list_r_timetable(SseDeserializer deserializer);
+
+  @protected
+  List<RscheduleCourse> sse_decode_list_rschedule_course(
+    SseDeserializer deserializer,
+  );
+
+  @protected
+  List<RscheduleExam> sse_decode_list_rschedule_exam(
+    SseDeserializer deserializer,
+  );
 
   @protected
   String? sse_decode_opt_String(SseDeserializer deserializer);
@@ -179,6 +220,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   RAttendanceList sse_decode_r_attendance_list(SseDeserializer deserializer);
+
+  @protected
+  RMarksCourse sse_decode_r_marks_course(SseDeserializer deserializer);
 
   @protected
   RTimetable sse_decode_r_timetable(SseDeserializer deserializer);
@@ -197,13 +241,31 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  (bool, String, List<RMarksCourse>)
+  sse_decode_record_bool_string_list_r_marks_course(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   (bool, String, List<RTimetable>)
   sse_decode_record_bool_string_list_r_timetable(SseDeserializer deserializer);
+
+  @protected
+  (bool, String, List<RscheduleExam>)
+  sse_decode_record_bool_string_list_rschedule_exam(
+    SseDeserializer deserializer,
+  );
 
   @protected
   (bool, String, List<String>) sse_decode_record_bool_string_list_string(
     SseDeserializer deserializer,
   );
+
+  @protected
+  RscheduleCourse sse_decode_rschedule_course(SseDeserializer deserializer);
+
+  @protected
+  RscheduleExam sse_decode_rschedule_exam(SseDeserializer deserializer);
 
   @protected
   int sse_decode_u_8(SseDeserializer deserializer);
@@ -273,8 +335,26 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_list_r_marks_course(
+    List<RMarksCourse> self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_list_r_timetable(
     List<RTimetable> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_rschedule_course(
+    List<RscheduleCourse> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_rschedule_exam(
+    List<RscheduleExam> self,
     SseSerializer serializer,
   );
 
@@ -289,6 +369,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
     RAttendanceList self,
     SseSerializer serializer,
   );
+
+  @protected
+  void sse_encode_r_marks_course(RMarksCourse self, SseSerializer serializer);
 
   @protected
   void sse_encode_r_timetable(RTimetable self, SseSerializer serializer);
@@ -312,8 +395,20 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
+  void sse_encode_record_bool_string_list_r_marks_course(
+    (bool, String, List<RMarksCourse>) self,
+    SseSerializer serializer,
+  );
+
+  @protected
   void sse_encode_record_bool_string_list_r_timetable(
     (bool, String, List<RTimetable>) self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_record_bool_string_list_rschedule_exam(
+    (bool, String, List<RscheduleExam>) self,
     SseSerializer serializer,
   );
 
@@ -322,6 +417,15 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
     (bool, String, List<String>) self,
     SseSerializer serializer,
   );
+
+  @protected
+  void sse_encode_rschedule_course(
+    RscheduleCourse self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_rschedule_exam(RscheduleExam self, SseSerializer serializer);
 
   @protected
   void sse_encode_u_8(int self, SseSerializer serializer);

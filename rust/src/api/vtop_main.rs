@@ -1,5 +1,7 @@
 use super::vtop::{
-    client::Iclient, parseattn, parsett, types::{RAtCourse, RAttendanceList, RTimetable}
+    client::Iclient,
+    parseattn, parsemarks, parsesched, parsett,
+    types::{RAtCourse, RAttendanceList, RMarksCourse, RTimetable, RscheduleExam},
 };
 use base64::{engine::general_purpose::URL_SAFE, Engine as _};
 
@@ -64,13 +66,13 @@ pub async fn onstart_run(
 }
 
 #[flutter_rust_bridge::frb()]
-pub async fn rust_timetable_semid(client: &mut Iclient) -> (bool, String,Vec<String> ) {
-    let mut result = (false, "".to_string(),vec![]);
+pub async fn rust_timetable_semid(client: &mut Iclient) -> (bool, String, Vec<String>) {
+    let mut result = (false, "".to_string(), vec![]);
 
     let m = client.loginactive;
     if !m {
         let _check = login_vtop(client).await;
-        result = (_check.0,_check.1,vec![]);
+        result = (_check.0, _check.1, vec![]);
     }
     let m = client.loginactive;
     if m {
@@ -78,12 +80,12 @@ pub async fn rust_timetable_semid(client: &mut Iclient) -> (bool, String,Vec<Str
         if html.0 {
             let k = parsett::parse_semid_timetable(html.1);
             if k.is_empty() {
-                result = (false, "".to_string(),k);
+                result = (false, "".to_string(), k);
             } else {
-                result = (true, "".to_string(),k)
+                result = (true, "".to_string(), k)
             }
         } else {
-            result = (html.0,html.1,vec![]);
+            result = (html.0, html.1, vec![]);
         }
     }
 
@@ -91,13 +93,16 @@ pub async fn rust_timetable_semid(client: &mut Iclient) -> (bool, String,Vec<Str
 }
 
 #[flutter_rust_bridge::frb()]
-pub async fn rust_timetable(client: &mut Iclient, semid: String) -> (bool, String,Vec<RTimetable>) {
-    let mut result = (false, "".to_string(),vec![]);
+pub async fn rust_timetable(
+    client: &mut Iclient,
+    semid: String,
+) -> (bool, String, Vec<RTimetable>) {
+    let mut result = (false, "".to_string(), vec![]);
 
     let m = client.loginactive;
     if !m {
         let _check = login_vtop(client).await;
-        result = (_check.0,_check.1,vec![]);
+        result = (_check.0, _check.1, vec![]);
     }
     let m = client.loginactive;
     if m {
@@ -105,12 +110,12 @@ pub async fn rust_timetable(client: &mut Iclient, semid: String) -> (bool, Strin
         if res.0 {
             let k = parsett::parse_timetable(res.1);
             if k.is_empty() {
-                result = (false, "".to_string(),k);
+                result = (false, "".to_string(), k);
             } else {
-                result = (true, "".to_string(),k)
+                result = (true, "".to_string(), k)
             }
         } else {
-            result = (res.0,res.1,vec![]);
+            result = (res.0, res.1, vec![]);
         }
     }
     result
@@ -120,13 +125,13 @@ pub async fn rust_timetable(client: &mut Iclient, semid: String) -> (bool, Strin
 pub async fn rust_attendance(
     client: &mut Iclient,
     semid: String,
-) ->(bool, String,Vec<RAtCourse>){
-    let mut result = (false, "".to_string(),vec![]);
+) -> (bool, String, Vec<RAtCourse>) {
+    let mut result = (false, "".to_string(), vec![]);
 
     let m = client.loginactive;
     if !m {
         let _check = login_vtop(client).await;
-        result = (_check.0,_check.1,vec![]);
+        result = (_check.0, _check.1, vec![]);
     }
     let m = client.loginactive;
     if m {
@@ -134,12 +139,12 @@ pub async fn rust_attendance(
         if html.0 {
             let k = parseattn::parse_attendance(html.1);
             if k.is_empty() {
-                result = (false,"".to_string(), k);
+                result = (false, "".to_string(), k);
             } else {
-                result = (true,"".to_string(), k)
+                result = (true, "".to_string(), k)
             }
         } else {
-            result = (html.0,html.1,vec![]);
+            result = (html.0, html.1, vec![]);
         }
     }
 
@@ -148,17 +153,17 @@ pub async fn rust_attendance(
 
 #[flutter_rust_bridge::frb()]
 pub async fn rust_full_attendance(
-client: &mut Iclient,
+    client: &mut Iclient,
     semid: String,
     course_id: String,
     course_type: String,
-) -> (bool, String,Vec<RAttendanceList>){
-    let mut result = (false, "".to_string(),vec![]);
+) -> (bool, String, Vec<RAttendanceList>) {
+    let mut result = (false, "".to_string(), vec![]);
 
     let m = client.loginactive;
     if !m {
         let _check = login_vtop(client).await;
-        result = (_check.0,_check.1,vec![]);
+        result = (_check.0, _check.1, vec![]);
     }
     let m = client.loginactive;
     if m {
@@ -168,14 +173,77 @@ client: &mut Iclient,
         if html.0 {
             let k = parseattn::parse_full_attendance(html.1);
             if k.is_empty() {
-                result = (false,"".to_string() ,k);
+                result = (false, "".to_string(), k);
             } else {
-                result = (true,"".to_string(), k)
+                result = (true, "".to_string(), k)
             }
         } else {
-            result = (html.0,html.1,vec![]);
+            result = (html.0, html.1, vec![]);
         }
     }
 
- result
+    result
+}
+
+#[flutter_rust_bridge::frb()]
+pub async fn rust_marks_list(client: &mut Iclient, semid: String) -> (bool, String, Vec<RMarksCourse>) {
+    let mut result = (false, "".to_string(), vec![]);
+
+    let m = client.loginactive;
+    if !m {
+        let _check = login_vtop(client).await;
+        result = (_check.0, _check.1, vec![]);
+    }
+    let m = client.loginactive;
+    if m {
+        let html = client.get_marks_list(semid).await;
+        if html.0 {
+            let k = parsemarks::parse_marks(html.1);
+            if k.is_empty() {
+                result = (false, "".to_string(), k);
+            } else {
+                result = (true, "".to_string(), k)
+            }
+        } else {
+            result = (html.0, html.1, vec![]);
+        }
+    }
+    result
+}
+
+#[flutter_rust_bridge::frb()]
+pub async fn rust_exam_shedule(
+    client: &mut Iclient,
+    semid: String,
+) -> (bool, String, Vec<RscheduleExam>) {
+    let mut result = (false, "".to_string(), vec![]);
+
+    let m = client.loginactive;
+    if !m {
+        let _check = login_vtop(client).await;
+        result = (_check.0, _check.1, vec![]);
+    }
+    let m = client.loginactive;
+    if m {
+        let html = client.get_exam_shedule(semid).await;
+        if html.0 {
+            let k = parsesched::parse_schedule(html.1);
+            if k.is_empty() {
+                result = (false, "".to_string(), k);
+            } else {
+                result = (true, "".to_string(), k)
+            }
+        } else {
+            result = (html.0, html.1, vec![]);
+        }
+    }
+
+    result
+}
+
+#[flutter_rust_bridge::frb()]
+pub async fn rust_get_cookies(
+    client: &mut Iclient,
+) -> Vec<u8>{
+    client.get_cookies()
 }

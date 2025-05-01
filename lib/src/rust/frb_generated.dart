@@ -73,7 +73,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.9.0';
 
   @override
-  int get rustContentHash => 1759655570;
+  int get rustContentHash => 1119501058;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -124,6 +124,10 @@ abstract class RustLibApi extends BaseApi {
   });
 
   Future<(bool, String)> crateApiVtopClientIclientGetAttendancePage({
+    required Iclient that,
+  });
+
+  Future<Uint8List> crateApiVtopClientIclientGetCookies({
     required Iclient that,
   });
 
@@ -236,9 +240,13 @@ abstract class RustLibApi extends BaseApi {
     required String html,
   });
 
-  Future<String> crateApiVtopParsemarksParseMarks({required String html});
+  Future<List<RMarksCourse>> crateApiVtopParsemarksParseMarks({
+    required String html,
+  });
 
-  Future<String> crateApiVtopParseschedParseSchedule({required String html});
+  Future<List<RscheduleExam>> crateApiVtopParseschedParseSchedule({
+    required String html,
+  });
 
   Future<String> crateApiVtopParsecoursepgParseSemid({required String html});
 
@@ -265,12 +273,24 @@ abstract class RustLibApi extends BaseApi {
     required String semid,
   });
 
+  Future<(bool, String, List<RscheduleExam>)> crateApiVtopMainRustExamShedule({
+    required Iclient client,
+    required String semid,
+  });
+
   Future<(bool, String, List<RAttendanceList>)>
   crateApiVtopMainRustFullAttendance({
     required Iclient client,
     required String semid,
     required String courseId,
     required String courseType,
+  });
+
+  Future<Uint8List> crateApiVtopMainRustGetCookies({required Iclient client});
+
+  Future<(bool, String, List<RMarksCourse>)> crateApiVtopMainRustMarksList({
+    required Iclient client,
+    required String semid,
   });
 
   Future<(bool, String, List<RTimetable>)> crateApiVtopMainRustTimetable({
@@ -638,6 +658,39 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
+  Future<Uint8List> crateApiVtopClientIclientGetCookies({
+    required Iclient that,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            that,
+            serializer,
+          );
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 11,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_list_prim_u_8_strict,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopClientIclientGetCookiesConstMeta,
+        argValues: [that],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopClientIclientGetCookiesConstMeta =>
+      const TaskConstMeta(debugName: "Iclient_get_cookies", argNames: ["that"]);
+
+  @override
   Future<(bool, String)> crateApiVtopClientIclientGetCourseClasses({
     required Iclient that,
     required String semid,
@@ -656,7 +709,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 11,
+            funcId: 12,
             port: port_,
           );
         },
@@ -694,7 +747,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 12,
+            funcId: 13,
             port: port_,
           );
         },
@@ -736,7 +789,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 13,
+            funcId: 14,
             port: port_,
           );
         },
@@ -772,7 +825,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 14,
+            funcId: 15,
             port: port_,
           );
         },
@@ -810,7 +863,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 15,
+            funcId: 16,
             port: port_,
           );
         },
@@ -846,7 +899,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 16,
+            funcId: 17,
             port: port_,
           );
         },
@@ -888,7 +941,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 17,
+            funcId: 18,
             port: port_,
           );
         },
@@ -924,7 +977,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 18,
+            funcId: 19,
             port: port_,
           );
         },
@@ -962,7 +1015,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 19,
+            funcId: 20,
             port: port_,
           );
         },
@@ -998,7 +1051,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 20,
+            funcId: 21,
             port: port_,
           );
         },
@@ -1036,7 +1089,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 21,
+            funcId: 22,
             port: port_,
           );
         },
@@ -1072,7 +1125,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 22,
+            funcId: 23,
             port: port_,
           );
         },
@@ -1110,7 +1163,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 23,
+            funcId: 24,
             port: port_,
           );
         },
@@ -1146,7 +1199,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 24,
+            funcId: 25,
             port: port_,
           );
         },
@@ -1176,7 +1229,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 25,
+            funcId: 26,
             port: port_,
           );
         },
@@ -1214,7 +1267,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 26,
+            funcId: 27,
             port: port_,
           );
         },
@@ -1254,7 +1307,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 27,
+            funcId: 28,
             port: port_,
           );
         },
@@ -1281,7 +1334,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       SyncTask(
         callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 28)!;
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 29)!;
         },
         codec: SseCodec(
           decodeSuccessData:
@@ -1305,7 +1358,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
         callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
           sse_encode_String(name, serializer);
-          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 29)!;
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 30)!;
         },
         codec: SseCodec(
           decodeSuccessData: sse_decode_String,
@@ -1330,7 +1383,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 30,
+            funcId: 31,
             port: port_,
           );
         },
@@ -1367,7 +1420,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 31,
+            funcId: 32,
             port: port_,
           );
         },
@@ -1399,7 +1452,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 32,
+            funcId: 33,
             port: port_,
           );
         },
@@ -1427,7 +1480,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 33,
+            funcId: 34,
             port: port_,
           );
         },
@@ -1455,7 +1508,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 34,
+            funcId: 35,
             port: port_,
           );
         },
@@ -1483,7 +1536,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 35,
+            funcId: 36,
             port: port_,
           );
         },
@@ -1513,7 +1566,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 36,
+            funcId: 37,
             port: port_,
           );
         },
@@ -1535,35 +1588,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<String> crateApiVtopParsemarksParseMarks({required String html}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(html, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 37,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_String,
-          decodeErrorData: null,
-        ),
-        constMeta: kCrateApiVtopParsemarksParseMarksConstMeta,
-        argValues: [html],
-        apiImpl: this,
-      ),
-    );
-  }
-
-  TaskConstMeta get kCrateApiVtopParsemarksParseMarksConstMeta =>
-      const TaskConstMeta(debugName: "parse_marks", argNames: ["html"]);
-
-  @override
-  Future<String> crateApiVtopParseschedParseSchedule({required String html}) {
+  Future<List<RMarksCourse>> crateApiVtopParsemarksParseMarks({
+    required String html,
+  }) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
@@ -1577,7 +1604,37 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_String,
+          decodeSuccessData: sse_decode_list_r_marks_course,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopParsemarksParseMarksConstMeta,
+        argValues: [html],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopParsemarksParseMarksConstMeta =>
+      const TaskConstMeta(debugName: "parse_marks", argNames: ["html"]);
+
+  @override
+  Future<List<RscheduleExam>> crateApiVtopParseschedParseSchedule({
+    required String html,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(html, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 39,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_list_rschedule_exam,
           decodeErrorData: null,
         ),
         constMeta: kCrateApiVtopParseschedParseScheduleConstMeta,
@@ -1600,7 +1657,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 39,
+            funcId: 40,
             port: port_,
           );
         },
@@ -1630,7 +1687,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 40,
+            funcId: 41,
             port: port_,
           );
         },
@@ -1661,7 +1718,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 41,
+            funcId: 42,
             port: port_,
           );
         },
@@ -1691,7 +1748,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 42,
+            funcId: 43,
             port: port_,
           );
         },
@@ -1724,7 +1781,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 43,
+            funcId: 44,
             port: port_,
           );
         },
@@ -1757,7 +1814,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 44,
+            funcId: 45,
             port: port_,
           );
         },
@@ -1792,7 +1849,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 45,
+            funcId: 46,
             port: port_,
           );
         },
@@ -1810,6 +1867,44 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   TaskConstMeta get kCrateApiVtopMainRustAttendanceConstMeta =>
       const TaskConstMeta(
         debugName: "rust_attendance",
+        argNames: ["client", "semid"],
+      );
+
+  @override
+  Future<(bool, String, List<RscheduleExam>)> crateApiVtopMainRustExamShedule({
+    required Iclient client,
+    required String semid,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            client,
+            serializer,
+          );
+          sse_encode_String(semid, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 47,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string_list_rschedule_exam,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopMainRustExamSheduleConstMeta,
+        argValues: [client, semid],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopMainRustExamSheduleConstMeta =>
+      const TaskConstMeta(
+        debugName: "rust_exam_shedule",
         argNames: ["client", "semid"],
       );
 
@@ -1835,7 +1930,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 46,
+            funcId: 48,
             port: port_,
           );
         },
@@ -1858,6 +1953,75 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
+  Future<Uint8List> crateApiVtopMainRustGetCookies({required Iclient client}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            client,
+            serializer,
+          );
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 49,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_list_prim_u_8_strict,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopMainRustGetCookiesConstMeta,
+        argValues: [client],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopMainRustGetCookiesConstMeta =>
+      const TaskConstMeta(debugName: "rust_get_cookies", argNames: ["client"]);
+
+  @override
+  Future<(bool, String, List<RMarksCourse>)> crateApiVtopMainRustMarksList({
+    required Iclient client,
+    required String semid,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_Auto_RefMut_RustOpaque_flutter_rust_bridgefor_generatedRustAutoOpaqueInnerIclient(
+            client,
+            serializer,
+          );
+          sse_encode_String(semid, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 50,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string_list_r_marks_course,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopMainRustMarksListConstMeta,
+        argValues: [client, semid],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopMainRustMarksListConstMeta =>
+      const TaskConstMeta(
+        debugName: "rust_marks_list",
+        argNames: ["client", "semid"],
+      );
+
+  @override
   Future<(bool, String, List<RTimetable>)> crateApiVtopMainRustTimetable({
     required Iclient client,
     required String semid,
@@ -1874,7 +2038,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 47,
+            funcId: 51,
             port: port_,
           );
         },
@@ -1910,7 +2074,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 48,
+            funcId: 52,
             port: port_,
           );
         },
@@ -1947,7 +2111,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
-            funcId: 49,
+            funcId: 53,
             port: port_,
           );
         },
@@ -2055,9 +2219,27 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  List<RMarksCourse> dco_decode_list_r_marks_course(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_r_marks_course).toList();
+  }
+
+  @protected
   List<RTimetable> dco_decode_list_r_timetable(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     return (raw as List<dynamic>).map(dco_decode_r_timetable).toList();
+  }
+
+  @protected
+  List<RscheduleCourse> dco_decode_list_rschedule_course(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_rschedule_course).toList();
+  }
+
+  @protected
+  List<RscheduleExam> dco_decode_list_rschedule_exam(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return (raw as List<dynamic>).map(dco_decode_rschedule_exam).toList();
   }
 
   @protected
@@ -2101,6 +2283,23 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       dayTime: dco_decode_String(arr[3]),
       status: dco_decode_String(arr[4]),
       remark: dco_decode_String(arr[5]),
+    );
+  }
+
+  @protected
+  RMarksCourse dco_decode_r_marks_course(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 7)
+      throw Exception('unexpected arr length: expect 7 but see ${arr.length}');
+    return RMarksCourse(
+      serial: dco_decode_String(arr[0]),
+      coursecode: dco_decode_String(arr[1]),
+      coursetitle: dco_decode_String(arr[2]),
+      coursetype: dco_decode_String(arr[3]),
+      faculity: dco_decode_String(arr[4]),
+      slot: dco_decode_String(arr[5]),
+      marks: dco_decode_list_String(arr[6]),
     );
   }
 
@@ -2165,6 +2364,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  (bool, String, List<RMarksCourse>)
+  dco_decode_record_bool_string_list_r_marks_course(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3) {
+      throw Exception('Expected 3 elements, got ${arr.length}');
+    }
+    return (
+      dco_decode_bool(arr[0]),
+      dco_decode_String(arr[1]),
+      dco_decode_list_r_marks_course(arr[2]),
+    );
+  }
+
+  @protected
   (bool, String, List<RTimetable>)
   dco_decode_record_bool_string_list_r_timetable(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
@@ -2176,6 +2390,21 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       dco_decode_bool(arr[0]),
       dco_decode_String(arr[1]),
       dco_decode_list_r_timetable(arr[2]),
+    );
+  }
+
+  @protected
+  (bool, String, List<RscheduleExam>)
+  dco_decode_record_bool_string_list_rschedule_exam(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3) {
+      throw Exception('Expected 3 elements, got ${arr.length}');
+    }
+    return (
+      dco_decode_bool(arr[0]),
+      dco_decode_String(arr[1]),
+      dco_decode_list_rschedule_exam(arr[2]),
     );
   }
 
@@ -2192,6 +2421,41 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       dco_decode_bool(arr[0]),
       dco_decode_String(arr[1]),
       dco_decode_list_String(arr[2]),
+    );
+  }
+
+  @protected
+  RscheduleCourse dco_decode_rschedule_course(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 13)
+      throw Exception('unexpected arr length: expect 13 but see ${arr.length}');
+    return RscheduleCourse(
+      serial: dco_decode_String(arr[0]),
+      slot: dco_decode_String(arr[1]),
+      courseName: dco_decode_String(arr[2]),
+      courseCode: dco_decode_String(arr[3]),
+      courseType: dco_decode_String(arr[4]),
+      courseId: dco_decode_String(arr[5]),
+      examDate: dco_decode_String(arr[6]),
+      examSession: dco_decode_String(arr[7]),
+      reportingTime: dco_decode_String(arr[8]),
+      examTime: dco_decode_String(arr[9]),
+      venue: dco_decode_String(arr[10]),
+      seatLocation: dco_decode_String(arr[11]),
+      seatNo: dco_decode_String(arr[12]),
+    );
+  }
+
+  @protected
+  RscheduleExam dco_decode_rschedule_exam(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return RscheduleExam(
+      examType: dco_decode_String(arr[0]),
+      course: dco_decode_list_rschedule_course(arr[1]),
     );
   }
 
@@ -2326,6 +2590,20 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  List<RMarksCourse> sse_decode_list_r_marks_course(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <RMarksCourse>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_r_marks_course(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
   List<RTimetable> sse_decode_list_r_timetable(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
@@ -2333,6 +2611,34 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var ans_ = <RTimetable>[];
     for (var idx_ = 0; idx_ < len_; ++idx_) {
       ans_.add(sse_decode_r_timetable(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  List<RscheduleCourse> sse_decode_list_rschedule_course(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <RscheduleCourse>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_rschedule_course(deserializer));
+    }
+    return ans_;
+  }
+
+  @protected
+  List<RscheduleExam> sse_decode_list_rschedule_exam(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <RscheduleExam>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_rschedule_exam(deserializer));
     }
     return ans_;
   }
@@ -2399,6 +2705,27 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  RMarksCourse sse_decode_r_marks_course(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_serial = sse_decode_String(deserializer);
+    var var_coursecode = sse_decode_String(deserializer);
+    var var_coursetitle = sse_decode_String(deserializer);
+    var var_coursetype = sse_decode_String(deserializer);
+    var var_faculity = sse_decode_String(deserializer);
+    var var_slot = sse_decode_String(deserializer);
+    var var_marks = sse_decode_list_String(deserializer);
+    return RMarksCourse(
+      serial: var_serial,
+      coursecode: var_coursecode,
+      coursetitle: var_coursetitle,
+      coursetype: var_coursetype,
+      faculity: var_faculity,
+      slot: var_slot,
+      marks: var_marks,
+    );
+  }
+
+  @protected
   RTimetable sse_decode_r_timetable(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var var_serial = sse_decode_String(deserializer);
@@ -2456,12 +2783,36 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  (bool, String, List<RMarksCourse>)
+  sse_decode_record_bool_string_list_r_marks_course(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_field0 = sse_decode_bool(deserializer);
+    var var_field1 = sse_decode_String(deserializer);
+    var var_field2 = sse_decode_list_r_marks_course(deserializer);
+    return (var_field0, var_field1, var_field2);
+  }
+
+  @protected
   (bool, String, List<RTimetable>)
   sse_decode_record_bool_string_list_r_timetable(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var var_field0 = sse_decode_bool(deserializer);
     var var_field1 = sse_decode_String(deserializer);
     var var_field2 = sse_decode_list_r_timetable(deserializer);
+    return (var_field0, var_field1, var_field2);
+  }
+
+  @protected
+  (bool, String, List<RscheduleExam>)
+  sse_decode_record_bool_string_list_rschedule_exam(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_field0 = sse_decode_bool(deserializer);
+    var var_field1 = sse_decode_String(deserializer);
+    var var_field2 = sse_decode_list_rschedule_exam(deserializer);
     return (var_field0, var_field1, var_field2);
   }
 
@@ -2474,6 +2825,47 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     var var_field1 = sse_decode_String(deserializer);
     var var_field2 = sse_decode_list_String(deserializer);
     return (var_field0, var_field1, var_field2);
+  }
+
+  @protected
+  RscheduleCourse sse_decode_rschedule_course(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_serial = sse_decode_String(deserializer);
+    var var_slot = sse_decode_String(deserializer);
+    var var_courseName = sse_decode_String(deserializer);
+    var var_courseCode = sse_decode_String(deserializer);
+    var var_courseType = sse_decode_String(deserializer);
+    var var_courseId = sse_decode_String(deserializer);
+    var var_examDate = sse_decode_String(deserializer);
+    var var_examSession = sse_decode_String(deserializer);
+    var var_reportingTime = sse_decode_String(deserializer);
+    var var_examTime = sse_decode_String(deserializer);
+    var var_venue = sse_decode_String(deserializer);
+    var var_seatLocation = sse_decode_String(deserializer);
+    var var_seatNo = sse_decode_String(deserializer);
+    return RscheduleCourse(
+      serial: var_serial,
+      slot: var_slot,
+      courseName: var_courseName,
+      courseCode: var_courseCode,
+      courseType: var_courseType,
+      courseId: var_courseId,
+      examDate: var_examDate,
+      examSession: var_examSession,
+      reportingTime: var_reportingTime,
+      examTime: var_examTime,
+      venue: var_venue,
+      seatLocation: var_seatLocation,
+      seatNo: var_seatNo,
+    );
+  }
+
+  @protected
+  RscheduleExam sse_decode_rschedule_exam(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_examType = sse_decode_String(deserializer);
+    var var_course = sse_decode_list_rschedule_course(deserializer);
+    return RscheduleExam(examType: var_examType, course: var_course);
   }
 
   @protected
@@ -2607,6 +2999,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_list_r_marks_course(
+    List<RMarksCourse> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_r_marks_course(item, serializer);
+    }
+  }
+
+  @protected
   void sse_encode_list_r_timetable(
     List<RTimetable> self,
     SseSerializer serializer,
@@ -2615,6 +3019,30 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_i_32(self.length, serializer);
     for (final item in self) {
       sse_encode_r_timetable(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_rschedule_course(
+    List<RscheduleCourse> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_rschedule_course(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_rschedule_exam(
+    List<RscheduleExam> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_rschedule_exam(item, serializer);
     }
   }
 
@@ -2657,6 +3085,18 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_String(self.dayTime, serializer);
     sse_encode_String(self.status, serializer);
     sse_encode_String(self.remark, serializer);
+  }
+
+  @protected
+  void sse_encode_r_marks_course(RMarksCourse self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.serial, serializer);
+    sse_encode_String(self.coursecode, serializer);
+    sse_encode_String(self.coursetitle, serializer);
+    sse_encode_String(self.coursetype, serializer);
+    sse_encode_String(self.faculity, serializer);
+    sse_encode_String(self.slot, serializer);
+    sse_encode_list_String(self.marks, serializer);
   }
 
   @protected
@@ -2707,6 +3147,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_record_bool_string_list_r_marks_course(
+    (bool, String, List<RMarksCourse>) self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_bool(self.$1, serializer);
+    sse_encode_String(self.$2, serializer);
+    sse_encode_list_r_marks_course(self.$3, serializer);
+  }
+
+  @protected
   void sse_encode_record_bool_string_list_r_timetable(
     (bool, String, List<RTimetable>) self,
     SseSerializer serializer,
@@ -2718,6 +3169,17 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  void sse_encode_record_bool_string_list_rschedule_exam(
+    (bool, String, List<RscheduleExam>) self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_bool(self.$1, serializer);
+    sse_encode_String(self.$2, serializer);
+    sse_encode_list_rschedule_exam(self.$3, serializer);
+  }
+
+  @protected
   void sse_encode_record_bool_string_list_string(
     (bool, String, List<String>) self,
     SseSerializer serializer,
@@ -2726,6 +3188,34 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
     sse_encode_bool(self.$1, serializer);
     sse_encode_String(self.$2, serializer);
     sse_encode_list_String(self.$3, serializer);
+  }
+
+  @protected
+  void sse_encode_rschedule_course(
+    RscheduleCourse self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.serial, serializer);
+    sse_encode_String(self.slot, serializer);
+    sse_encode_String(self.courseName, serializer);
+    sse_encode_String(self.courseCode, serializer);
+    sse_encode_String(self.courseType, serializer);
+    sse_encode_String(self.courseId, serializer);
+    sse_encode_String(self.examDate, serializer);
+    sse_encode_String(self.examSession, serializer);
+    sse_encode_String(self.reportingTime, serializer);
+    sse_encode_String(self.examTime, serializer);
+    sse_encode_String(self.venue, serializer);
+    sse_encode_String(self.seatLocation, serializer);
+    sse_encode_String(self.seatNo, serializer);
+  }
+
+  @protected
+  void sse_encode_rschedule_exam(RscheduleExam self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.examType, serializer);
+    sse_encode_list_rschedule_course(self.course, serializer);
   }
 
   @protected
@@ -2805,6 +3295,9 @@ class IclientImpl extends RustOpaque implements Iclient {
 
   Future<(bool, String)> getAttendancePage() => RustLib.instance.api
       .crateApiVtopClientIclientGetAttendancePage(that: this);
+
+  Future<Uint8List> getCookies() =>
+      RustLib.instance.api.crateApiVtopClientIclientGetCookies(that: this);
 
   Future<(bool, String)> getCourseClasses({
     required String semid,

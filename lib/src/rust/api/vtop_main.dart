@@ -63,3 +63,22 @@ Future<(bool, String, List<RAttendanceList>)> rustFullAttendance({
   courseId: courseId,
   courseType: courseType,
 );
+
+Future<(bool, String, List<RMarksCourse>)> rustMarksList({
+  required Iclient client,
+  required String semid,
+}) => RustLib.instance.api.crateApiVtopMainRustMarksList(
+  client: client,
+  semid: semid,
+);
+
+Future<(bool, String, List<RscheduleExam>)> rustExamShedule({
+  required Iclient client,
+  required String semid,
+}) => RustLib.instance.api.crateApiVtopMainRustExamShedule(
+  client: client,
+  semid: semid,
+);
+
+Future<Uint8List> rustGetCookies({required Iclient client}) =>
+    RustLib.instance.api.crateApiVtopMainRustGetCookies(client: client);

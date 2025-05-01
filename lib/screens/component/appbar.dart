@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:vitapmate/router/route_names.dart';
 
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -20,7 +19,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         children: <Widget>[
           Text(
             'Vitap Mate',
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w900),
           ),
           Text('', style: TextStyle(fontSize: 14.0, color: Colors.grey)),
         ],

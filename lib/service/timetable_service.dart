@@ -31,11 +31,7 @@ class TimetableService {
     await batch.commit(noResult: true);
   }
 
-  static getTimetable({
-    required Database db,
-    required String semid,
-    String? days,
-  }) async {
+  static getTimetable({required Database db, required String semid}) async {
     var timetable = await db.query(
       DBtimetable.timetabelTable,
       columns: [

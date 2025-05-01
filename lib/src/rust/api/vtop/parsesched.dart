@@ -5,9 +5,10 @@
 
 import '../../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
+import 'types.dart';
 
 Future<String> parseSemidSchedule({required String html}) =>
     RustLib.instance.api.crateApiVtopParseschedParseSemidSchedule(html: html);
 
-Future<String> parseSchedule({required String html}) =>
+Future<List<RscheduleExam>> parseSchedule({required String html}) =>
     RustLib.instance.api.crateApiVtopParseschedParseSchedule(html: html);

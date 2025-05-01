@@ -22,7 +22,11 @@ class AppState extends _$AppState {
   }
 
   updatesucess() {
-    state = state.copyWith(vtopDown: false, networkUp: true, isLogin: true);
+    if (state.vtopDown == true ||
+        state.isLogin == false ||
+        state.networkUp == false) {
+      state = state.copyWith(vtopDown: false, networkUp: true, isLogin: true);
+    }
   }
 
   updatestate(dynamic data) {
@@ -35,5 +39,6 @@ class AppState extends _$AppState {
     } else {
       updatesucess();
     }
+    print(state);
   }
 }

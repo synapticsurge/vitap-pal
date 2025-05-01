@@ -4,7 +4,6 @@ import 'package:vitapmate/screens/component/navbar.dart';
 
 class ScaffoldWithNavBar extends StatelessWidget {
   final Widget child;
-
   const ScaffoldWithNavBar({super.key, required this.child});
 
   @override
@@ -12,13 +11,6 @@ class ScaffoldWithNavBar extends StatelessWidget {
     return Scaffold(
       body: child,
       appBar: TopAppBar(),
-      //     body: CustomScrollView(
-
-      //       slivers: [TopAppBar(), SliverToBoxAdapter(child:  SizedBox(
-      //   height: MediaQuery.of(context).size.height -200,
-      //   child: child,
-      // ),)],
-      //     ),
       bottomNavigationBar: BottomNavBar(),
     );
   }

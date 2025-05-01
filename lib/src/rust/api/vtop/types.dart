@@ -6,6 +6,8 @@
 import '../../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
+// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `clone`
+
 class RAtCourse {
   final String serial;
   final String category;
@@ -108,6 +110,49 @@ class RAttendanceList {
           remark == other.remark;
 }
 
+class RMarksCourse {
+  final String serial;
+  final String coursecode;
+  final String coursetitle;
+  final String coursetype;
+  final String faculity;
+  final String slot;
+  final List<String> marks;
+
+  const RMarksCourse({
+    required this.serial,
+    required this.coursecode,
+    required this.coursetitle,
+    required this.coursetype,
+    required this.faculity,
+    required this.slot,
+    required this.marks,
+  });
+
+  @override
+  int get hashCode =>
+      serial.hashCode ^
+      coursecode.hashCode ^
+      coursetitle.hashCode ^
+      coursetype.hashCode ^
+      faculity.hashCode ^
+      slot.hashCode ^
+      marks.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RMarksCourse &&
+          runtimeType == other.runtimeType &&
+          serial == other.serial &&
+          coursecode == other.coursecode &&
+          coursetitle == other.coursetitle &&
+          coursetype == other.coursetype &&
+          faculity == other.faculity &&
+          slot == other.slot &&
+          marks == other.marks;
+}
+
 class RTimetable {
   final String serial;
   final String day;
@@ -161,4 +206,89 @@ class RTimetable {
           startTime == other.startTime &&
           endTime == other.endTime &&
           name == other.name;
+}
+
+class RscheduleCourse {
+  final String serial;
+  final String slot;
+  final String courseName;
+  final String courseCode;
+  final String courseType;
+  final String courseId;
+  final String examDate;
+  final String examSession;
+  final String reportingTime;
+  final String examTime;
+  final String venue;
+  final String seatLocation;
+  final String seatNo;
+
+  const RscheduleCourse({
+    required this.serial,
+    required this.slot,
+    required this.courseName,
+    required this.courseCode,
+    required this.courseType,
+    required this.courseId,
+    required this.examDate,
+    required this.examSession,
+    required this.reportingTime,
+    required this.examTime,
+    required this.venue,
+    required this.seatLocation,
+    required this.seatNo,
+  });
+
+  @override
+  int get hashCode =>
+      serial.hashCode ^
+      slot.hashCode ^
+      courseName.hashCode ^
+      courseCode.hashCode ^
+      courseType.hashCode ^
+      courseId.hashCode ^
+      examDate.hashCode ^
+      examSession.hashCode ^
+      reportingTime.hashCode ^
+      examTime.hashCode ^
+      venue.hashCode ^
+      seatLocation.hashCode ^
+      seatNo.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RscheduleCourse &&
+          runtimeType == other.runtimeType &&
+          serial == other.serial &&
+          slot == other.slot &&
+          courseName == other.courseName &&
+          courseCode == other.courseCode &&
+          courseType == other.courseType &&
+          courseId == other.courseId &&
+          examDate == other.examDate &&
+          examSession == other.examSession &&
+          reportingTime == other.reportingTime &&
+          examTime == other.examTime &&
+          venue == other.venue &&
+          seatLocation == other.seatLocation &&
+          seatNo == other.seatNo;
+}
+
+class RscheduleExam {
+  final String examType;
+  final List<RscheduleCourse> course;
+
+  const RscheduleExam({required this.examType, required this.course});
+
+  @override
+  int get hashCode => examType.hashCode ^ course.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is RscheduleExam &&
+          runtimeType == other.runtimeType &&
+          examType == other.examType &&
+          course == other.course;
 }

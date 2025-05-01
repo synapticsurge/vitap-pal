@@ -1,7 +1,6 @@
 use scraper::{Html, Selector};
-use serde;
-use serde::Deserialize;
-use serde_json;
+
+use super::types::RMarksCourse;
 
 pub fn parse_semid_marks(html: String) -> String {
     let mut sem_names_ids = vec![];
@@ -21,21 +20,12 @@ pub fn parse_semid_marks(html: String) -> String {
     return serde_json::to_string(&sem_names_ids).unwrap();
 }
 
-pub fn parse_marks(html: String) -> String {
-    #[derive(serde::Serialize, Deserialize, Clone)]
-    struct Course {
-        serial: String,
-        coursecode: String,
-        coursetitle: String,
-        coursetype: String,
-        faculity: String,
-        slot: String,
-        marks: Vec<String>,
-    }
+pub fn parse_marks(html: String) -> Vec<RMarksCourse> {
+   
     let document = Html::parse_document(&html);
-    let mut courses: Vec<Course> = Vec::new();
+    let mut courses: Vec<RMarksCourse> = Vec::new();
 
-    let mut course = Course {
+    let mut course = RMarksCourse {
         serial: "".to_string(),
         coursecode: "".to_string(),
         coursetitle: "".to_string(),
@@ -76,7 +66,7 @@ pub fn parse_marks(html: String) -> String {
             course.marks = marks_vec;
 
             courses.push(course.clone());
-            course = Course {
+            course = RMarksCourse {
                 serial: "".to_string(),
                 coursecode: "".to_string(),
                 coursetitle: "".to_string(),
@@ -86,7 +76,7 @@ pub fn parse_marks(html: String) -> String {
                 marks: vec![],
             };
         } else {
-            course = Course {
+            course = RMarksCourse {
                 serial: cells[0]
                     .text()
                     .collect::<Vec<_>>()
@@ -135,6 +125,5 @@ pub fn parse_marks(html: String) -> String {
 
         bmarks = !bmarks
     }
-    let json_data = serde_json::to_string_pretty(&courses).unwrap();
-    return json_data;
+    courses
 }

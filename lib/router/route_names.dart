@@ -8,4 +8,5 @@ class RouteNames {
   static const socialRouteName = "social";
   static const featuresRouteName = "features_enable";
   static const credsRouteName = "creds";
+  static const vtopWebsiteRouteName = "VtopWebsite";
 }

@@ -1,27 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'attendance.dart';
+part of 'schedule.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$attendanceHash() => r'be031120f3932ebc3d8c430680ea5cf17e15b9db';
+String _$scheduleHash() => r'c430d20f139d71682242316562a39d39223acfc0';
 
-/// See also [Attendance].
-@ProviderFor(Attendance)
-final attendanceProvider =
-    AutoDisposeAsyncNotifierProvider<Attendance, AttendanceModel>.internal(
-      Attendance.new,
-      name: r'attendanceProvider',
+/// See also [Schedule].
+@ProviderFor(Schedule)
+final scheduleProvider =
+    AutoDisposeAsyncNotifierProvider<Schedule, ScheduleModel>.internal(
+      Schedule.new,
+      name: r'scheduleProvider',
       debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$attendanceHash,
+          const bool.fromEnvironment('dart.vm.product') ? null : _$scheduleHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$Attendance = AutoDisposeAsyncNotifier<AttendanceModel>;
+typedef _$Schedule = AutoDisposeAsyncNotifier<ScheduleModel>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

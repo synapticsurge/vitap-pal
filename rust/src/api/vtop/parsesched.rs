@@ -1,7 +1,7 @@
 use scraper::{Html, Selector};
-use serde;
-use serde::Deserialize;
-use serde_json;
+
+use super::types::{RscheduleCourse, RscheduleExam};
+
 
 pub fn parse_semid_schedule(html: String) -> String {
     let mut sem_names_ids = vec![];
@@ -21,31 +21,11 @@ pub fn parse_semid_schedule(html: String) -> String {
     return serde_json::to_string(&sem_names_ids).unwrap();
 }
 
-pub fn parse_schedule(html: String) -> String {
-    #[derive(serde::Serialize, Deserialize)]
-    struct Course {
-        serial: String,
-        slot: String,
-        course_name: String,
-        course_code: String,
-        course_type: String,
-        course_id: String,
-        exam_date: String,
-        exam_session: String,
-        reporting_time: String,
-        exam_time: String,
-        venue: String,
-        seat_location: String,
-        seat_no: String,
-    }
-    #[derive(serde::Serialize, Deserialize)]
-    struct Exam {
-        exam_type: String,
-        course: Vec<Course>,
-    }
+pub fn parse_schedule(html: String) -> Vec<RscheduleExam> {
+ 
     let document = Html::parse_document(&html);
     let rows_selector = Selector::parse("tr").unwrap();
-    let mut exams: Vec<Exam> = Vec::new();
+    let mut exams: Vec<RscheduleExam> = Vec::new();
 
     let mut off_set = -1;
     for row in document.select(&rows_selector).skip(2) {
@@ -58,14 +38,14 @@ pub fn parse_schedule(html: String) -> String {
                 .trim()
                 .replace("\t", "")
                 .replace("\n", "");
-            let exam = Exam {
+            let exam = RscheduleExam {
                 exam_type: n,
                 course: Vec::new(),
             };
             exams.push(exam);
             off_set += 1;
         } else if cells.len() > 12 {
-            let course = Course {
+            let course = RscheduleCourse {
                 serial: cells[0]
                     .text()
                     .collect::<Vec<_>>()
@@ -161,6 +141,6 @@ pub fn parse_schedule(html: String) -> String {
             exams[off_set as usize].course.push(course);
         }
     }
-    let json_data = serde_json::to_string_pretty(&exams).unwrap();
-    return json_data;
+    exams
+
 }

@@ -55,7 +55,6 @@ class DBattendance {
   static const serialRow = "serial";
   static const categoryRow = "category";
   static const courseNameRow = "courseName";
-  static const courseCodeRow = "courseCode";
   static const courseTypeRow = "courseType";
   static const facultyDetailRow = "facultyDetail";
   static const classesAttendedRow = "classesAttended";
@@ -63,7 +62,8 @@ class DBattendance {
   static const attendancePercentageRow = "attendancePercentage";
   static const attendenceFatCatRow = "attendenceFatCat";
   static const debarStatusRow = "debarStatus";
-  static const classidRow = "courseId";
+  static const slotRow = "slot";
+  static const classidRow = "courseCode";
   static const semIdRow = "semId";
   static const timeRow = "update_time";
 }
@@ -72,11 +72,44 @@ class DBfullattendance {
   static const table = "fullattendance_table";
   static const serialRow = "serial";
   static const dateRow = "date";
-  static const slotRowRow = "slot";
+  static const slotRow = "slot";
   static const dayTimeRow = "dayTime";
   static const statusRow = "status";
   static const remarkRow = "remark";
   static const semIdRow = "semId";
   static const timeRow = "update_time";
   static const classidRow = "class_id";
+}
+
+class DBmarks {
+  static const table = "marks_table";
+  static const serialRow = "serial";
+  static const coursecodeRow = "coursecode";
+  static const coursetitleRow = "coursetitle";
+  static const coursetypeRow = "coursetype";
+  static const faculityRow = "faculity";
+  static const slotRow = "slot";
+  static const marksRow = "marks";
+  static const semIdRow = "semId";
+  static const timeRow = "update_time";
+}
+
+class DBschedule {
+  static const table = "schedule_table";
+  static const serialRow = "serial";
+  static const slotRow = "slot";
+  static const courseNameRow = "courseName";
+  static const courseCodeRow = "courseCode";
+  static const courseTypeRow = "courseType";
+  static const courseIdRow = "courseId";
+  static const examDateRow = "examDate";
+  static const examSessionRow = "examSession";
+  static const reportingTimeRow = "reportingTime";
+  static const examTimeRow = "examTime";
+  static const venueRow = "venue";
+  static const seatLocationRow = "seatLocation";
+  static const seatNoRow = "seatNo";
+  static const examtypeRow = "examtype";
+  static const semIdRow = "semId";
+  static const timeRow = "update_time";
 }

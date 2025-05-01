@@ -30,6 +30,8 @@ abstract class Iclient implements RustOpaqueInterface {
 
   Future<(bool, String)> getAttendancePage();
 
+  Future<Uint8List> getCookies();
+
   Future<(bool, String)> getCourseClasses({
     required String semid,
     required String classid,

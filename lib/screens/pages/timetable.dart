@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/providers/timetable.dart';
 import 'package:intl/intl.dart';
+import 'package:vitapmate/router/route_names.dart';
 
 final key = GlobalKey();
 
@@ -121,7 +122,7 @@ class _TimetableState extends ConsumerState<Timetable>
                               ),
                             ],
                           ),
-                          SizedBox(height: 2),
+                          // SizedBox(height: 2),
                           Row(
                             children: [
                               Text(
@@ -133,7 +134,7 @@ class _TimetableState extends ConsumerState<Timetable>
                               ),
                             ],
                           ),
-                          SizedBox(height: 2),
+                          // SizedBox(height: 2),
                         ],
                       ),
                     ),
@@ -157,7 +158,9 @@ class _TimetableState extends ConsumerState<Timetable>
                           Row(
                             children: [
                               Icon(
-                                islab ? Icons.science : Icons.account_balance,
+                                islab
+                                    ? Icons.science
+                                    : Icons.account_balance_rounded,
                                 color:
                                     islab
                                         ? AppColors.secondary
@@ -181,7 +184,7 @@ class _TimetableState extends ConsumerState<Timetable>
                               ),
                             ],
                           ),
-                          SizedBox(height: 1),
+                          SizedBox(height: 2),
                           Row(
                             children: [
                               Expanded(
@@ -203,7 +206,7 @@ class _TimetableState extends ConsumerState<Timetable>
                               ),
                             ],
                           ),
-                          SizedBox(height: 1),
+
                           Row(
                             children: [
                               Expanded(
@@ -270,7 +273,25 @@ class _TimetableState extends ConsumerState<Timetable>
           ],
         );
       },
-      error: (e, se) => Text("some thing went worng $e"),
+      error:
+          (e, se) => Center(
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Add your vtop details in ",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  TextSpan(
+                    text: "settings",
+                    style: TextStyle(color: AppColors.primary, fontSize: 20),
+                    onEnter:
+                        (event) => context.goNamed(RouteNames.credsRouteName),
+                  ),
+                ],
+              ),
+            ),
+          ),
       loading: () {
         return Loadingsket();
       },
@@ -288,11 +309,130 @@ class Loadingsket extends StatelessWidget {
       child: ListView.builder(
         itemCount: 6,
         itemBuilder: (context, index) {
-          return const ListTile(
-            title: Text("Feature Title"),
-            subtitle: Text("Loading description..."),
-            trailing: Icon(Icons.circle),
-          );
+          if (index == 2 || index == 5) {
+            return const Card(
+              shape: RoundedRectangleBorder(side: BorderSide(width: 2.0)),
+              elevation: 0,
+              color: AppColors.backgroundDark,
+
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.timelapse),
+                        SizedBox(width: 5),
+                        Expanded(
+                          child: Text(
+                            "Free Time",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "2 Slots",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // SizedBox(height: 2),
+                    Row(
+                      children: [
+                        Text(
+                          "aaaaaaaaaaaaa",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // SizedBox(height: 2),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return const Card(
+              shape: RoundedRectangleBorder(side: BorderSide(width: 2.0)),
+              elevation: 0,
+              color: AppColors.backgroundDark,
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.account_balance_rounded),
+
+                        SizedBox(width: 5),
+                        Flexible(
+                          child: Text(
+                            'aaaaaaaaaaaaaaaaaaaaa ',
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.ellipsis,
+
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 2),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "aaaaaaa",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "aaaa",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "aaaaaaaaaaa",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "aaaaaaa",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
         },
       ),
     );
