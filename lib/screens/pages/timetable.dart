@@ -123,7 +123,7 @@ class _TimetableState extends ConsumerState<Timetable>
                                 child: Text(
                                   "Free Time",
                                   style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -134,7 +134,7 @@ class _TimetableState extends ConsumerState<Timetable>
                                     : "${k[DBtimetable.slotrow]} Slots",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w900,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                   color: Colors.grey.shade400,
                                 ),
                               ),
@@ -147,7 +147,7 @@ class _TimetableState extends ConsumerState<Timetable>
                                 "${to12H(val[index - 1][DBtimetable.endTimerow])} - ${to12H(val[index + 1][DBtimetable.startTimerow])} ",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                  fontSize: 14,
                                 ),
                               ),
                             ],
@@ -191,7 +191,7 @@ class _TimetableState extends ConsumerState<Timetable>
                                   overflow: TextOverflow.ellipsis,
 
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w800,
                                     color: Colors.grey.shade400,
                                   ),
@@ -207,7 +207,7 @@ class _TimetableState extends ConsumerState<Timetable>
                                   "${k[DBtimetable.blockrow].replaceFirst("ALL", "")} - ${k[DBtimetable.roomNorow]}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
-                                    fontSize: 18,
+                                    fontSize: 15,
                                   ),
                                 ),
                               ),
@@ -215,7 +215,7 @@ class _TimetableState extends ConsumerState<Timetable>
                                 " ${k[DBtimetable.slotrow]}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                   color: Colors.grey.shade500,
                                 ),
                               ),
@@ -229,7 +229,7 @@ class _TimetableState extends ConsumerState<Timetable>
                                   "${to12H(k[DBtimetable.startTimerow])} - ${to12H(k[DBtimetable.endTimerow])}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                                    fontSize: 13,
                                   ),
                                 ),
                               ),
@@ -237,6 +237,7 @@ class _TimetableState extends ConsumerState<Timetable>
                                 k[DBtimetable.courseCoderow],
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 12,
                                   color: Colors.grey.shade500,
                                 ),
                               ),

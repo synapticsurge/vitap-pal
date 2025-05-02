@@ -61,7 +61,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
               child: Column(
                 children: [
                   AppExpansionPanelList(
-                    dividerColor: AppColors.textColor,
+                    dividerColor: Colors.transparent,
                     expansionCallback: (int i, bool isExpanded) {
                       setState(() {
                         _isopen = List.generate(
@@ -135,7 +135,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                                                       TextOverflow.ellipsis,
 
                                                   style: TextStyle(
-                                                    fontSize: 14,
+                                                    fontSize: 12,
                                                     fontWeight: FontWeight.w800,
                                                     color: Colors.grey.shade400,
                                                   ),
@@ -159,8 +159,9 @@ class _AttendanceState extends ConsumerState<Attendance> {
                                                   text: TextSpan(
                                                     text:
                                                         "${item[DBattendance.courseNameRow]?.split("-")[0]}",
+
                                                     style: TextStyle(
-                                                      fontSize: 18,
+                                                      fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.w900,
                                                     ),
@@ -169,7 +170,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                                                 Text(
                                                   "${item[DBattendance.facultyDetailRow]}",
                                                   style: TextStyle(
-                                                    fontSize: 14,
+                                                    fontSize: 10,
                                                     fontWeight: FontWeight.w700,
                                                   ),
                                                 ),
@@ -185,7 +186,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                                               Text(
                                                 "BetweenExams",
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 12,
                                                   fontWeight: FontWeight.w900,
                                                 ),
                                               ),
@@ -201,12 +202,13 @@ class _AttendanceState extends ConsumerState<Attendance> {
                                               Text(
                                                 "Total",
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 12,
                                                   fontWeight: FontWeight.w900,
                                                 ),
                                               ),
                                             ],
                                           ),
+                                          SizedBox(width: 2),
                                         ],
                                       ),
                                       SizedBox(height: 8),
@@ -220,7 +222,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                                                 TextSpan(
                                                   text: "Attended Classes  ",
                                                   style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
+                                                    fontWeight: FontWeight.w400,
                                                   ),
                                                 ),
                                                 TextSpan(
@@ -241,7 +243,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                                                 TextSpan(
                                                   text: "Total Classes  ",
                                                   style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
+                                                    fontWeight: FontWeight.w400,
                                                   ),
                                                 ),
                                                 TextSpan(
@@ -321,13 +323,13 @@ Widget progreess(String? value) {
   double k = getPre(value);
 
   return SizedBox(
-    height: 65.0,
+    height: 55.0,
     child: Stack(
       alignment: Alignment.center,
       children: [
         SizedBox(
-          width: 65,
-          height: 65,
+          width: 55,
+          height: 55,
           child: CircularProgressIndicator(
             value: k,
             strokeWidth: 5,
@@ -336,7 +338,7 @@ Widget progreess(String? value) {
         ),
         Text(
           (value ?? "-"),
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
       ],
     ),
