@@ -26,6 +26,7 @@ class AppColors {
   static const textSecondary = Color(0xFF757575);
   static const stext = Color.fromARGB(255, 255, 120, 120);
   static const ptext = Color.fromARGB(255, 255, 253, 120);
+  static const red = Color(0xFFFF4D4D);
 }
 
 class DBsemtable {

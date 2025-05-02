@@ -38,9 +38,14 @@ class Semids extends _$Semids {
       map[DBsemtable.semNamerow] = i.split(":")[0];
       semids.add(map);
     }
-
     await TimetableService.saveTimetableSemIDs(db, semids);
     var sem = await getSemidsfromstorage(db);
     state = AsyncData(sem);
+  }
+
+  Future<void> updateall() async {
+    var db = await ref.watch(dBProvider.future);
+    var client = await ref.watch(clientProvider.future);
+    await updateSemids(client, db);
   }
 }

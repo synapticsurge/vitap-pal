@@ -82,3 +82,13 @@ Future<(bool, String, List<RscheduleExam>)> rustExamShedule({
 
 Future<Uint8List> rustGetCookies({required Iclient client}) =>
     RustLib.instance.api.crateApiVtopMainRustGetCookies(client: client);
+
+Future<(bool, String)> wifi({
+  required int i,
+  required String username,
+  required String password,
+}) => RustLib.instance.api.crateApiVtopMainWifi(
+  i: i,
+  username: username,
+  password: password,
+);

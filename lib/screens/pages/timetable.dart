@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vitapmate/constants.dart';
+import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/providers/timetable.dart';
 import 'package:intl/intl.dart';
 import 'package:vitapmate/router/route_names.dart';
@@ -33,7 +34,24 @@ class _TimetableState extends ConsumerState<Timetable>
     return timetable.when(
       data: (data) {
         if (data.timetable.isEmpty) {
-          return Loadingsket();
+          return RefreshIndicator(
+            onRefresh: () async {
+              await ref.read(timetableProvider.notifier).completeUpdate();
+              ref.read(appStateProvider.notifier).triggers();
+            },
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height - 200,
+                child: Center(
+                  child: Text(
+                    "Hmm, it looks like there's no data to display right now. This could be due to a slow internet connection or a temporary issue with the connection. Please try reloading the page.",
+                  ),
+                ),
+              ),
+            ),
+          );
         }
         var pdayslist = [for (var i in data.uniquedays) i[DBtimetable.dayrow]];
         var dayslist = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
@@ -145,10 +163,7 @@ class _TimetableState extends ConsumerState<Timetable>
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     elevation: 0,
-                    color:
-                        islab
-                            ? AppColors.backgroundDark
-                            : AppColors.backgroundDark,
+                    color: AppColors.backgroundDark,
 
                     child: Padding(
                       padding: EdgeInsets.all(10),
@@ -264,6 +279,7 @@ class _TimetableState extends ConsumerState<Timetable>
                         await ref
                             .read(timetableProvider.notifier)
                             .completeUpdate();
+                        ref.read(appStateProvider.notifier).triggers();
                       },
                       child: tabview(val),
                     ),

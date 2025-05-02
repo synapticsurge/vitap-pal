@@ -16,9 +16,14 @@ class Attendance extends _$Attendance {
     var db = await ref.watch(dBProvider.future);
     var settings = await ref.watch(settingsProvider.future);
     var k = await getAttendancefromstorage(db, settings.selSemId!);
-    Future.microtask(() async {
-      await updateAttendance();
-    });
+    if (k.isEmpty) {
+      await updateAttendance(db, settings.selSemId);
+      k = await getAttendancefromstorage(db, settings.selSemId!);
+    } else {
+      Future.microtask(() async {
+        await completeUpdate();
+      });
+    }
     print("build attendence");
     return AttendanceModel(attendance: k, fullAttendance: {});
   }
@@ -44,21 +49,25 @@ class Attendance extends _$Attendance {
     return attendance;
   }
 
-  Future updateAttendance() async {
-    var db = await ref.watch(dBProvider.future);
-    var settings = await ref.watch(settingsProvider.future);
+  Future updateAttendance(Database db, String? selSemId) async {
     var client = await ref.watch(clientProvider.future);
-    if (settings.selSemId != null) {
-      var c = await rustAttendance(client: client, semid: settings.selSemId!);
+    if (selSemId != null) {
+      var c = await rustAttendance(client: client, semid: selSemId);
       ref.read(appStateProvider.notifier).updatestate(c);
       if (!c.$1) return;
-      await AttendanceService.saveAttendace(db, settings.selSemId!, c.$3);
-      var k = await getAttendancefromstorage(db, settings.selSemId!);
+      await AttendanceService.saveAttendace(db, selSemId, c.$3);
+      var k = await getAttendancefromstorage(db, selSemId);
+      return k;
+    }
+  }
 
-      var data = await future;
-      if (data.attendance != k) {
-        state = AsyncData(data.copyWith(attendance: k));
-      }
+  Future completeUpdate() async {
+    var settings = await ref.watch(settingsProvider.future);
+    var db = await ref.watch(dBProvider.future);
+    var k = await updateAttendance(db, settings.selSemId);
+    var data = await future;
+    if (data.attendance != k) {
+      state = AsyncData(data.copyWith(attendance: k));
     }
   }
 

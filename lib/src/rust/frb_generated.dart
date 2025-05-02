@@ -73,7 +73,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.9.0';
 
   @override
-  int get rustContentHash => 1119501058;
+  int get rustContentHash => -902688585;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -300,6 +300,12 @@ abstract class RustLibApi extends BaseApi {
 
   Future<(bool, String, List<String>)> crateApiVtopMainRustTimetableSemid({
     required Iclient client,
+  });
+
+  Future<(bool, String)> crateApiVtopMainWifi({
+    required int i,
+    required String username,
+    required String password,
   });
 
   Future<(bool, String)> crateApiVtopWifiWifiLoginLogout({
@@ -2096,7 +2102,7 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
       );
 
   @override
-  Future<(bool, String)> crateApiVtopWifiWifiLoginLogout({
+  Future<(bool, String)> crateApiVtopMainWifi({
     required int i,
     required String username,
     required String password,
@@ -2112,6 +2118,42 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
             generalizedFrbRustBinding,
             serializer,
             funcId: 53,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_record_bool_string,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiVtopMainWifiConstMeta,
+        argValues: [i, username, password],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiVtopMainWifiConstMeta => const TaskConstMeta(
+    debugName: "wifi",
+    argNames: ["i", "username", "password"],
+  );
+
+  @override
+  Future<(bool, String)> crateApiVtopWifiWifiLoginLogout({
+    required int i,
+    required String username,
+    required String password,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_i_32(i, serializer);
+          sse_encode_String(username, serializer);
+          sse_encode_String(password, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 54,
             port: port_,
           );
         },

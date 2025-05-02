@@ -8,5 +8,6 @@ sealed class AppStateModel with _$AppStateModel {
     @Default(false) isLogin,
     @Default(false) networkUp,
     @Default(false) vtopDown,
+    @Default(0) temp,
   }) = _AppStateModel;
 }

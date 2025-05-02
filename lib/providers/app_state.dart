@@ -41,4 +41,9 @@ class AppState extends _$AppState {
     }
     print(state);
   }
+
+  triggers() {
+    var val = state.temp + 1;
+    state = state.copyWith(temp: val);
+  }
 }

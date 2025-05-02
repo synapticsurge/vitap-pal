@@ -1,7 +1,7 @@
 use super::vtop::{
     client::Iclient,
     parseattn, parsemarks, parsesched, parsett,
-    types::{RAtCourse, RAttendanceList, RMarksCourse, RTimetable, RscheduleExam},
+    types::{RAtCourse, RAttendanceList, RMarksCourse, RTimetable, RscheduleExam}, wifi,
 };
 use base64::{engine::general_purpose::URL_SAFE, Engine as _};
 
@@ -246,4 +246,10 @@ pub async fn rust_get_cookies(
     client: &mut Iclient,
 ) -> Vec<u8>{
     client.get_cookies()
+}
+
+#[flutter_rust_bridge::frb()]
+pub async fn wifi(i: i32, username: String, password: String) -> (bool, String) {
+    let k = wifi::wifi_login_logout(i, username, password).await;
+    k
 }

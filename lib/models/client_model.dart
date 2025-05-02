@@ -9,6 +9,7 @@ sealed class ClientModel with _$ClientModel {
     @Default(false) bool isLogin,
     @Default(false) bool isOnline,
     @Default(false) bool isVtopDown,
+    @Default(true) bool firstload,
     required Iclient iclient,
   }) = _ClientModel;
 }

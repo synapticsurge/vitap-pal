@@ -104,7 +104,7 @@ final goRouterprovider = Provider((ref) {
       GoRoute(
         path: '/VtopWeb',
         name: RouteNames.vtopWebsiteRouteName,
-        builder: (context, state) => VtopWeb(),
+        builder: (context, state) => VtopWebPage(),
       ),
     ],
   );

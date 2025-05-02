@@ -6,7 +6,7 @@ part of 'semid.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$semidsHash() => r'a62cb88fd8676494209a058d55213f35a46da0ec';
+String _$semidsHash() => r'53d638c59029157af4953cc879cf06ae7145a586';
 
 /// See also [Semids].
 @ProviderFor(Semids)

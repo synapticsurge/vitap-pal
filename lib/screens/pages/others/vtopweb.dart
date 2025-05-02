@@ -1,62 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/providers/client.dart';
 import 'package:vitapmate/providers/semid.dart';
 import 'package:vitapmate/src/rust/api/vtop/client.dart';
 import 'package:vitapmate/src/rust/api/vtop_main.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-class VtopWeb extends ConsumerWidget {
-  const VtopWeb({super.key});
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    var k = ref.watch(appStateProvider);
-    if (!k.networkUp) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('VTOP', style: TextStyle(fontSize: 15)),
-        ),
-        body: Center(
-          child: Column(
-            children: [
-              Text("No Internet"),
-              ElevatedButton(
-                onPressed: () {
-                  var _ = ref.refresh(semidsProvider);
-                },
-                child: Text("retry"),
-              ),
-            ],
-          ),
-        ),
-      );
-    } else if (k.isLogin) {
-      return VtopWebPage();
-    } else {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('VTOP', style: TextStyle(fontSize: 15)),
-        ),
-        body: Center(
-          child: Column(
-            children: [
-              Text("It looks like login attempt failed"),
-              ElevatedButton(
-                onPressed: () {
-                  var _ = ref.refresh(semidsProvider);
-                },
-                child: Text("retry"),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-  }
-}
 
 var cookieManager = WebViewCookieManager();
 
@@ -70,6 +20,7 @@ class VtopWebPage extends ConsumerStatefulWidget {
 class _VtopWebPageState extends ConsumerState<VtopWebPage> {
   late final WebViewController _controller;
   bool _isInitialized = false;
+  bool _loading = false;
 
   @override
   void initState() {
@@ -121,20 +72,84 @@ class _VtopWebPageState extends ConsumerState<VtopWebPage> {
 
     return clientAsync.when(
       data: (client) {
-        _initCookiesAndLoad(client);
-
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('VTOP', style: TextStyle(fontSize: 15)),
-            actions: [
-              IconButton(
-                onPressed: () => _controller.reload(),
-                icon: Icon(Icons.replay_outlined),
+        var k = ref.watch(appStateProvider);
+        if (!k.networkUp) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('VTOP', style: TextStyle(fontSize: 15)),
+            ),
+            body: Center(
+              child: Column(
+                children: [
+                  Text("No Internet"),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          !_loading ? AppColors.primary : Colors.grey,
+                    ),
+                    onPressed: () async {
+                      setState(() {
+                        _loading = true;
+                      });
+                      var _ =
+                          await ref.read(semidsProvider.notifier).updateall();
+                      ref.read(appStateProvider.notifier).triggers();
+                      setState(() {
+                        _loading = false;
+                      });
+                    },
+                    child: Text("retry"),
+                  ),
+                ],
               ),
-            ],
-          ),
-          body: WebViewWidget(controller: _controller),
-        );
+            ),
+          );
+        } else if (k.isLogin) {
+          _initCookiesAndLoad(client);
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('VTOP', style: TextStyle(fontSize: 15)),
+              actions: [
+                IconButton(
+                  onPressed: () => _controller.reload(),
+                  icon: Icon(Icons.replay_outlined),
+                ),
+              ],
+            ),
+            body: WebViewWidget(controller: _controller),
+          );
+        } else {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('VTOP', style: TextStyle(fontSize: 15)),
+            ),
+            body: Center(
+              child: Column(
+                children: [
+                  Text("It looks like login attempt failed"),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          !_loading ? AppColors.primary : Colors.grey,
+                    ),
+                    onPressed: () async {
+                      setState(() {
+                        _loading = true;
+                      });
+                      var _ =
+                          await ref.read(semidsProvider.notifier).updateall();
+                      ref.read(appStateProvider.notifier).triggers();
+                      setState(() {
+                        _loading = false;
+                      });
+                    },
+                    child: Text("retry"),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
       },
       error: (e, se) => const Center(child: Text('error loading client')),
       loading: () => const Center(child: CircularProgressIndicator()),

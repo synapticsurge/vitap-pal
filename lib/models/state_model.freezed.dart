@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppStateModel implements DiagnosticableTreeMixin {
 
- dynamic get isLogin; dynamic get networkUp; dynamic get vtopDown;
+ dynamic get isLogin; dynamic get networkUp; dynamic get vtopDown; dynamic get temp;
 /// Create a copy of AppStateModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,21 +27,21 @@ $AppStateModelCopyWith<AppStateModel> get copyWith => _$AppStateModelCopyWithImp
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'AppStateModel'))
-    ..add(DiagnosticsProperty('isLogin', isLogin))..add(DiagnosticsProperty('networkUp', networkUp))..add(DiagnosticsProperty('vtopDown', vtopDown));
+    ..add(DiagnosticsProperty('isLogin', isLogin))..add(DiagnosticsProperty('networkUp', networkUp))..add(DiagnosticsProperty('vtopDown', vtopDown))..add(DiagnosticsProperty('temp', temp));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppStateModel&&const DeepCollectionEquality().equals(other.isLogin, isLogin)&&const DeepCollectionEquality().equals(other.networkUp, networkUp)&&const DeepCollectionEquality().equals(other.vtopDown, vtopDown));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppStateModel&&const DeepCollectionEquality().equals(other.isLogin, isLogin)&&const DeepCollectionEquality().equals(other.networkUp, networkUp)&&const DeepCollectionEquality().equals(other.vtopDown, vtopDown)&&const DeepCollectionEquality().equals(other.temp, temp));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(isLogin),const DeepCollectionEquality().hash(networkUp),const DeepCollectionEquality().hash(vtopDown));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(isLogin),const DeepCollectionEquality().hash(networkUp),const DeepCollectionEquality().hash(vtopDown),const DeepCollectionEquality().hash(temp));
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AppStateModel(isLogin: $isLogin, networkUp: $networkUp, vtopDown: $vtopDown)';
+  return 'AppStateModel(isLogin: $isLogin, networkUp: $networkUp, vtopDown: $vtopDown, temp: $temp)';
 }
 
 
@@ -52,7 +52,7 @@ abstract mixin class $AppStateModelCopyWith<$Res>  {
   factory $AppStateModelCopyWith(AppStateModel value, $Res Function(AppStateModel) _then) = _$AppStateModelCopyWithImpl;
 @useResult
 $Res call({
- dynamic isLogin, dynamic networkUp, dynamic vtopDown
+ dynamic isLogin, dynamic networkUp, dynamic vtopDown, dynamic temp
 });
 
 
@@ -69,11 +69,12 @@ class _$AppStateModelCopyWithImpl<$Res>
 
 /// Create a copy of AppStateModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLogin = freezed,Object? networkUp = freezed,Object? vtopDown = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLogin = freezed,Object? networkUp = freezed,Object? vtopDown = freezed,Object? temp = freezed,}) {
   return _then(_self.copyWith(
 isLogin: freezed == isLogin ? _self.isLogin : isLogin // ignore: cast_nullable_to_non_nullable
 as dynamic,networkUp: freezed == networkUp ? _self.networkUp : networkUp // ignore: cast_nullable_to_non_nullable
 as dynamic,vtopDown: freezed == vtopDown ? _self.vtopDown : vtopDown // ignore: cast_nullable_to_non_nullable
+as dynamic,temp: freezed == temp ? _self.temp : temp // ignore: cast_nullable_to_non_nullable
 as dynamic,
   ));
 }
@@ -85,12 +86,13 @@ as dynamic,
 
 
 class _AppStateModel with DiagnosticableTreeMixin implements AppStateModel {
-   _AppStateModel({this.isLogin = false, this.networkUp = false, this.vtopDown = false});
+   _AppStateModel({this.isLogin = false, this.networkUp = false, this.vtopDown = false, this.temp = 0});
   
 
 @override@JsonKey() final  dynamic isLogin;
 @override@JsonKey() final  dynamic networkUp;
 @override@JsonKey() final  dynamic vtopDown;
+@override@JsonKey() final  dynamic temp;
 
 /// Create a copy of AppStateModel
 /// with the given fields replaced by the non-null parameter values.
@@ -103,21 +105,21 @@ _$AppStateModelCopyWith<_AppStateModel> get copyWith => __$AppStateModelCopyWith
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'AppStateModel'))
-    ..add(DiagnosticsProperty('isLogin', isLogin))..add(DiagnosticsProperty('networkUp', networkUp))..add(DiagnosticsProperty('vtopDown', vtopDown));
+    ..add(DiagnosticsProperty('isLogin', isLogin))..add(DiagnosticsProperty('networkUp', networkUp))..add(DiagnosticsProperty('vtopDown', vtopDown))..add(DiagnosticsProperty('temp', temp));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppStateModel&&const DeepCollectionEquality().equals(other.isLogin, isLogin)&&const DeepCollectionEquality().equals(other.networkUp, networkUp)&&const DeepCollectionEquality().equals(other.vtopDown, vtopDown));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppStateModel&&const DeepCollectionEquality().equals(other.isLogin, isLogin)&&const DeepCollectionEquality().equals(other.networkUp, networkUp)&&const DeepCollectionEquality().equals(other.vtopDown, vtopDown)&&const DeepCollectionEquality().equals(other.temp, temp));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(isLogin),const DeepCollectionEquality().hash(networkUp),const DeepCollectionEquality().hash(vtopDown));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(isLogin),const DeepCollectionEquality().hash(networkUp),const DeepCollectionEquality().hash(vtopDown),const DeepCollectionEquality().hash(temp));
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AppStateModel(isLogin: $isLogin, networkUp: $networkUp, vtopDown: $vtopDown)';
+  return 'AppStateModel(isLogin: $isLogin, networkUp: $networkUp, vtopDown: $vtopDown, temp: $temp)';
 }
 
 
@@ -128,7 +130,7 @@ abstract mixin class _$AppStateModelCopyWith<$Res> implements $AppStateModelCopy
   factory _$AppStateModelCopyWith(_AppStateModel value, $Res Function(_AppStateModel) _then) = __$AppStateModelCopyWithImpl;
 @override @useResult
 $Res call({
- dynamic isLogin, dynamic networkUp, dynamic vtopDown
+ dynamic isLogin, dynamic networkUp, dynamic vtopDown, dynamic temp
 });
 
 
@@ -145,11 +147,12 @@ class __$AppStateModelCopyWithImpl<$Res>
 
 /// Create a copy of AppStateModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLogin = freezed,Object? networkUp = freezed,Object? vtopDown = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLogin = freezed,Object? networkUp = freezed,Object? vtopDown = freezed,Object? temp = freezed,}) {
   return _then(_AppStateModel(
 isLogin: freezed == isLogin ? _self.isLogin : isLogin // ignore: cast_nullable_to_non_nullable
 as dynamic,networkUp: freezed == networkUp ? _self.networkUp : networkUp // ignore: cast_nullable_to_non_nullable
 as dynamic,vtopDown: freezed == vtopDown ? _self.vtopDown : vtopDown // ignore: cast_nullable_to_non_nullable
+as dynamic,temp: freezed == temp ? _self.temp : temp // ignore: cast_nullable_to_non_nullable
 as dynamic,
   ));
 }
