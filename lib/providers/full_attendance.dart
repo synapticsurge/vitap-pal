@@ -76,6 +76,7 @@ class FullAttendance extends _$FullAttendance {
         classid,
         courseType,
       );
+      if (at.isEmpty) return;
       var data = await future;
       var save = Map<String, List<Map<String, String>>>.from(
         data.fullAttendance,

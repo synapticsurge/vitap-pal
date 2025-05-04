@@ -67,13 +67,13 @@ class _AttendanceState extends ConsumerState<Attendance> {
                   AppExpansionPanelList(
                     dividerColor: Colors.transparent,
                     expansionCallback: (int i, bool isExpanded) {
-                      setState(() {
-                        _isopen = List.generate(
-                          attendance.length,
-                          (index) => false,
-                        );
-                        _isopen[i] = isExpanded;
-                      });
+                      // setState(() {
+                      //   _isopen = List.generate(
+                      //     attendance.length,
+                      //     (index) => false,
+                      //   );
+                      //   _isopen[i] = isExpanded;
+                      // });
                     },
                     children: [
                       for (final (i, item) in attendance.indexed)
@@ -90,8 +90,8 @@ class _AttendanceState extends ConsumerState<Attendance> {
                             return InkWell(
                               splashColor: Colors.transparent,
                               onTap: () {
-                                bool temp = _isopen[i];
                                 setState(() {
+                                  bool temp = _isopen[i];
                                   _isopen = List.generate(
                                     attendance.length,
                                     (index) => false,
@@ -310,7 +310,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
             ),
           ),
       loading: () {
-        return Loadingsket();
+        return Loadingsketpage();
       },
     );
   }
@@ -385,7 +385,7 @@ class Loadingsket extends StatelessWidget {
                 DataColumn(label: Text("Remark")),
               ],
               rows: [
-                for (var i in [0,1,2,3,4])
+                for (var _ in [0, 1, 2, 3, 4])
                   DataRow(
                     cells: [
                       DataCell(Text("1")),
@@ -421,43 +421,53 @@ class FullAttendance extends ConsumerStatefulWidget {
 }
 
 class _FullAttendanceState extends ConsumerState<FullAttendance> {
-  bool k = true;
+  bool _canFetch = true;
   @override
-  Widget build(BuildContext context) {
-    if (widget.exp) {
-      Future.microtask(() {
-        if (!k) return;
-        ref
-            .read(fullAttendanceProvider.notifier)
-            .updateFullAttendance(widget.courseId, widget.courseType);
-        k = false;
-        Future.delayed(Duration(seconds: 5), () => k = true);
+  void didUpdateWidget(covariant FullAttendance oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.exp && !oldWidget.exp && _canFetch) {
+      _canFetch = false;
+
+      ref
+          .read(fullAttendanceProvider.notifier)
+          .updateFullAttendance(widget.courseId, widget.courseType);
+
+    
+      Future.delayed(const Duration(seconds: 5), () {
+        if (mounted) {
+          setState(() => _canFetch = true);
+        }
       });
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     var c = ref.watch(fullAttendanceProvider);
-
-    // Future.microtask(() {
-    //   if (!k) return;
-    //   ref
-    //       .read(fullAttendanceProvider.notifier)
-    //       .updateFullAttendance(widget.courseId, widget.courseType);
-    //   k = false;
-    //   Future.delayed(Duration(seconds: 5), () => k = true);
-    // });
-
-    //return SizedBox(width: double.infinity, height: MediaQuery.of(context).size.height/3, child: Loadingsket());
+    if (!widget.exp) {
+      return Loadingsket();
+    }
+    var id = "${widget.courseId}.${widget.courseType}";
     return c.when(
       data: (p) {
-        var data = p.fullAttendance["${widget.courseId}.${widget.courseType}"];
-        if (data == null) {
+        var data =  List<Map<String, String>>.from(p.fullAttendance[id]??[]) ;
+    
+        if (data.isEmpty) {
           return SizedBox(
             width: double.infinity,
             height: MediaQuery.of(context).size.height / 3,
             child: Loadingsket(),
           );
-        } else if (data.isNotEmpty && data.length >= 2) {
+        }   else if (data.length >= 2) {
           data.removeLast();
           data.removeLast();
+        }else{
+           return SizedBox(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height / 3,
+            child: Loadingsket(),
+          );
         }
 
         return ConstrainedBox(
@@ -490,15 +500,15 @@ class _FullAttendanceState extends ConsumerState<FullAttendance> {
                     DataColumn(label: Text("Remark")),
                   ],
                   rows: [
-                    for (var i in data ?? [])
+                    for (var i in data)
                       DataRow(
                         cells: [
-                          DataCell(Text(i[DBfullattendance.serialRow])),
-                          DataCell(Text(i[DBfullattendance.dateRow])),
-                          DataCell(Text(i[DBfullattendance.statusRow])),
-                          DataCell(Text(i[DBfullattendance.dayTimeRow])),
-                          DataCell(Text(i[DBfullattendance.slotRow])),
-                          DataCell(Text(i[DBfullattendance.remarkRow])),
+                          DataCell(Text(i[DBfullattendance.serialRow] ?? "")),
+                          DataCell(Text(i[DBfullattendance.dateRow] ?? "")),
+                          DataCell(Text(i[DBfullattendance.statusRow] ?? "")),
+                          DataCell(Text(i[DBfullattendance.dayTimeRow] ?? "")),
+                          DataCell(Text(i[DBfullattendance.slotRow] ?? "")),
+                          DataCell(Text(i[DBfullattendance.remarkRow] ?? "")),
                         ],
                       ),
                   ],
@@ -515,6 +525,146 @@ class _FullAttendanceState extends ConsumerState<FullAttendance> {
             height: MediaQuery.of(context).size.height / 3,
             child: Loadingsket(),
           ),
+    );
+  }
+}
+
+class Loadingsketpage extends StatelessWidget {
+  const Loadingsketpage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Skeletonizer(
+      enabled: true,
+      child: ListView.builder(
+        itemCount: 6,
+        itemBuilder: (context, index) {
+          if (index == 2 || index == 5) {
+            return const Card(
+              shape: RoundedRectangleBorder(side: BorderSide(width: 2.0)),
+              elevation: 0,
+              color: AppColors.backgroundDark,
+
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.timelapse),
+                        SizedBox(width: 5),
+                        Expanded(
+                          child: Text(
+                            "Free Time",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "2 Slots",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // SizedBox(height: 2),
+                    Row(
+                      children: [
+                        Text(
+                          "aaaaaaaaaaaaa",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // SizedBox(height: 2),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return const Card(
+              shape: RoundedRectangleBorder(side: BorderSide(width: 2.0)),
+              elevation: 0,
+              color: AppColors.backgroundDark,
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.account_balance_rounded),
+
+                        SizedBox(width: 5),
+                        Flexible(
+                          child: Text(
+                            'aaaaaaaaaaaaaaaaaaaaa ',
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.ellipsis,
+
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 2),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "aaaaaaa",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "aaaa",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "aaaaaaaaaaa",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "aaaaaaa",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }

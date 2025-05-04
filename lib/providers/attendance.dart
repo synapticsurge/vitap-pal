@@ -66,7 +66,7 @@ class Attendance extends _$Attendance {
     var db = await ref.watch(dBProvider.future);
     var k = await updateAttendance(db, settings.selSemId);
     var data = await future;
-    if (data.attendance != k) {
+    if (data.attendance != k && k != null) {
       state = AsyncData(data.copyWith(attendance: k));
     }
   }

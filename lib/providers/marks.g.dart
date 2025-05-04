@@ -6,7 +6,7 @@ part of 'marks.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$marksHash() => r'959468da3eb14cfc646ac65c574f6c593c9b4b88';
+String _$marksHash() => r'8077f52bfb498d56ae19a202f3d9c4a74d730f20';
 
 /// See also [Marks].
 @ProviderFor(Marks)
