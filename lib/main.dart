@@ -16,7 +16,7 @@ class MyApp extends ConsumerWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final goRouter = ref.read(goRouterprovider);
+    final goRouter = ref.watch(goRouterprovider);
     final Color primaryBlue = AppColors.primary;
     final Color accentRed = AppColors.secondary;
     return MaterialApp.router(

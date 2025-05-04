@@ -36,70 +36,30 @@ class Attendance extends _$Attendance {
     return attendance;
   }
 
-  // Future<List<Map<String, String>>> getFullAttendancefromstorage(
-  //   Database db,
-  //   String semid,
-  //   String classid,
-  // ) async {
-  //   var attendance = await AttendanceService.getFullAttendance(
-  //     db,
-  //     semid,
-  //     classid,
-  //   );
-  //   return attendance;
-  // }
+
 
   Future updateAttendance(Database db, String? selSemId) async {
     if (selSemId != null) {
-      var c = await ref.watch(clientProvider.notifier).attendance(selSemId);
+      var c = await ref.read(clientProvider.notifier).attendance(selSemId);
       if (c == null) return;
       if (c.$1) {
         await AttendanceService.saveAttendace(db, selSemId, c.$3);
         var k = await getAttendancefromstorage(db, selSemId);
+        print(k.length);
         return k;
       }
     }
   }
 
   Future completeUpdate() async {
-    var settings = await ref.watch(settingsProvider.future);
-    var db = await ref.watch(dBProvider.future);
+    var settings = await ref.read(settingsProvider.future);
+    var db = await ref.read(dBProvider.future);
     var k = await updateAttendance(db, settings.selSemId);
     var data = await future;
+    
     if (data.attendance != k && k != null) {
       state = AsyncData(data.copyWith(attendance: k));
     }
   }
 
-  // Future updateFullAttendance(String classid, String courseType) async {
-  //   var db = await ref.watch(dBProvider.future);
-  //   var settings = await ref.watch(settingsProvider.future);
-  //   if (settings.selSemId != null) {
-  //     var c = await ref
-  //         .watch(clientProvider.notifier)
-  //         .fullAttendance(settings.selSemId!, classid.trim(), courseType);
-  //     print(c);
-  //     if (c.$1) {
-  //       print(c.$3[0]);
-  //       await AttendanceService.saveFullAttendace(
-  //         db,
-  //         settings.selSemId!,
-  //         classid,
-  //         c.$3,
-  //       );
-  //     }
-  //     var at = await getFullAttendancefromstorage(
-  //       db,
-  //       settings.selSemId!,
-  //       classid,
-  //     );
-  //     var data = await future;
-  //     var save = Map<String, List<Map<String, String>>>.from(
-  //       data.fullAttendance,
-  //     );
-  //     save[classid] = at;
-  //     print(save);
-  //     state = AsyncData(data.copyWith(fullAttendance: save));
-  //   }
-  // }
 }

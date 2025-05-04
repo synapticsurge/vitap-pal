@@ -55,11 +55,11 @@ class FullAttendance extends _$FullAttendance {
   }
 
   Future updateFullAttendance(String classid, String courseType) async {
-    var db = await ref.watch(dBProvider.future);
-    var settings = await ref.watch(settingsProvider.future);
+    var db = await ref.read(dBProvider.future);
+    var settings = await ref.read(settingsProvider.future);
     if (settings.selSemId != null) {
       var c = await ref
-          .watch(clientProvider.notifier)
+          .read(clientProvider.notifier)
           .fullAttendance(settings.selSemId!, classid.trim(), courseType);
       if (c.$1) {
         await AttendanceService.saveFullAttendace(

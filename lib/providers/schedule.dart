@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vitapmate/constants.dart';
@@ -42,7 +41,7 @@ class Schedule extends _$Schedule {
   }
 
   Future<void> updateSchedule(Database db, String semid) async {
-    var schedule = await ref.watch(clientProvider.notifier).examSchedule(semid);
+    var schedule = await ref.read(clientProvider.notifier).examSchedule(semid);
     if (schedule == null) return;
     if (!schedule.$1) return;
     await ScheduleService.saveSchedule(db, semid, schedule.$3);
@@ -55,8 +54,8 @@ class Schedule extends _$Schedule {
   }
 
   Future completeUpdate() async {
-    var db = await ref.watch(dBProvider.future);
-    var settings = await ref.watch(settingsProvider.future);
+    var db = await ref.read(dBProvider.future);
+    var settings = await ref.read(settingsProvider.future);
     if (settings.selSemId != null) {
       log("schedule update in task ", level: 800);
       //await updateSemids(client, db);

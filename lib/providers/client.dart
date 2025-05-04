@@ -42,7 +42,7 @@ class Client extends _$Client {
     var client = await future;
     if (!k.isValid) return;
     var c = await ref
-        .watch(globalAsyncQueueProvider.notifier)
+        .read(globalAsyncQueueProvider.notifier)
         .run(
           "rust_attendance_$selSemId",
           () => rustAttendance(client: client, semid: selSemId),

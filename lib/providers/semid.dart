@@ -27,7 +27,7 @@ class Semids extends _$Semids {
 
   Future<void> updateSemids(Iclient client, Database db) async {
     var semdata = await ref
-        .watch(clientProvider.notifier)
+        .read(clientProvider.notifier)
         .timetableSemid(client);
     if (semdata == null) return;
     if (!semdata.$1) return;
@@ -44,8 +44,8 @@ class Semids extends _$Semids {
   }
 
   Future<void> updateall() async {
-    var db = await ref.watch(dBProvider.future);
-    var client = await ref.watch(clientProvider.future);
+    var db = await ref.read(dBProvider.future);
+    var client = await ref.read(clientProvider.future);
     await updateSemids(client, db);
   }
 }

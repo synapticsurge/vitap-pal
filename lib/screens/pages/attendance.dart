@@ -51,6 +51,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
         if (_isopen.isEmpty || _isopen.length != attendance.length) {
           _isopen = List.generate(attendance.length, (index) => false);
         }
+        print(attendance.length);
         return RefreshIndicator(
           onRefresh: () async {
             await ref.read(attendanceProvider.notifier).completeUpdate();
@@ -66,15 +67,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                 children: [
                   AppExpansionPanelList(
                     dividerColor: Colors.transparent,
-                    expansionCallback: (int i, bool isExpanded) {
-                      // setState(() {
-                      //   _isopen = List.generate(
-                      //     attendance.length,
-                      //     (index) => false,
-                      //   );
-                      //   _isopen[i] = isExpanded;
-                      // });
-                    },
+                    expansionCallback: (int i, bool isExpanded) {},
                     children: [
                       for (final (i, item) in attendance.indexed)
                         ExpansionPanel(
@@ -433,7 +426,6 @@ class _FullAttendanceState extends ConsumerState<FullAttendance> {
           .read(fullAttendanceProvider.notifier)
           .updateFullAttendance(widget.courseId, widget.courseType);
 
-    
       Future.delayed(const Duration(seconds: 5), () {
         if (mounted) {
           setState(() => _canFetch = true);
@@ -451,19 +443,19 @@ class _FullAttendanceState extends ConsumerState<FullAttendance> {
     var id = "${widget.courseId}.${widget.courseType}";
     return c.when(
       data: (p) {
-        var data =  List<Map<String, String>>.from(p.fullAttendance[id]??[]) ;
-    
+        var data = List<Map<String, String>>.from(p.fullAttendance[id] ?? []);
+
         if (data.isEmpty) {
           return SizedBox(
             width: double.infinity,
             height: MediaQuery.of(context).size.height / 3,
             child: Loadingsket(),
           );
-        }   else if (data.length >= 2) {
+        } else if (data.length >= 2) {
           data.removeLast();
           data.removeLast();
-        }else{
-           return SizedBox(
+        } else {
+          return SizedBox(
             width: double.infinity,
             height: MediaQuery.of(context).size.height / 3,
             child: Loadingsket(),

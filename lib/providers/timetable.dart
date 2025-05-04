@@ -39,7 +39,7 @@ class Timetable extends _$Timetable {
   }
 
   Future updateTimetable(Database db, String semid) async {
-    var tt = await ref.watch(clientProvider.notifier).timetable(semid);
+    var tt = await ref.read(clientProvider.notifier).timetable(semid);
     if (tt == null) return;
     if (!tt.$1) return;
     await TimetableService.saveTimetable(db, tt.$3, semid);
@@ -67,8 +67,8 @@ class Timetable extends _$Timetable {
   }
 
   Future completeUpdate() async {
-    var db = await ref.watch(dBProvider.future);
-    var settings = await ref.watch(settingsProvider.future);
+    var db = await ref.read(dBProvider.future);
+    var settings = await ref.read(settingsProvider.future);
     if (settings.selSemId != null) {
       log("tt update in task ", level: 800);
       //await updateSemids(client, db);

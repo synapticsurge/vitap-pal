@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vitapmate/models/marks_model.dart';
@@ -33,9 +32,9 @@ class Marks extends _$Marks {
   }
 
   Future<void> updateMarks(Iclient client, Database db, String semid) async {
-    var marks = await ref.watch(clientProvider.notifier).marks(semid);
+    var marks = await ref.read(clientProvider.notifier).marks(semid);
     if (marks == null) return;
-    ref.watch(appStateProvider.notifier).updatestate(marks);
+    ref.read(appStateProvider.notifier).updatestate(marks);
     if (!marks.$1) return;
     await MarksService.saveMarks(db, semid, marks.$3);
     log("updates marks", level: 800);
@@ -45,9 +44,9 @@ class Marks extends _$Marks {
   }
 
   Future completeUpdate() async {
-    var db = await ref.watch(dBProvider.future);
-    var settings = await ref.watch(settingsProvider.future);
-    var client = await ref.watch(clientProvider.future);
+    var db = await ref.read(dBProvider.future);
+    var settings = await ref.read(settingsProvider.future);
+    var client = await ref.read(clientProvider.future);
     if (settings.selSemId != null) {
       log("Marks update in task ", level: 800);
       await updateMarks(client, db, settings.selSemId!);
