@@ -22,6 +22,7 @@ class AttendanceService {
         DBattendance.slotRow,
         DBattendance.semIdRow,
         DBattendance.timeRow,
+        DBattendance.courseIdRow,
       ],
       where: '${DBattendance.semIdRow} = ?',
       whereArgs: [semid],
@@ -34,7 +35,12 @@ class AttendanceService {
     return attens;
   }
 
-  static getFullAttendance(Database db, String semid, String classid) async {
+  static getFullAttendance(
+    Database db,
+    String semid,
+    String classid,
+    String cousreType,
+  ) async {
     var att = await db.query(
       DBfullattendance.table,
       columns: [
@@ -46,11 +52,12 @@ class AttendanceService {
         DBfullattendance.remarkRow,
         DBfullattendance.semIdRow,
         DBfullattendance.timeRow,
-        DBfullattendance.classidRow,
+        DBfullattendance.courseIdRow,
+        DBfullattendance.courseTypeRow,
       ],
       where:
-          '${DBfullattendance.semIdRow} = ?  AND ${DBfullattendance.classidRow} = ?',
-      whereArgs: [semid, classid],
+          '${DBfullattendance.semIdRow} = ?  AND ${DBfullattendance.courseIdRow} = ? AND ${DBfullattendance.courseTypeRow} = ?',
+      whereArgs: [semid, classid, cousreType],
       orderBy: '${DBfullattendance.serialRow} ASC',
     );
     List<Map<String, String>> attens =
@@ -83,6 +90,7 @@ class AttendanceService {
         DBattendance.slotRow: id.courseCode,
         DBattendance.semIdRow: semid,
         DBattendance.timeRow: unixTime,
+        DBattendance.courseIdRow: id.courseId,
       }, conflictAlgorithm: ConflictAlgorithm.replace);
     }
     await db.delete(
@@ -97,6 +105,7 @@ class AttendanceService {
     Database db,
     String semid,
     String classid,
+    String courseType,
     List<RAttendanceList> atten,
   ) async {
     var batch = db.batch();
@@ -109,17 +118,34 @@ class AttendanceService {
         DBfullattendance.dayTimeRow: id.dayTime,
         DBfullattendance.statusRow: id.status,
         DBfullattendance.remarkRow: id.remark,
-        DBfullattendance.classidRow: classid,
+        DBfullattendance.courseIdRow: classid,
         DBfullattendance.semIdRow: semid,
         DBfullattendance.timeRow: unixTime,
-      });
+        DBfullattendance.courseTypeRow: courseType,
+      }, conflictAlgorithm: ConflictAlgorithm.replace);
     }
     await db.delete(
       DBattendance.table,
       where:
-          '${DBfullattendance.semIdRow} = ? AND ${DBfullattendance.classidRow} = ?',
-      whereArgs: [semid, classid],
+          '${DBfullattendance.semIdRow} = ? AND ${DBfullattendance.courseIdRow} = ? AND ${DBfullattendance.courseTypeRow} = ?',
+      whereArgs: [semid, classid, courseType],
     );
     await batch.commit(noResult: true);
+  }
+
+  static getUniqueFullattendance(Database db, String semid) async {
+    var day = await db.query(
+      DBfullattendance.table,
+      columns: [DBfullattendance.courseIdRow, DBfullattendance.courseTypeRow],
+      where: '${DBfullattendance.semIdRow} = ?',
+      whereArgs: [semid],
+      distinct: true,
+    );
+    List<Map<String, String>> days =
+        day.map((row) {
+          return row.map((key, value) => MapEntry(key, value.toString()));
+        }).toList();
+
+    return days;
   }
 }

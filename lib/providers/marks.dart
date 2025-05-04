@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vitapmate/models/marks_model.dart';
@@ -7,7 +9,6 @@ import 'package:vitapmate/providers/db.dart';
 import 'package:vitapmate/providers/settings.dart';
 import 'package:vitapmate/service/marks_service.dart';
 import 'package:vitapmate/src/rust/api/vtop/client.dart';
-import 'package:vitapmate/src/rust/api/vtop_main.dart';
 part 'marks.g.dart';
 
 @riverpod
@@ -32,11 +33,12 @@ class Marks extends _$Marks {
   }
 
   Future<void> updateMarks(Iclient client, Database db, String semid) async {
-    var marks = await rustMarksList(client: client, semid: semid);
+    var marks = await ref.watch(clientProvider.notifier).marks(semid);
+    if (marks == null) return;
     ref.watch(appStateProvider.notifier).updatestate(marks);
     if (!marks.$1) return;
     await MarksService.saveMarks(db, semid, marks.$3);
-    print("updates marks");
+    log("updates marks", level: 800);
     var fromstorage = await getMarksFromStorage(db, semid);
     var data = await future;
     if (data.marks != fromstorage) {}
@@ -47,10 +49,8 @@ class Marks extends _$Marks {
     var settings = await ref.watch(settingsProvider.future);
     var client = await ref.watch(clientProvider.future);
     if (settings.selSemId != null) {
-      print("Marks update in task ");
-      //await updateSemids(client, db);
+      log("Marks update in task ", level: 800);
       await updateMarks(client, db, settings.selSemId!);
-      print("done");
     }
   }
 }

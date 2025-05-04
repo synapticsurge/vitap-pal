@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +8,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/providers/attendance.dart';
+import 'package:vitapmate/providers/full_attendance.dart';
 import 'package:vitapmate/router/route_names.dart';
 import '../component/expnasion_cutsom_plane.dart';
 
@@ -21,6 +24,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
   @override
   Widget build(BuildContext context) {
     var k = ref.watch(attendanceProvider);
+    log("build page in att ", level: 800);
     return k.when(
       data: (data) {
         if (data.attendance.isEmpty) {
@@ -44,7 +48,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
           );
         }
         var attendance = data.attendance;
-        if (_isopen.isEmpty) {
+        if (_isopen.isEmpty || _isopen.length != attendance.length) {
           _isopen = List.generate(attendance.length, (index) => false);
         }
         return RefreshIndicator(
@@ -266,7 +270,12 @@ class _AttendanceState extends ConsumerState<Attendance> {
                               ),
                             );
                           },
-                          body: Text("body"),
+                          //body: Text("Table data "),
+                          body: FullAttendance(
+                            courseId: item[DBattendance.courseIdRow] ?? "",
+                            courseType: item[DBattendance.courseTypeRow] ?? "",
+                            exp: _isopen[i],
+                          ),
                           isExpanded: _isopen[i],
                         ),
                     ],
@@ -352,135 +361,160 @@ class Loadingsket extends StatelessWidget {
   Widget build(BuildContext context) {
     return Skeletonizer(
       enabled: true,
-      child: ListView.builder(
-        itemCount: 6,
-        itemBuilder: (context, index) {
-          if (index == 2 || index == 5) {
-            return const Card(
-              shape: RoundedRectangleBorder(side: BorderSide(width: 2.0)),
-              elevation: 0,
-              color: AppColors.backgroundDark,
-
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.timelapse),
-                        SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            "Free Time",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "2 Slots",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
-                    ),
-                    // SizedBox(height: 2),
-                    Row(
-                      children: [
-                        Text(
-                          "aaaaaaaaaaaaa",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    // SizedBox(height: 2),
-                  ],
-                ),
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DataTable(
+              decoration: BoxDecoration(),
+              dividerThickness: 0,
+              border: TableBorder.all(
+                color: AppColors.textColor,
+                borderRadius: BorderRadius.all(Radius.circular(4)),
               ),
-            );
-          } else {
-            return const Card(
-              shape: RoundedRectangleBorder(side: BorderSide(width: 2.0)),
-              elevation: 0,
-              color: AppColors.backgroundDark,
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.account_balance_rounded),
 
-                        SizedBox(width: 5),
-                        Flexible(
-                          child: Text(
-                            'aaaaaaaaaaaaaaaaaaaaa ',
-                            maxLines: 1,
-                            textAlign: TextAlign.start,
-                            overflow: TextOverflow.ellipsis,
-
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 2),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            "aaaaaaa",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "aaaa",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            "aaaaaaaaaaa",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "aaaaaaa",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }
-        },
+              columns: [
+                DataColumn(label: Text("")),
+                DataColumn(label: Text("Date")),
+                DataColumn(label: Text("Status")),
+                DataColumn(label: Text("Time")),
+                DataColumn(label: Text("Slot")),
+                DataColumn(label: Text("Remark")),
+              ],
+              rows: [
+                for (var i in [0,1,2,3,4])
+                  DataRow(
+                    cells: [
+                      DataCell(Text("1")),
+                      DataCell(Text("6676767")),
+                      DataCell(Text("present")),
+                      DataCell(Text("hwyuett")),
+                      DataCell(Text("ewhjgge")),
+                      DataCell(Text("8887")),
+                    ],
+                  ),
+              ],
+            ),
+          ),
+        ),
       ),
+    );
+  }
+}
+
+class FullAttendance extends ConsumerStatefulWidget {
+  final String courseId;
+  final String courseType;
+  final bool exp;
+  const FullAttendance({
+    super.key,
+    required this.courseId,
+    required this.courseType,
+    required this.exp,
+  });
+
+  @override
+  ConsumerState<FullAttendance> createState() => _FullAttendanceState();
+}
+
+class _FullAttendanceState extends ConsumerState<FullAttendance> {
+  bool k = true;
+  @override
+  Widget build(BuildContext context) {
+    if (widget.exp) {
+      Future.microtask(() {
+        if (!k) return;
+        ref
+            .read(fullAttendanceProvider.notifier)
+            .updateFullAttendance(widget.courseId, widget.courseType);
+        k = false;
+        Future.delayed(Duration(seconds: 5), () => k = true);
+      });
+    }
+    var c = ref.watch(fullAttendanceProvider);
+
+    // Future.microtask(() {
+    //   if (!k) return;
+    //   ref
+    //       .read(fullAttendanceProvider.notifier)
+    //       .updateFullAttendance(widget.courseId, widget.courseType);
+    //   k = false;
+    //   Future.delayed(Duration(seconds: 5), () => k = true);
+    // });
+
+    //return SizedBox(width: double.infinity, height: MediaQuery.of(context).size.height/3, child: Loadingsket());
+    return c.when(
+      data: (p) {
+        var data = p.fullAttendance["${widget.courseId}.${widget.courseType}"];
+        if (data == null) {
+          return SizedBox(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height / 3,
+            child: Loadingsket(),
+          );
+        } else if (data.isNotEmpty && data.length >= 2) {
+          data.removeLast();
+          data.removeLast();
+        }
+
+        return ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: double.infinity,
+            minWidth: MediaQuery.of(context).size.width,
+            maxHeight: MediaQuery.of(context).size.height / 3,
+          ),
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DataTable(
+                  decoration: BoxDecoration(),
+                  dividerThickness: 0,
+                  border: TableBorder.all(
+                    color: AppColors.textColor,
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                  ),
+
+                  columns: [
+                    DataColumn(label: Text("")),
+                    DataColumn(label: Text("Date")),
+                    DataColumn(label: Text("Status")),
+                    DataColumn(label: Text("Time")),
+                    DataColumn(label: Text("Slot")),
+                    DataColumn(label: Text("Remark")),
+                  ],
+                  rows: [
+                    for (var i in data ?? [])
+                      DataRow(
+                        cells: [
+                          DataCell(Text(i[DBfullattendance.serialRow])),
+                          DataCell(Text(i[DBfullattendance.dateRow])),
+                          DataCell(Text(i[DBfullattendance.statusRow])),
+                          DataCell(Text(i[DBfullattendance.dayTimeRow])),
+                          DataCell(Text(i[DBfullattendance.slotRow])),
+                          DataCell(Text(i[DBfullattendance.remarkRow])),
+                        ],
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      error: (e, se) => Text("$e"),
+      loading:
+          () => SizedBox(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height / 3,
+            child: Loadingsket(),
+          ),
     );
   }
 }

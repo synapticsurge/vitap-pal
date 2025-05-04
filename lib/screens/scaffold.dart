@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/screens/component/appbar.dart';
 import 'package:vitapmate/screens/component/navbar.dart';

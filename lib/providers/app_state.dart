@@ -39,7 +39,6 @@ class AppState extends _$AppState {
     } else {
       updatesucess();
     }
-    print(state);
   }
 
   triggers() {

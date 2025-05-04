@@ -6,7 +6,7 @@ part of 'schedule.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$scheduleHash() => r'6de20626aaea9ffa1a027595846cf8075a1b9e47';
+String _$scheduleHash() => r'5d9756a4f0fb9089eae6f61f928de26bcae4c0e7';
 
 /// See also [Schedule].
 @ProviderFor(Schedule)

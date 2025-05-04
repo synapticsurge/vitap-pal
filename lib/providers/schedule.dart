@@ -1,14 +1,13 @@
+import 'dart:developer';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vitapmate/constants.dart';
 import 'package:vitapmate/models/schedule_model.dart';
-import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/providers/client.dart';
 import 'package:vitapmate/providers/db.dart';
 import 'package:vitapmate/providers/settings.dart';
 import 'package:vitapmate/service/schedule_service.dart';
-import 'package:vitapmate/src/rust/api/vtop/client.dart';
-import 'package:vitapmate/src/rust/api/vtop_main.dart';
 part 'schedule.g.dart';
 
 @riverpod
@@ -42,12 +41,12 @@ class Schedule extends _$Schedule {
     return schedules;
   }
 
-  Future<void> updateSchedule(Iclient client, Database db, String semid) async {
-    var schedule = await rustExamShedule(client: client, semid: semid);
-    ref.watch(appStateProvider.notifier).updatestate(schedule);
+  Future<void> updateSchedule(Database db, String semid) async {
+    var schedule = await ref.watch(clientProvider.notifier).examSchedule(semid);
+    if (schedule == null) return;
     if (!schedule.$1) return;
     await ScheduleService.saveSchedule(db, semid, schedule.$3);
-    print("updates schedule");
+    log("updates schedule", level: 800);
     var fromstorage = await getSchedulefromstorage(db, semid);
     var data = await future;
     if (data.schedule != fromstorage) {
@@ -58,12 +57,10 @@ class Schedule extends _$Schedule {
   Future completeUpdate() async {
     var db = await ref.watch(dBProvider.future);
     var settings = await ref.watch(settingsProvider.future);
-    var client = await ref.watch(clientProvider.future);
     if (settings.selSemId != null) {
-      print("schedule update in task ");
+      log("schedule update in task ", level: 800);
       //await updateSemids(client, db);
-      await updateSchedule(client, db, settings.selSemId!);
-      print("done");
+      await updateSchedule(db, settings.selSemId!);
     }
   }
 }

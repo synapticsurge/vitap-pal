@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vitapmate/models/settings_model.dart';
@@ -8,7 +10,7 @@ class Settings extends _$Settings {
   @override
   Future<SettingsModel> build() async {
     var prefs = await SharedPreferences.getInstance();
-    print("build from settings");
+    log("build from settings", level: 800);
     return SettingsModel(prefs: prefs, selSemId: prefs.getString("selSemId"));
   }
 
@@ -17,6 +19,6 @@ class Settings extends _$Settings {
     await data.prefs.setString("selSemId", semid);
     state = AsyncData(data.copyWith(selSemId: semid));
     var data1 = await future;
-    print(data1.selSemId);
+    log('sel sem id ${data1.selSemId}', level: 800);
   }
 }

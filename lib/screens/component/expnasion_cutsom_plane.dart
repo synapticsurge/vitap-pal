@@ -33,7 +33,7 @@ class _SaltedKey<S, V> extends LocalKey {
 
 class AppExpansionPanelList extends StatefulWidget {
   const AppExpansionPanelList({
-    Key? key,
+    super.key,
 
     required this.children,
     this.expansionCallback,
@@ -42,8 +42,7 @@ class AppExpansionPanelList extends StatefulWidget {
     this.dividerColor,
     this.elevation = 2,
   }) : _allowOnlyOnePanelOpen = false,
-       initialOpenPanelValue = null,
-       super(key: key);
+       initialOpenPanelValue = null;
 
   final List<ExpansionPanel> children;
 

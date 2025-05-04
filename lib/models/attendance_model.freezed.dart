@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AttendanceModel implements DiagnosticableTreeMixin {
 
- List<Map<String, String>> get attendance; Map<String, List<Map<String, String>>> get fullAttendance;
+ List<Map<String, String>> get attendance;
 /// Create a copy of AttendanceModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,21 +27,21 @@ $AttendanceModelCopyWith<AttendanceModel> get copyWith => _$AttendanceModelCopyW
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'AttendanceModel'))
-    ..add(DiagnosticsProperty('attendance', attendance))..add(DiagnosticsProperty('fullAttendance', fullAttendance));
+    ..add(DiagnosticsProperty('attendance', attendance));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AttendanceModel&&const DeepCollectionEquality().equals(other.attendance, attendance)&&const DeepCollectionEquality().equals(other.fullAttendance, fullAttendance));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AttendanceModel&&const DeepCollectionEquality().equals(other.attendance, attendance));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(attendance),const DeepCollectionEquality().hash(fullAttendance));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(attendance));
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AttendanceModel(attendance: $attendance, fullAttendance: $fullAttendance)';
+  return 'AttendanceModel(attendance: $attendance)';
 }
 
 
@@ -52,7 +52,7 @@ abstract mixin class $AttendanceModelCopyWith<$Res>  {
   factory $AttendanceModelCopyWith(AttendanceModel value, $Res Function(AttendanceModel) _then) = _$AttendanceModelCopyWithImpl;
 @useResult
 $Res call({
- List<Map<String, String>> attendance, Map<String, List<Map<String, String>>> fullAttendance
+ List<Map<String, String>> attendance
 });
 
 
@@ -69,11 +69,10 @@ class _$AttendanceModelCopyWithImpl<$Res>
 
 /// Create a copy of AttendanceModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? attendance = null,Object? fullAttendance = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? attendance = null,}) {
   return _then(_self.copyWith(
 attendance: null == attendance ? _self.attendance : attendance // ignore: cast_nullable_to_non_nullable
-as List<Map<String, String>>,fullAttendance: null == fullAttendance ? _self.fullAttendance : fullAttendance // ignore: cast_nullable_to_non_nullable
-as Map<String, List<Map<String, String>>>,
+as List<Map<String, String>>,
   ));
 }
 
@@ -84,7 +83,7 @@ as Map<String, List<Map<String, String>>>,
 
 
 class _AttendanceModel with DiagnosticableTreeMixin implements AttendanceModel {
-   _AttendanceModel({required final  List<Map<String, String>> attendance, required final  Map<String, List<Map<String, String>>> fullAttendance}): _attendance = attendance,_fullAttendance = fullAttendance;
+   _AttendanceModel({required final  List<Map<String, String>> attendance}): _attendance = attendance;
   
 
  final  List<Map<String, String>> _attendance;
@@ -92,13 +91,6 @@ class _AttendanceModel with DiagnosticableTreeMixin implements AttendanceModel {
   if (_attendance is EqualUnmodifiableListView) return _attendance;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_attendance);
-}
-
- final  Map<String, List<Map<String, String>>> _fullAttendance;
-@override Map<String, List<Map<String, String>>> get fullAttendance {
-  if (_fullAttendance is EqualUnmodifiableMapView) return _fullAttendance;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_fullAttendance);
 }
 
 
@@ -113,21 +105,21 @@ _$AttendanceModelCopyWith<_AttendanceModel> get copyWith => __$AttendanceModelCo
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'AttendanceModel'))
-    ..add(DiagnosticsProperty('attendance', attendance))..add(DiagnosticsProperty('fullAttendance', fullAttendance));
+    ..add(DiagnosticsProperty('attendance', attendance));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AttendanceModel&&const DeepCollectionEquality().equals(other._attendance, _attendance)&&const DeepCollectionEquality().equals(other._fullAttendance, _fullAttendance));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AttendanceModel&&const DeepCollectionEquality().equals(other._attendance, _attendance));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_attendance),const DeepCollectionEquality().hash(_fullAttendance));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_attendance));
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AttendanceModel(attendance: $attendance, fullAttendance: $fullAttendance)';
+  return 'AttendanceModel(attendance: $attendance)';
 }
 
 
@@ -138,7 +130,7 @@ abstract mixin class _$AttendanceModelCopyWith<$Res> implements $AttendanceModel
   factory _$AttendanceModelCopyWith(_AttendanceModel value, $Res Function(_AttendanceModel) _then) = __$AttendanceModelCopyWithImpl;
 @override @useResult
 $Res call({
- List<Map<String, String>> attendance, Map<String, List<Map<String, String>>> fullAttendance
+ List<Map<String, String>> attendance
 });
 
 
@@ -155,11 +147,10 @@ class __$AttendanceModelCopyWithImpl<$Res>
 
 /// Create a copy of AttendanceModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? attendance = null,Object? fullAttendance = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? attendance = null,}) {
   return _then(_AttendanceModel(
 attendance: null == attendance ? _self._attendance : attendance // ignore: cast_nullable_to_non_nullable
-as List<Map<String, String>>,fullAttendance: null == fullAttendance ? _self._fullAttendance : fullAttendance // ignore: cast_nullable_to_non_nullable
-as Map<String, List<Map<String, String>>>,
+as List<Map<String, String>>,
   ));
 }
 

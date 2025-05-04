@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'timetable.dart';
+part of 'global_async_queue.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$timetableHash() => r'16b8046d258711fdaa7120e094f22cfb2c193d5b';
+String _$globalAsyncQueueHash() => r'a9ab3d2015c4c71f0c7964a5f756783a2378f6ca';
 
-/// See also [Timetable].
-@ProviderFor(Timetable)
-final timetableProvider =
-    AsyncNotifierProvider<Timetable, TimetableModel>.internal(
-      Timetable.new,
-      name: r'timetableProvider',
+/// See also [GlobalAsyncQueue].
+@ProviderFor(GlobalAsyncQueue)
+final globalAsyncQueueProvider =
+    NotifierProvider<GlobalAsyncQueue, GlobalAsyncQueueModel>.internal(
+      GlobalAsyncQueue.new,
+      name: r'globalAsyncQueueProvider',
       debugGetCreateSourceHash:
           const bool.fromEnvironment('dart.vm.product')
               ? null
-              : _$timetableHash,
+              : _$globalAsyncQueueHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$Timetable = AsyncNotifier<TimetableModel>;
+typedef _$GlobalAsyncQueue = Notifier<GlobalAsyncQueueModel>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

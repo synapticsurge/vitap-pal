@@ -67,6 +67,7 @@ class DBattendance {
   static const classidRow = "courseCode";
   static const semIdRow = "semId";
   static const timeRow = "update_time";
+  static const courseIdRow = "courseIdRow";
 }
 
 class DBfullattendance {
@@ -79,7 +80,8 @@ class DBfullattendance {
   static const remarkRow = "remark";
   static const semIdRow = "semId";
   static const timeRow = "update_time";
-  static const classidRow = "class_id";
+  static const courseIdRow = "courseIdRow";
+  static const courseTypeRow = "courseType";
 }
 
 class DBmarks {

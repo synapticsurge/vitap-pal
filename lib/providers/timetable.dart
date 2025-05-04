@@ -1,12 +1,12 @@
+import 'dart:developer';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:vitapmate/models/timetable_model.dart';
 import 'package:vitapmate/providers/client.dart';
 import 'package:vitapmate/providers/db.dart';
 import 'package:vitapmate/providers/settings.dart';
-import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/service/timetable_service.dart';
-import 'package:vitapmate/src/rust/api/vtop_main.dart';
 part 'timetable.g.dart';
 
 @Riverpod(keepAlive: true)
@@ -16,7 +16,7 @@ class Timetable extends _$Timetable {
     var db = await ref.watch(dBProvider.future);
     var settings = await ref.watch(settingsProvider.future);
     //await TimetableService.getTimetableSemIDs(db);
-    print("semid in settings ${settings.selSemId}");
+    log("semid in settings ${settings.selSemId}", level: 800);
     var tt = await getTimetablefromstorage(db, settings.selSemId!);
     var days = await getUniqueDaysfromstorage(db, settings.selSemId!);
     if (tt.isEmpty) {
@@ -28,7 +28,7 @@ class Timetable extends _$Timetable {
         await completeUpdate();
       });
     }
-    print("running  timetable build");
+    log("running  timetable build", level: 800);
     return TimetableModel(timetable: tt, uniquedays: days);
   }
 
@@ -39,13 +39,11 @@ class Timetable extends _$Timetable {
   }
 
   Future updateTimetable(Database db, String semid) async {
-    var client = await ref.watch(clientProvider.future);
-    var tt = await rustTimetable(client: client, semid: semid);
-    print("rust is doine");
-    ref.watch(appStateProvider.notifier).updatestate(tt);
+    var tt = await ref.watch(clientProvider.notifier).timetable(semid);
+    if (tt == null) return;
     if (!tt.$1) return;
     await TimetableService.saveTimetable(db, tt.$3, semid);
-    print("updates timtables");
+    log("updates timtables", level: 800);
     var timet = await getTimetablefromstorage(db, semid);
     var day = await getUniqueDaysfromstorage(db, semid);
     return (timet, day);
@@ -72,7 +70,7 @@ class Timetable extends _$Timetable {
     var db = await ref.watch(dBProvider.future);
     var settings = await ref.watch(settingsProvider.future);
     if (settings.selSemId != null) {
-      print("tt update in task ");
+      log("tt update in task ", level: 800);
       //await updateSemids(client, db);
       var updateddata = await updateTimetable(db, settings.selSemId!);
       if (updateddata == (null, null) || updateddata == null) return;
@@ -83,7 +81,6 @@ class Timetable extends _$Timetable {
           data.copyWith(timetable: updateddata.$1, uniquedays: updateddata.$2),
         );
       }
-      print("done");
     }
   }
 }

@@ -1,12 +1,12 @@
+import 'dart:developer';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vitapmate/models/attendance_model.dart';
-import 'package:vitapmate/providers/app_state.dart';
 import 'package:vitapmate/providers/client.dart';
 import 'package:vitapmate/providers/db.dart';
 import 'package:vitapmate/providers/settings.dart';
 import 'package:vitapmate/service/attendance_service.dart';
-import 'package:vitapmate/src/rust/api/vtop_main.dart';
 part 'attendance.g.dart';
 
 @riverpod
@@ -24,8 +24,8 @@ class Attendance extends _$Attendance {
         await completeUpdate();
       });
     }
-    print("build attendence");
-    return AttendanceModel(attendance: k, fullAttendance: {});
+    log("build attendence", level: 800);
+    return AttendanceModel(attendance: k);
   }
 
   Future<List<Map<String, String>>> getAttendancefromstorage(
@@ -36,28 +36,28 @@ class Attendance extends _$Attendance {
     return attendance;
   }
 
-  Future<List<Map<String, String>>> getFullAttendancefromstorage(
-    Database db,
-    String semid,
-    String classid,
-  ) async {
-    var attendance = await AttendanceService.getFullAttendance(
-      db,
-      semid,
-      classid,
-    );
-    return attendance;
-  }
+  // Future<List<Map<String, String>>> getFullAttendancefromstorage(
+  //   Database db,
+  //   String semid,
+  //   String classid,
+  // ) async {
+  //   var attendance = await AttendanceService.getFullAttendance(
+  //     db,
+  //     semid,
+  //     classid,
+  //   );
+  //   return attendance;
+  // }
 
   Future updateAttendance(Database db, String? selSemId) async {
-    var client = await ref.watch(clientProvider.future);
     if (selSemId != null) {
-      var c = await rustAttendance(client: client, semid: selSemId);
-      ref.read(appStateProvider.notifier).updatestate(c);
-      if (!c.$1) return;
-      await AttendanceService.saveAttendace(db, selSemId, c.$3);
-      var k = await getAttendancefromstorage(db, selSemId);
-      return k;
+      var c = await ref.watch(clientProvider.notifier).attendance(selSemId);
+      if (c == null) return;
+      if (c.$1) {
+        await AttendanceService.saveAttendace(db, selSemId, c.$3);
+        var k = await getAttendancefromstorage(db, selSemId);
+        return k;
+      }
     }
   }
 
@@ -71,26 +71,35 @@ class Attendance extends _$Attendance {
     }
   }
 
-  Future updateFullAttendance(String classid, String courseType) async {
-    var db = await ref.watch(dBProvider.future);
-    var settings = await ref.watch(settingsProvider.future);
-    var client = await ref.watch(clientProvider.future);
-    if (settings.selSemId != null) {
-      var c = await rustFullAttendance(
-        client: client,
-        semid: settings.selSemId!,
-        courseId: classid,
-        courseType: courseType,
-      );
-      ref.read(appStateProvider.notifier).updatestate(c);
-      if (c.$1) {
-        await AttendanceService.saveFullAttendace(
-          db,
-          settings.selSemId!,
-          classid,
-          c.$3,
-        );
-      }
-    }
-  }
+  // Future updateFullAttendance(String classid, String courseType) async {
+  //   var db = await ref.watch(dBProvider.future);
+  //   var settings = await ref.watch(settingsProvider.future);
+  //   if (settings.selSemId != null) {
+  //     var c = await ref
+  //         .watch(clientProvider.notifier)
+  //         .fullAttendance(settings.selSemId!, classid.trim(), courseType);
+  //     print(c);
+  //     if (c.$1) {
+  //       print(c.$3[0]);
+  //       await AttendanceService.saveFullAttendace(
+  //         db,
+  //         settings.selSemId!,
+  //         classid,
+  //         c.$3,
+  //       );
+  //     }
+  //     var at = await getFullAttendancefromstorage(
+  //       db,
+  //       settings.selSemId!,
+  //       classid,
+  //     );
+  //     var data = await future;
+  //     var save = Map<String, List<Map<String, String>>>.from(
+  //       data.fullAttendance,
+  //     );
+  //     save[classid] = at;
+  //     print(save);
+  //     state = AsyncData(data.copyWith(fullAttendance: save));
+  //   }
+  // }
 }
