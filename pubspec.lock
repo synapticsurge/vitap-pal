@@ -145,6 +145,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  charcode:
+    dependency: transitive
+    description:
+      name: charcode
+      sha256: fb0f1107cac15a5ea6ef0a6ef71a807b9e4267c713bb93e00e92d737cc8dbd8a
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
   checked_yaml:
     dependency: transitive
     description:
@@ -265,6 +273,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  drift:
+    dependency: "direct main"
+    description:
+      name: drift
+      sha256: b584ddeb2b74436735dd2cf746d2d021e19a9a6770f409212fd5cbc2814ada85
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.26.1"
+  drift_dev:
+    dependency: "direct dev"
+    description:
+      name: drift_dev
+      sha256: "54dc207c6e4662741f60e5752678df183957ab907754ffab0372a7082f6d2816"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.26.1"
+  drift_flutter:
+    dependency: "direct main"
+    description:
+      name: drift_flutter
+      sha256: "0cadbf3b8733409a6cf61d18ba2e94e149df81df7de26f48ae0695b48fd71922"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.4"
   fake_async:
     dependency: transitive
     description:
@@ -664,7 +696,7 @@ packages:
     source: hosted
     version: "1.1.0"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: "50c5dd5b6e1aaf6fb3a78b33f6aa3afca52bf903a8a5298f53101fdaee55bbcd"
@@ -775,6 +807,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
+  recase:
+    dependency: transitive
+    description:
+      name: recase
+      sha256: e4eb4ec2dcdee52dcf99cb4ceabaffc631d7424ee55e56f280bc039737f89213
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   riverpod:
     dependency: "direct main"
     description:
@@ -939,46 +979,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
-  sqflite:
-    dependency: "direct main"
-    description:
-      name: sqflite
-      sha256: e2297b1da52f127bc7a3da11439985d9b536f75070f3325e62ada69a5c585d03
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.2"
-  sqflite_android:
+  sqlite3:
     dependency: transitive
     description:
-      name: sqflite_android
-      sha256: "2b3070c5fa881839f8b402ee4a39c1b4d561704d4ebbbcfb808a119bc2a1701b"
+      name: sqlite3
+      sha256: "310af39c40dd0bb2058538333c9d9840a2725ae0b9f77e4fd09ad6696aa8f66e"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1"
-  sqflite_common:
+    version: "2.7.5"
+  sqlite3_flutter_libs:
     dependency: transitive
     description:
-      name: sqflite_common
-      sha256: "84731e8bfd8303a3389903e01fb2141b6e59b5973cacbb0929021df08dddbe8b"
+      name: sqlite3_flutter_libs
+      sha256: "1a96b59227828d9eb1463191d684b37a27d66ee5ed7597fcf42eee6452c88a14"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.5"
-  sqflite_darwin:
+    version: "0.5.32"
+  sqlparser:
     dependency: transitive
     description:
-      name: sqflite_darwin
-      sha256: "279832e5cde3fe99e8571879498c9211f3ca6391b0d818df4e17d9fff5c6ccb3"
+      name: sqlparser
+      sha256: "27dd0a9f0c02e22ac0eb42a23df9ea079ce69b52bb4a3b478d64e0ef34a263ee"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2"
-  sqflite_platform_interface:
-    dependency: transitive
-    description:
-      name: sqflite_platform_interface
-      sha256: "8dd4515c7bdcae0a785b0062859336de775e8c65db81ae33dd5445f35be61920"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.0"
+    version: "0.41.0"
   stack_trace:
     dependency: transitive
     description:
@@ -1027,14 +1051,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.1"
-  synchronized:
-    dependency: transitive
-    description:
-      name: synchronized
-      sha256: "0669c70faae6270521ee4f05bffd2919892d42d1276e6c495be80174b6bc0ef6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.3.1"
   term_glyph:
     dependency: transitive
     description:

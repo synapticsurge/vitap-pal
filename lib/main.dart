@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vitapmate/constants.dart';
-import 'package:vitapmate/router/routes.dart';
-import 'package:vitapmate/src/rust/frb_generated.dart';
+import 'package:vitapmate/core/constants/constants.dart';
+import 'package:vitapmate/core/router/routes.dart';
+import 'package:vitapmate/core/rust_gen/frb_generated.dart';
 
 //Todo : splash screen
 

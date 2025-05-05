@@ -46,12 +46,14 @@ dependencies:
   package_info_plus: ^8.3.0
   flutter_native_splash: ^2.4.6
   skeletonizer: ^1.4.3
-  sqflite: ^2.4.2
   path: ^1.9.1
   freezed_annotation: ^3.0.0
   shared_preferences: ^2.5.3
   intl: ^0.19.0
   webview_flutter: ^4.11.0
+  drift: ^2.26.1
+  drift_flutter: ^0.2.4
+  path_provider: ^2.1.5
 
 
 dev_dependencies:
@@ -71,6 +73,7 @@ dev_dependencies:
   custom_lint: ^0.7.5
   riverpod_lint: ^2.6.5
   freezed: ^3.0.6
+  drift_dev: ^2.26.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

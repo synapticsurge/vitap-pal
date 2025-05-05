@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vitapmate/main.dart';
-import 'package:vitapmate/src/rust/frb_generated.dart';
+import 'package:vitapmate/core/rust_gen/frb_generated.dart';
 import 'package:integration_test/integration_test.dart';
 
 void main() {
