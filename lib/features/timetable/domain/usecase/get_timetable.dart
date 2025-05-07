@@ -1,4 +1,4 @@
-import 'package:vitapmate/features/settings/business/usecase/usecase.dart';
+import 'package:vitapmate/core/utils/usecase.dart';
 import 'package:vitapmate/features/timetable/domain/entities/timetable_entity.dart';
 import 'package:vitapmate/features/timetable/domain/repository/timetable_repository.dart';
 

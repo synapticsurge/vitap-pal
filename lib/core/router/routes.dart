@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vitapmate/core/router/route_names.dart';
-import 'package:vitapmate/core/widgets/scaffold.dart';
+import 'package:vitapmate/core/shared/user/presentation/providers/user.dart';
+import 'package:vitapmate/core/shared/widgets/scaffold.dart';
 import 'package:vitapmate/features/attendance/presentation/pages/attendance_page.dart';
+import 'package:vitapmate/features/settings/presentation/pages/creds.dart';
+import 'package:vitapmate/features/settings/presentation/pages/settings.dart';
 import 'package:vitapmate/features/timetable/presentation/pages/timetable_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -73,7 +76,7 @@ final goRouterprovider = Provider((ref) {
       GoRoute(
         path: '/settings',
         name: RouteNames.settingsRoutename,
-        builder: (context, state) => Placeholder(),
+        builder: (context, state) => SettingsPage(),
         routes: [
           GoRoute(
             path: 'about',
@@ -88,7 +91,7 @@ final goRouterprovider = Provider((ref) {
           GoRoute(
             path: 'credentials',
             name: RouteNames.credsRouteName,
-            builder: (context, state) => Placeholder(),
+            builder: (context, state) => Creds(),
           ),
         ],
       ),
@@ -106,12 +109,9 @@ FutureOr<String?> redirect(
   Ref ref,
   GoRouterState state,
 ) async {
-  // var user = await ref.read(userProvider.future);
-  // var settings = await ref.read(psettings.settingsProvider.future);
-  // if (!user.isValid || settings.selSemId == null) {
-  //   return "/settings/creds";
-  // } else if (user.initialLoad) {
-  //   return "/settings/creds";
-  // }
+  var user = await ref.read(userProvider.future);
+  if (!user.isValid || user.semid == null) {
+    return "/settings/credentials";
+  }
   return null;
 }

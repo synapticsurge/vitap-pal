@@ -1,4 +1,4 @@
-import 'package:vitapmate/core/database/appdatabase.dart';
+import 'package:vitapmate/core/shared/database/appdatabase.dart';
 import 'package:vitapmate/core/rust_gen/api/vtop/types.dart';
 import 'package:vitapmate/features/timetable/domain/entities/sub_timetable_entity.dart';
 import 'package:vitapmate/features/timetable/domain/entities/timetable_entity.dart';

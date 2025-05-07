@@ -1,11 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vitapmate/core/constants/constants.dart';
-import 'package:vitapmate/core/providers/app_state.dart';
-import 'package:vitapmate/core/providers/client.dart';
-import 'package:vitapmate/core/providers/user.dart';
 import 'package:vitapmate/core/router/route_names.dart';
+import 'package:vitapmate/core/shared/user/presentation/providers/user.dart';
+import 'package:vitapmate/features/settings/presentation/providers/semid.dart';
 
 final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
@@ -51,12 +52,21 @@ class _CredsInputState extends ConsumerState<CredsInput> {
       });
       String username = _usernameController.text;
       String password = _passwordController.text;
-      var n = await ref
-          .read(userProvider.notifier)
-          .updateCreds(username, password);
-      if (!mounted) return;
-      if (!n.$1) {
-        if (n.$2 == "NE") {
+      try {
+        ref.watch(userProvider.notifier).updateUserDetails(
+          password,
+          username,
+        );
+        if (!mounted) return;
+        _scaffoldMessengerKey.currentState?.showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text("Sucessfully saved creds"),
+          ),
+        );
+      } catch (e) {
+        log("$e", level: 900);
+        if (e == "NE") {
           _scaffoldMessengerKey.currentState?.showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -65,7 +75,7 @@ class _CredsInputState extends ConsumerState<CredsInput> {
               ),
             ),
           );
-        } else if (n.$2 == "VE") {
+        } else if (e == "VE") {
           _scaffoldMessengerKey.currentState?.showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -74,17 +84,40 @@ class _CredsInputState extends ConsumerState<CredsInput> {
           );
         } else {
           _scaffoldMessengerKey.currentState?.showSnackBar(
-            SnackBar(behavior: SnackBarBehavior.floating, content: Text(n.$2)),
+            SnackBar(behavior: SnackBarBehavior.floating, content: Text("$e")),
           );
         }
-      } else {
-        _scaffoldMessengerKey.currentState?.showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            content: Text("Sucessfully saved creds"),
-          ),
-        );
       }
+      // if (!n.$1) {
+      //   if (n.$2 == "NE") {
+      //     _scaffoldMessengerKey.currentState?.showSnackBar(
+      //       SnackBar(
+      //         behavior: SnackBarBehavior.floating,
+      //         content: Text(
+      //           "Oops! No internet right now. Give it another try when you're back online.",
+      //         ),
+      //       ),
+      //     );
+      //   } else if (n.$2 == "VE") {
+      //     _scaffoldMessengerKey.currentState?.showSnackBar(
+      //       SnackBar(
+      //         behavior: SnackBarBehavior.floating,
+      //         content: Text("Oops! It looks like Vtop is Down"),
+      //       ),
+      //     );
+      //   } else {
+      //     _scaffoldMessengerKey.currentState?.showSnackBar(
+      //       SnackBar(behavior: SnackBarBehavior.floating, content: Text(n.$2)),
+      //     );
+      //   }
+      // } else {
+      //   _scaffoldMessengerKey.currentState?.showSnackBar(
+      //     SnackBar(
+      //       behavior: SnackBarBehavior.floating,
+      //       content: Text("Sucessfully saved creds"),
+      //     ),
+      //   );
+      // }
     }
     setState(() {
       _running = false;
@@ -261,7 +294,6 @@ class _SemidSelectionState extends ConsumerState<SemidSelection> {
   @override
   Widget build(BuildContext context) {
     var user = ref.watch(userProvider);
-    var client = ref.watch(clientProvider);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
@@ -271,29 +303,22 @@ class _SemidSelectionState extends ConsumerState<SemidSelection> {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: AppColors.backgroundDark, width: 20),
       ),
-      child: c.when(
+      child: user.when(
         error: (error, stackTrace) => Text("error $error"),
         loading: () => CircularProgressIndicator(),
         data: (value) {
           if (value.username == null && value.password == null) {
             return Text("Enter your VTOP credentials above to continue.");
-          } else if ((client.value == null ||
-                  ref.read(appStateProvider).isLogin == false) &&
-              user.value?.semid == null) {
-            return CircularProgressIndicator();
-          }
-          var tt = ref.watch(semidsProvider);
-          return tt.when(
+          } 
+          var semids = ref.watch(semidsProvider);
+          return semids.when(
             loading: () => CircularProgressIndicator(),
             error: (error, stackTrace) => Text("error $error"),
             data: (value) {
               List<DropdownMenuEntry> menu = [];
-              for (var val in value) {
+              for (var val in value.semids) {
                 menu.add(
-                  DropdownMenuEntry(
-                    value: val[DBsemtable.semIDrow],
-                    label: val[DBsemtable.semNamerow]!,
-                  ),
+                  DropdownMenuEntry(value: val.semid, label: val.semName),
                 );
               }
 

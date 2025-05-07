@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:vitapmate/core/entities/global_async_queue_entity.dart';
+import 'package:vitapmate/core/shared/entities/global_async_queue_entity.dart';
  part 'global_async_queue.g.dart';
 
 @Riverpod(keepAlive: true)

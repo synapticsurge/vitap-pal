@@ -1,23 +1,25 @@
-import 'package:vitapmate/core/database/appdatabase.dart';
+import 'package:vitapmate/core/shared/database/appdatabase.dart';
+import 'package:vitapmate/core/utils/global_async_queue.dart';
 import 'package:vitapmate/features/timetable/data/models/timetable_model.dart';
 import 'package:vitapmate/features/timetable/domain/entities/timetable_entity.dart';
 
 class LocalDataSource {
-  final AppDatabase db;
-  LocalDataSource({required this.db});
+  final AppDatabase _db;
+  final GlobalAsyncQueue _globalAsyncQueue;
+  LocalDataSource(this._db, this._globalAsyncQueue);
 
   Future<TimetableEntity> getTimetable(String semid) async {
-    final allRows =
-        await (db.select(db.timetable)
-          ..where((tbl) => tbl.semId.equals(semid))).get();
+    final allRows = await _globalAsyncQueue.run("fromStrorage_timetable_$semid", ()=> (_db.select(_db.timetable)
+          ..where((tbl) => tbl.semId.equals(semid))).get());
     return TimetableModel.toEntityFromLocal(allRows);
   }
 
   Future<void> saveTimetable(TimetableEntity timetable, String semid) async {
-    await (db.delete(db.timetable)
-      ..where((tbl) => tbl.semId.equals(semid))).go();
-    await (db.batch((batch) {
-      batch.insertAll(db.timetable, [
+    // await (_db.delete(_db.timetable)
+    //   ..where((tbl) => tbl.semId.equals(semid))).go();
+    await _globalAsyncQueue.run("toStriage_timetable_$semid", ()=>(_db.batch((batch) {
+      batch.deleteWhere(_db.timetable,(tbl)=>tbl.semId.equals(semid));
+      batch.insertAll(_db.timetable, [
         for (var i in timetable.timetable)
           TimetableCompanion.insert(
             serial: int.parse(i.serial),
@@ -34,6 +36,6 @@ class LocalDataSource {
             time: i.updateTime,
           ),
       ]);
-    }));
+    })));
   }
 }
