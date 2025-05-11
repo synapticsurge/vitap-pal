@@ -31,4 +31,8 @@ class LocalDataSource {
   Future<void> saveValidStateToStorage(bool isValid) async {
     await _storage.write(key: StorageKeys.isValid, value: "$isValid");
   }
+
+  Future<void> saveUserSemid(String semid) async {
+    await _storage.write(key: StorageKeys.selectedSem, value: semid);
+  }
 }

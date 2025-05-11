@@ -53,10 +53,9 @@ class _CredsInputState extends ConsumerState<CredsInput> {
       String username = _usernameController.text;
       String password = _passwordController.text;
       try {
-        ref.watch(userProvider.notifier).updateUserDetails(
-          password,
-          username,
-        );
+        await ref
+            .watch(userProvider.notifier)
+            .updateUserDetails(username, password);
         if (!mounted) return;
         _scaffoldMessengerKey.currentState?.showSnackBar(
           SnackBar(
@@ -65,6 +64,7 @@ class _CredsInputState extends ConsumerState<CredsInput> {
           ),
         );
       } catch (e) {
+        _scaffoldMessengerKey.currentState?.clearSnackBars();
         log("$e", level: 900);
         if (e == "NE") {
           _scaffoldMessengerKey.currentState?.showSnackBar(
@@ -309,7 +309,7 @@ class _SemidSelectionState extends ConsumerState<SemidSelection> {
         data: (value) {
           if (value.username == null && value.password == null) {
             return Text("Enter your VTOP credentials above to continue.");
-          } 
+          }
           var semids = ref.watch(semidsProvider);
           return semids.when(
             loading: () => CircularProgressIndicator(),
@@ -336,7 +336,7 @@ class _SemidSelectionState extends ConsumerState<SemidSelection> {
                     hintText: "Select semester",
                     onSelected: (value) async {
                       var ni = user.value?.semid;
-                      //ref.invalidate(timetableProvider);
+                      await ref.read(userProvider.notifier).updateSemid(value);
                       if (!mounted) return;
                       if (ni == null) {
                         GoRouter.of(

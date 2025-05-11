@@ -15,25 +15,41 @@ class Client extends _$Client {
   Future<Iclient> build() async {
     UserEntity user = await ref.watch(userProvider.future);
     Iclient client = getClient();
+
     if (user.isValid) {
       if (user.password == null || user.username == null) {
-        throw Exception("No uername and password , this is not expected to happen");
+        throw Exception(
+          "No uername and password , this is not expected to happen",
+        );
+      } else {
+        Future.microtask(() async {
+          await login(user.username!, user.password!);
+        });
       }
-      var login = await ref
-          .read(globalAsyncQueueProvider.notifier)
-          .run(
-            "rust_onstartRun_${user.username}",
-            () => onstartRun(
-              iclient: client,
-              username: user.username!,
-              password: user.password!,
-            ),
-          );
-      ref.read(appStateProvider.notifier).updatestate(login);
     }
     log("new client ${client.loginactive}", level: 800);
 
     return client;
+  }
+
+  Future<void> login(String username, String password) async {
+    Iclient client = await future;
+    var login = await ref
+        .read(globalAsyncQueueProvider.notifier)
+        .run(
+          "rust_onstartRun_$username",
+          () => onstartRun(
+            iclient: client,
+            username: username,
+            password: password,
+          ),
+        );
+
+    try {
+      ref.read(appStateProvider.notifier).updatestate(login);
+    } catch (e) {
+      log("$e", level: 1000);
+    }
   }
 
   //   Future attendance(String selSemId) async {

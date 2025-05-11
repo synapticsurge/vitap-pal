@@ -12,6 +12,10 @@ class AppState extends _$AppState {
     return AppStateEntity();
   }
 
+  updatesucess() {
+    state = state.copyWith(isLogin: true, newtork: true, vtopDown: false);
+  }
+
   updatestate(data) {
     if (!data.$1) {
       if (data.$2 == "NE") {

@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:vitapmate/core/shared/user/domine/entities/user_entity.dart';
 import 'package:vitapmate/core/shared/user/domine/usecase/get_user_details.dart';
 import 'package:vitapmate/core/shared/user/domine/usecase/update_user_details.dart';
+import 'package:vitapmate/core/shared/user/domine/usecase/update_user_semid.dart';
 import 'package:vitapmate/core/shared/user/presentation/providers/state/user_repository.dart';
 part 'user.g.dart';
 
@@ -23,6 +24,16 @@ class User extends _$User {
       password,
     ).call();
     var data = await future;
-    state = AsyncData(data.copyWith(username: username, password: password,isValid: true)); 
+    state = AsyncData(
+      data.copyWith(username: username, password: password, isValid: true),
+    );
+  }
+
+  Future<void> updateSemid(String semid) async {
+    await UpdateUserSemid(ref.watch(userRepositoryImplProvider), semid).call();
+    var data = await future;
+    state = AsyncData(
+      data.copyWith(semid: semid),
+    );
   }
 }

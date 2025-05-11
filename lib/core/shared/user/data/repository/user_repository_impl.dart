@@ -24,4 +24,9 @@ class UserRepositoryImpl extends UserRepository {
       throw Exception(data.$2);
     }
   }
+  
+  @override
+  Future<void> updateSemid(String semid)  async {
+     await _localDataSource.saveUserSemid(semid);
+  }
 }

@@ -5,7 +5,7 @@ class UpdateUserDetails extends Usecase<void,void> {
   final UserRepository _userRepository;
   final String _username ;
   final String _password;
-  UpdateUserDetails(this._userRepository,this._password,this._username);
+  UpdateUserDetails(this._userRepository,this._username,this._password);
 
   @override
   Future<void> call({void params}) async {

@@ -11,7 +11,7 @@ part 'semid.g.dart';
 class Semids extends _$Semids {
   @override
   Future<SemidEntity> build() async {
-    var semidRepository = await ref.watch(semidRepositoryProvider.future);
+    var semidRepository = await ref.read(semidRepositoryProvider.future);
     Future.microtask(() async {
       try {
         await updatesemids();
@@ -23,7 +23,7 @@ class Semids extends _$Semids {
   }
 
   Future<void> updatesemids() async {
-    SemidRepository repo = await ref.watch(semidRepositoryProvider.future);
+    SemidRepository repo = await ref.read(semidRepositoryProvider.future);
     var data = await repo.updateSemids();
     state = AsyncData(data);
   }

@@ -6,7 +6,7 @@ part of 'user.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userHash() => r'702a35c4796f94e66e3aa3772eb3fbbe498e8e15';
+String _$userHash() => r'23e84016b4a4cb51c6109cb84c9bc9fa0f9dca3b';
 
 /// See also [User].
 @ProviderFor(User)
