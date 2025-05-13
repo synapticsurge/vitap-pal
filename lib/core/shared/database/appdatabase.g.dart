@@ -934,12 +934,12 @@ class TimetableCompanion extends UpdateCompanion<TimetableData> {
   }
 }
 
-class $AttendanceTableTable extends AttendanceTable
-    with TableInfo<$AttendanceTableTable, AttendanceTableData> {
+class $FullAttendanceTableTable extends FullAttendanceTable
+    with TableInfo<$FullAttendanceTableTable, FullAttendanceTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $AttendanceTableTable(this.attachedDatabase, [this._alias]);
+  $FullAttendanceTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _serialMeta = const VerificationMeta('serial');
   @override
   late final GeneratedColumn<int> serial = GeneratedColumn<int>(
@@ -996,6 +996,28 @@ class $AttendanceTableTable extends AttendanceTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _courseTypeMeta = const VerificationMeta(
+    'courseType',
+  );
+  @override
+  late final GeneratedColumn<String> courseType = GeneratedColumn<String>(
+    'course_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _courseIdMeta = const VerificationMeta(
+    'courseId',
+  );
+  @override
+  late final GeneratedColumn<String> courseId = GeneratedColumn<String>(
+    'course_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _semIdMeta = const VerificationMeta('semId');
   @override
   late final GeneratedColumn<String> semId = GeneratedColumn<String>(
@@ -1025,6 +1047,8 @@ class $AttendanceTableTable extends AttendanceTable
     dayTime,
     status,
     remark,
+    courseType,
+    courseId,
     semId,
     time,
   ];
@@ -1032,10 +1056,10 @@ class $AttendanceTableTable extends AttendanceTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'attendance_table';
+  static const String $name = 'full_attendance_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<AttendanceTableData> instance, {
+    Insertable<FullAttendanceTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -1088,6 +1112,22 @@ class $AttendanceTableTable extends AttendanceTable
     } else if (isInserting) {
       context.missing(_remarkMeta);
     }
+    if (data.containsKey('course_type')) {
+      context.handle(
+        _courseTypeMeta,
+        courseType.isAcceptableOrUnknown(data['course_type']!, _courseTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_courseTypeMeta);
+    }
+    if (data.containsKey('course_id')) {
+      context.handle(
+        _courseIdMeta,
+        courseId.isAcceptableOrUnknown(data['course_id']!, _courseIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_courseIdMeta);
+    }
     if (data.containsKey('sem_id')) {
       context.handle(
         _semIdMeta,
@@ -1110,9 +1150,12 @@ class $AttendanceTableTable extends AttendanceTable
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  AttendanceTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  FullAttendanceTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return AttendanceTableData(
+    return FullAttendanceTableData(
       serial:
           attachedDatabase.typeMapping.read(
             DriftSqlType.int,
@@ -1143,6 +1186,16 @@ class $AttendanceTableTable extends AttendanceTable
             DriftSqlType.string,
             data['${effectivePrefix}remark'],
           )!,
+      courseType:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}course_type'],
+          )!,
+      courseId:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}course_id'],
+          )!,
       semId:
           attachedDatabase.typeMapping.read(
             DriftSqlType.string,
@@ -1157,28 +1210,32 @@ class $AttendanceTableTable extends AttendanceTable
   }
 
   @override
-  $AttendanceTableTable createAlias(String alias) {
-    return $AttendanceTableTable(attachedDatabase, alias);
+  $FullAttendanceTableTable createAlias(String alias) {
+    return $FullAttendanceTableTable(attachedDatabase, alias);
   }
 }
 
-class AttendanceTableData extends DataClass
-    implements Insertable<AttendanceTableData> {
+class FullAttendanceTableData extends DataClass
+    implements Insertable<FullAttendanceTableData> {
   final int serial;
   final String date;
   final String slot;
   final String dayTime;
   final String status;
   final String remark;
+  final String courseType;
+  final String courseId;
   final String semId;
   final int time;
-  const AttendanceTableData({
+  const FullAttendanceTableData({
     required this.serial,
     required this.date,
     required this.slot,
     required this.dayTime,
     required this.status,
     required this.remark,
+    required this.courseType,
+    required this.courseId,
     required this.semId,
     required this.time,
   });
@@ -1191,36 +1248,42 @@ class AttendanceTableData extends DataClass
     map['day_time'] = Variable<String>(dayTime);
     map['status'] = Variable<String>(status);
     map['remark'] = Variable<String>(remark);
+    map['course_type'] = Variable<String>(courseType);
+    map['course_id'] = Variable<String>(courseId);
     map['sem_id'] = Variable<String>(semId);
     map['time'] = Variable<int>(time);
     return map;
   }
 
-  AttendanceTableCompanion toCompanion(bool nullToAbsent) {
-    return AttendanceTableCompanion(
+  FullAttendanceTableCompanion toCompanion(bool nullToAbsent) {
+    return FullAttendanceTableCompanion(
       serial: Value(serial),
       date: Value(date),
       slot: Value(slot),
       dayTime: Value(dayTime),
       status: Value(status),
       remark: Value(remark),
+      courseType: Value(courseType),
+      courseId: Value(courseId),
       semId: Value(semId),
       time: Value(time),
     );
   }
 
-  factory AttendanceTableData.fromJson(
+  factory FullAttendanceTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return AttendanceTableData(
+    return FullAttendanceTableData(
       serial: serializer.fromJson<int>(json['serial']),
       date: serializer.fromJson<String>(json['date']),
       slot: serializer.fromJson<String>(json['slot']),
       dayTime: serializer.fromJson<String>(json['dayTime']),
       status: serializer.fromJson<String>(json['status']),
       remark: serializer.fromJson<String>(json['remark']),
+      courseType: serializer.fromJson<String>(json['courseType']),
+      courseId: serializer.fromJson<String>(json['courseId']),
       semId: serializer.fromJson<String>(json['semId']),
       time: serializer.fromJson<int>(json['time']),
     );
@@ -1235,38 +1298,47 @@ class AttendanceTableData extends DataClass
       'dayTime': serializer.toJson<String>(dayTime),
       'status': serializer.toJson<String>(status),
       'remark': serializer.toJson<String>(remark),
+      'courseType': serializer.toJson<String>(courseType),
+      'courseId': serializer.toJson<String>(courseId),
       'semId': serializer.toJson<String>(semId),
       'time': serializer.toJson<int>(time),
     };
   }
 
-  AttendanceTableData copyWith({
+  FullAttendanceTableData copyWith({
     int? serial,
     String? date,
     String? slot,
     String? dayTime,
     String? status,
     String? remark,
+    String? courseType,
+    String? courseId,
     String? semId,
     int? time,
-  }) => AttendanceTableData(
+  }) => FullAttendanceTableData(
     serial: serial ?? this.serial,
     date: date ?? this.date,
     slot: slot ?? this.slot,
     dayTime: dayTime ?? this.dayTime,
     status: status ?? this.status,
     remark: remark ?? this.remark,
+    courseType: courseType ?? this.courseType,
+    courseId: courseId ?? this.courseId,
     semId: semId ?? this.semId,
     time: time ?? this.time,
   );
-  AttendanceTableData copyWithCompanion(AttendanceTableCompanion data) {
-    return AttendanceTableData(
+  FullAttendanceTableData copyWithCompanion(FullAttendanceTableCompanion data) {
+    return FullAttendanceTableData(
       serial: data.serial.present ? data.serial.value : this.serial,
       date: data.date.present ? data.date.value : this.date,
       slot: data.slot.present ? data.slot.value : this.slot,
       dayTime: data.dayTime.present ? data.dayTime.value : this.dayTime,
       status: data.status.present ? data.status.value : this.status,
       remark: data.remark.present ? data.remark.value : this.remark,
+      courseType:
+          data.courseType.present ? data.courseType.value : this.courseType,
+      courseId: data.courseId.present ? data.courseId.value : this.courseId,
       semId: data.semId.present ? data.semId.value : this.semId,
       time: data.time.present ? data.time.value : this.time,
     );
@@ -1274,13 +1346,15 @@ class AttendanceTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('AttendanceTableData(')
+    return (StringBuffer('FullAttendanceTableData(')
           ..write('serial: $serial, ')
           ..write('date: $date, ')
           ..write('slot: $slot, ')
           ..write('dayTime: $dayTime, ')
           ..write('status: $status, ')
           ..write('remark: $remark, ')
+          ..write('courseType: $courseType, ')
+          ..write('courseId: $courseId, ')
           ..write('semId: $semId, ')
           ..write('time: $time')
           ..write(')'))
@@ -1288,50 +1362,69 @@ class AttendanceTableData extends DataClass
   }
 
   @override
-  int get hashCode =>
-      Object.hash(serial, date, slot, dayTime, status, remark, semId, time);
+  int get hashCode => Object.hash(
+    serial,
+    date,
+    slot,
+    dayTime,
+    status,
+    remark,
+    courseType,
+    courseId,
+    semId,
+    time,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is AttendanceTableData &&
+      (other is FullAttendanceTableData &&
           other.serial == this.serial &&
           other.date == this.date &&
           other.slot == this.slot &&
           other.dayTime == this.dayTime &&
           other.status == this.status &&
           other.remark == this.remark &&
+          other.courseType == this.courseType &&
+          other.courseId == this.courseId &&
           other.semId == this.semId &&
           other.time == this.time);
 }
 
-class AttendanceTableCompanion extends UpdateCompanion<AttendanceTableData> {
+class FullAttendanceTableCompanion
+    extends UpdateCompanion<FullAttendanceTableData> {
   final Value<int> serial;
   final Value<String> date;
   final Value<String> slot;
   final Value<String> dayTime;
   final Value<String> status;
   final Value<String> remark;
+  final Value<String> courseType;
+  final Value<String> courseId;
   final Value<String> semId;
   final Value<int> time;
   final Value<int> rowid;
-  const AttendanceTableCompanion({
+  const FullAttendanceTableCompanion({
     this.serial = const Value.absent(),
     this.date = const Value.absent(),
     this.slot = const Value.absent(),
     this.dayTime = const Value.absent(),
     this.status = const Value.absent(),
     this.remark = const Value.absent(),
+    this.courseType = const Value.absent(),
+    this.courseId = const Value.absent(),
     this.semId = const Value.absent(),
     this.time = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  AttendanceTableCompanion.insert({
+  FullAttendanceTableCompanion.insert({
     required int serial,
     required String date,
     required String slot,
     required String dayTime,
     required String status,
     required String remark,
+    required String courseType,
+    required String courseId,
     required String semId,
     required int time,
     this.rowid = const Value.absent(),
@@ -1341,15 +1434,19 @@ class AttendanceTableCompanion extends UpdateCompanion<AttendanceTableData> {
        dayTime = Value(dayTime),
        status = Value(status),
        remark = Value(remark),
+       courseType = Value(courseType),
+       courseId = Value(courseId),
        semId = Value(semId),
        time = Value(time);
-  static Insertable<AttendanceTableData> custom({
+  static Insertable<FullAttendanceTableData> custom({
     Expression<int>? serial,
     Expression<String>? date,
     Expression<String>? slot,
     Expression<String>? dayTime,
     Expression<String>? status,
     Expression<String>? remark,
+    Expression<String>? courseType,
+    Expression<String>? courseId,
     Expression<String>? semId,
     Expression<int>? time,
     Expression<int>? rowid,
@@ -1361,30 +1458,36 @@ class AttendanceTableCompanion extends UpdateCompanion<AttendanceTableData> {
       if (dayTime != null) 'day_time': dayTime,
       if (status != null) 'status': status,
       if (remark != null) 'remark': remark,
+      if (courseType != null) 'course_type': courseType,
+      if (courseId != null) 'course_id': courseId,
       if (semId != null) 'sem_id': semId,
       if (time != null) 'time': time,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
-  AttendanceTableCompanion copyWith({
+  FullAttendanceTableCompanion copyWith({
     Value<int>? serial,
     Value<String>? date,
     Value<String>? slot,
     Value<String>? dayTime,
     Value<String>? status,
     Value<String>? remark,
+    Value<String>? courseType,
+    Value<String>? courseId,
     Value<String>? semId,
     Value<int>? time,
     Value<int>? rowid,
   }) {
-    return AttendanceTableCompanion(
+    return FullAttendanceTableCompanion(
       serial: serial ?? this.serial,
       date: date ?? this.date,
       slot: slot ?? this.slot,
       dayTime: dayTime ?? this.dayTime,
       status: status ?? this.status,
       remark: remark ?? this.remark,
+      courseType: courseType ?? this.courseType,
+      courseId: courseId ?? this.courseId,
       semId: semId ?? this.semId,
       time: time ?? this.time,
       rowid: rowid ?? this.rowid,
@@ -1412,6 +1515,867 @@ class AttendanceTableCompanion extends UpdateCompanion<AttendanceTableData> {
     if (remark.present) {
       map['remark'] = Variable<String>(remark.value);
     }
+    if (courseType.present) {
+      map['course_type'] = Variable<String>(courseType.value);
+    }
+    if (courseId.present) {
+      map['course_id'] = Variable<String>(courseId.value);
+    }
+    if (semId.present) {
+      map['sem_id'] = Variable<String>(semId.value);
+    }
+    if (time.present) {
+      map['time'] = Variable<int>(time.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FullAttendanceTableCompanion(')
+          ..write('serial: $serial, ')
+          ..write('date: $date, ')
+          ..write('slot: $slot, ')
+          ..write('dayTime: $dayTime, ')
+          ..write('status: $status, ')
+          ..write('remark: $remark, ')
+          ..write('courseType: $courseType, ')
+          ..write('courseId: $courseId, ')
+          ..write('semId: $semId, ')
+          ..write('time: $time, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AttendanceTableTable extends AttendanceTable
+    with TableInfo<$AttendanceTableTable, AttendanceTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AttendanceTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _serialMeta = const VerificationMeta('serial');
+  @override
+  late final GeneratedColumn<int> serial = GeneratedColumn<int>(
+    'serial',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _courseNameMeta = const VerificationMeta(
+    'courseName',
+  );
+  @override
+  late final GeneratedColumn<String> courseName = GeneratedColumn<String>(
+    'course_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _courseCodeMeta = const VerificationMeta(
+    'courseCode',
+  );
+  @override
+  late final GeneratedColumn<String> courseCode = GeneratedColumn<String>(
+    'course_code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _courseTypeMeta = const VerificationMeta(
+    'courseType',
+  );
+  @override
+  late final GeneratedColumn<String> courseType = GeneratedColumn<String>(
+    'course_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _facultyDetailMeta = const VerificationMeta(
+    'facultyDetail',
+  );
+  @override
+  late final GeneratedColumn<String> facultyDetail = GeneratedColumn<String>(
+    'faculty_detail',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _classesAttendedMeta = const VerificationMeta(
+    'classesAttended',
+  );
+  @override
+  late final GeneratedColumn<String> classesAttended = GeneratedColumn<String>(
+    'classes_attended',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _totalClassesMeta = const VerificationMeta(
+    'totalClasses',
+  );
+  @override
+  late final GeneratedColumn<String> totalClasses = GeneratedColumn<String>(
+    'total_classes',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _attendancePercentageMeta =
+      const VerificationMeta('attendancePercentage');
+  @override
+  late final GeneratedColumn<String> attendancePercentage =
+      GeneratedColumn<String>(
+        'attendance_percentage',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _attendenceFatCatMeta = const VerificationMeta(
+    'attendenceFatCat',
+  );
+  @override
+  late final GeneratedColumn<String> attendenceFatCat = GeneratedColumn<String>(
+    'attendence_fat_cat',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _debarStatusMeta = const VerificationMeta(
+    'debarStatus',
+  );
+  @override
+  late final GeneratedColumn<String> debarStatus = GeneratedColumn<String>(
+    'debar_status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _courseIdMeta = const VerificationMeta(
+    'courseId',
+  );
+  @override
+  late final GeneratedColumn<String> courseId = GeneratedColumn<String>(
+    'course_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _semIdMeta = const VerificationMeta('semId');
+  @override
+  late final GeneratedColumn<String> semId = GeneratedColumn<String>(
+    'sem_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES sem_table (semid)',
+    ),
+  );
+  static const VerificationMeta _timeMeta = const VerificationMeta('time');
+  @override
+  late final GeneratedColumn<int> time = GeneratedColumn<int>(
+    'time',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    serial,
+    category,
+    courseName,
+    courseCode,
+    courseType,
+    facultyDetail,
+    classesAttended,
+    totalClasses,
+    attendancePercentage,
+    attendenceFatCat,
+    debarStatus,
+    courseId,
+    semId,
+    time,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'attendance_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AttendanceTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('serial')) {
+      context.handle(
+        _serialMeta,
+        serial.isAcceptableOrUnknown(data['serial']!, _serialMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_serialMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('course_name')) {
+      context.handle(
+        _courseNameMeta,
+        courseName.isAcceptableOrUnknown(data['course_name']!, _courseNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_courseNameMeta);
+    }
+    if (data.containsKey('course_code')) {
+      context.handle(
+        _courseCodeMeta,
+        courseCode.isAcceptableOrUnknown(data['course_code']!, _courseCodeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_courseCodeMeta);
+    }
+    if (data.containsKey('course_type')) {
+      context.handle(
+        _courseTypeMeta,
+        courseType.isAcceptableOrUnknown(data['course_type']!, _courseTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_courseTypeMeta);
+    }
+    if (data.containsKey('faculty_detail')) {
+      context.handle(
+        _facultyDetailMeta,
+        facultyDetail.isAcceptableOrUnknown(
+          data['faculty_detail']!,
+          _facultyDetailMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_facultyDetailMeta);
+    }
+    if (data.containsKey('classes_attended')) {
+      context.handle(
+        _classesAttendedMeta,
+        classesAttended.isAcceptableOrUnknown(
+          data['classes_attended']!,
+          _classesAttendedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_classesAttendedMeta);
+    }
+    if (data.containsKey('total_classes')) {
+      context.handle(
+        _totalClassesMeta,
+        totalClasses.isAcceptableOrUnknown(
+          data['total_classes']!,
+          _totalClassesMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_totalClassesMeta);
+    }
+    if (data.containsKey('attendance_percentage')) {
+      context.handle(
+        _attendancePercentageMeta,
+        attendancePercentage.isAcceptableOrUnknown(
+          data['attendance_percentage']!,
+          _attendancePercentageMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_attendancePercentageMeta);
+    }
+    if (data.containsKey('attendence_fat_cat')) {
+      context.handle(
+        _attendenceFatCatMeta,
+        attendenceFatCat.isAcceptableOrUnknown(
+          data['attendence_fat_cat']!,
+          _attendenceFatCatMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_attendenceFatCatMeta);
+    }
+    if (data.containsKey('debar_status')) {
+      context.handle(
+        _debarStatusMeta,
+        debarStatus.isAcceptableOrUnknown(
+          data['debar_status']!,
+          _debarStatusMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_debarStatusMeta);
+    }
+    if (data.containsKey('course_id')) {
+      context.handle(
+        _courseIdMeta,
+        courseId.isAcceptableOrUnknown(data['course_id']!, _courseIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_courseIdMeta);
+    }
+    if (data.containsKey('sem_id')) {
+      context.handle(
+        _semIdMeta,
+        semId.isAcceptableOrUnknown(data['sem_id']!, _semIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_semIdMeta);
+    }
+    if (data.containsKey('time')) {
+      context.handle(
+        _timeMeta,
+        time.isAcceptableOrUnknown(data['time']!, _timeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_timeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  AttendanceTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AttendanceTableData(
+      serial:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}serial'],
+          )!,
+      category:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}category'],
+          )!,
+      courseName:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}course_name'],
+          )!,
+      courseCode:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}course_code'],
+          )!,
+      courseType:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}course_type'],
+          )!,
+      facultyDetail:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}faculty_detail'],
+          )!,
+      classesAttended:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}classes_attended'],
+          )!,
+      totalClasses:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}total_classes'],
+          )!,
+      attendancePercentage:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}attendance_percentage'],
+          )!,
+      attendenceFatCat:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}attendence_fat_cat'],
+          )!,
+      debarStatus:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}debar_status'],
+          )!,
+      courseId:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}course_id'],
+          )!,
+      semId:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}sem_id'],
+          )!,
+      time:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}time'],
+          )!,
+    );
+  }
+
+  @override
+  $AttendanceTableTable createAlias(String alias) {
+    return $AttendanceTableTable(attachedDatabase, alias);
+  }
+}
+
+class AttendanceTableData extends DataClass
+    implements Insertable<AttendanceTableData> {
+  final int serial;
+  final String category;
+  final String courseName;
+  final String courseCode;
+  final String courseType;
+  final String facultyDetail;
+  final String classesAttended;
+  final String totalClasses;
+  final String attendancePercentage;
+  final String attendenceFatCat;
+  final String debarStatus;
+  final String courseId;
+  final String semId;
+  final int time;
+  const AttendanceTableData({
+    required this.serial,
+    required this.category,
+    required this.courseName,
+    required this.courseCode,
+    required this.courseType,
+    required this.facultyDetail,
+    required this.classesAttended,
+    required this.totalClasses,
+    required this.attendancePercentage,
+    required this.attendenceFatCat,
+    required this.debarStatus,
+    required this.courseId,
+    required this.semId,
+    required this.time,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['serial'] = Variable<int>(serial);
+    map['category'] = Variable<String>(category);
+    map['course_name'] = Variable<String>(courseName);
+    map['course_code'] = Variable<String>(courseCode);
+    map['course_type'] = Variable<String>(courseType);
+    map['faculty_detail'] = Variable<String>(facultyDetail);
+    map['classes_attended'] = Variable<String>(classesAttended);
+    map['total_classes'] = Variable<String>(totalClasses);
+    map['attendance_percentage'] = Variable<String>(attendancePercentage);
+    map['attendence_fat_cat'] = Variable<String>(attendenceFatCat);
+    map['debar_status'] = Variable<String>(debarStatus);
+    map['course_id'] = Variable<String>(courseId);
+    map['sem_id'] = Variable<String>(semId);
+    map['time'] = Variable<int>(time);
+    return map;
+  }
+
+  AttendanceTableCompanion toCompanion(bool nullToAbsent) {
+    return AttendanceTableCompanion(
+      serial: Value(serial),
+      category: Value(category),
+      courseName: Value(courseName),
+      courseCode: Value(courseCode),
+      courseType: Value(courseType),
+      facultyDetail: Value(facultyDetail),
+      classesAttended: Value(classesAttended),
+      totalClasses: Value(totalClasses),
+      attendancePercentage: Value(attendancePercentage),
+      attendenceFatCat: Value(attendenceFatCat),
+      debarStatus: Value(debarStatus),
+      courseId: Value(courseId),
+      semId: Value(semId),
+      time: Value(time),
+    );
+  }
+
+  factory AttendanceTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AttendanceTableData(
+      serial: serializer.fromJson<int>(json['serial']),
+      category: serializer.fromJson<String>(json['category']),
+      courseName: serializer.fromJson<String>(json['courseName']),
+      courseCode: serializer.fromJson<String>(json['courseCode']),
+      courseType: serializer.fromJson<String>(json['courseType']),
+      facultyDetail: serializer.fromJson<String>(json['facultyDetail']),
+      classesAttended: serializer.fromJson<String>(json['classesAttended']),
+      totalClasses: serializer.fromJson<String>(json['totalClasses']),
+      attendancePercentage: serializer.fromJson<String>(
+        json['attendancePercentage'],
+      ),
+      attendenceFatCat: serializer.fromJson<String>(json['attendenceFatCat']),
+      debarStatus: serializer.fromJson<String>(json['debarStatus']),
+      courseId: serializer.fromJson<String>(json['courseId']),
+      semId: serializer.fromJson<String>(json['semId']),
+      time: serializer.fromJson<int>(json['time']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'serial': serializer.toJson<int>(serial),
+      'category': serializer.toJson<String>(category),
+      'courseName': serializer.toJson<String>(courseName),
+      'courseCode': serializer.toJson<String>(courseCode),
+      'courseType': serializer.toJson<String>(courseType),
+      'facultyDetail': serializer.toJson<String>(facultyDetail),
+      'classesAttended': serializer.toJson<String>(classesAttended),
+      'totalClasses': serializer.toJson<String>(totalClasses),
+      'attendancePercentage': serializer.toJson<String>(attendancePercentage),
+      'attendenceFatCat': serializer.toJson<String>(attendenceFatCat),
+      'debarStatus': serializer.toJson<String>(debarStatus),
+      'courseId': serializer.toJson<String>(courseId),
+      'semId': serializer.toJson<String>(semId),
+      'time': serializer.toJson<int>(time),
+    };
+  }
+
+  AttendanceTableData copyWith({
+    int? serial,
+    String? category,
+    String? courseName,
+    String? courseCode,
+    String? courseType,
+    String? facultyDetail,
+    String? classesAttended,
+    String? totalClasses,
+    String? attendancePercentage,
+    String? attendenceFatCat,
+    String? debarStatus,
+    String? courseId,
+    String? semId,
+    int? time,
+  }) => AttendanceTableData(
+    serial: serial ?? this.serial,
+    category: category ?? this.category,
+    courseName: courseName ?? this.courseName,
+    courseCode: courseCode ?? this.courseCode,
+    courseType: courseType ?? this.courseType,
+    facultyDetail: facultyDetail ?? this.facultyDetail,
+    classesAttended: classesAttended ?? this.classesAttended,
+    totalClasses: totalClasses ?? this.totalClasses,
+    attendancePercentage: attendancePercentage ?? this.attendancePercentage,
+    attendenceFatCat: attendenceFatCat ?? this.attendenceFatCat,
+    debarStatus: debarStatus ?? this.debarStatus,
+    courseId: courseId ?? this.courseId,
+    semId: semId ?? this.semId,
+    time: time ?? this.time,
+  );
+  AttendanceTableData copyWithCompanion(AttendanceTableCompanion data) {
+    return AttendanceTableData(
+      serial: data.serial.present ? data.serial.value : this.serial,
+      category: data.category.present ? data.category.value : this.category,
+      courseName:
+          data.courseName.present ? data.courseName.value : this.courseName,
+      courseCode:
+          data.courseCode.present ? data.courseCode.value : this.courseCode,
+      courseType:
+          data.courseType.present ? data.courseType.value : this.courseType,
+      facultyDetail:
+          data.facultyDetail.present
+              ? data.facultyDetail.value
+              : this.facultyDetail,
+      classesAttended:
+          data.classesAttended.present
+              ? data.classesAttended.value
+              : this.classesAttended,
+      totalClasses:
+          data.totalClasses.present
+              ? data.totalClasses.value
+              : this.totalClasses,
+      attendancePercentage:
+          data.attendancePercentage.present
+              ? data.attendancePercentage.value
+              : this.attendancePercentage,
+      attendenceFatCat:
+          data.attendenceFatCat.present
+              ? data.attendenceFatCat.value
+              : this.attendenceFatCat,
+      debarStatus:
+          data.debarStatus.present ? data.debarStatus.value : this.debarStatus,
+      courseId: data.courseId.present ? data.courseId.value : this.courseId,
+      semId: data.semId.present ? data.semId.value : this.semId,
+      time: data.time.present ? data.time.value : this.time,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AttendanceTableData(')
+          ..write('serial: $serial, ')
+          ..write('category: $category, ')
+          ..write('courseName: $courseName, ')
+          ..write('courseCode: $courseCode, ')
+          ..write('courseType: $courseType, ')
+          ..write('facultyDetail: $facultyDetail, ')
+          ..write('classesAttended: $classesAttended, ')
+          ..write('totalClasses: $totalClasses, ')
+          ..write('attendancePercentage: $attendancePercentage, ')
+          ..write('attendenceFatCat: $attendenceFatCat, ')
+          ..write('debarStatus: $debarStatus, ')
+          ..write('courseId: $courseId, ')
+          ..write('semId: $semId, ')
+          ..write('time: $time')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    serial,
+    category,
+    courseName,
+    courseCode,
+    courseType,
+    facultyDetail,
+    classesAttended,
+    totalClasses,
+    attendancePercentage,
+    attendenceFatCat,
+    debarStatus,
+    courseId,
+    semId,
+    time,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AttendanceTableData &&
+          other.serial == this.serial &&
+          other.category == this.category &&
+          other.courseName == this.courseName &&
+          other.courseCode == this.courseCode &&
+          other.courseType == this.courseType &&
+          other.facultyDetail == this.facultyDetail &&
+          other.classesAttended == this.classesAttended &&
+          other.totalClasses == this.totalClasses &&
+          other.attendancePercentage == this.attendancePercentage &&
+          other.attendenceFatCat == this.attendenceFatCat &&
+          other.debarStatus == this.debarStatus &&
+          other.courseId == this.courseId &&
+          other.semId == this.semId &&
+          other.time == this.time);
+}
+
+class AttendanceTableCompanion extends UpdateCompanion<AttendanceTableData> {
+  final Value<int> serial;
+  final Value<String> category;
+  final Value<String> courseName;
+  final Value<String> courseCode;
+  final Value<String> courseType;
+  final Value<String> facultyDetail;
+  final Value<String> classesAttended;
+  final Value<String> totalClasses;
+  final Value<String> attendancePercentage;
+  final Value<String> attendenceFatCat;
+  final Value<String> debarStatus;
+  final Value<String> courseId;
+  final Value<String> semId;
+  final Value<int> time;
+  final Value<int> rowid;
+  const AttendanceTableCompanion({
+    this.serial = const Value.absent(),
+    this.category = const Value.absent(),
+    this.courseName = const Value.absent(),
+    this.courseCode = const Value.absent(),
+    this.courseType = const Value.absent(),
+    this.facultyDetail = const Value.absent(),
+    this.classesAttended = const Value.absent(),
+    this.totalClasses = const Value.absent(),
+    this.attendancePercentage = const Value.absent(),
+    this.attendenceFatCat = const Value.absent(),
+    this.debarStatus = const Value.absent(),
+    this.courseId = const Value.absent(),
+    this.semId = const Value.absent(),
+    this.time = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AttendanceTableCompanion.insert({
+    required int serial,
+    required String category,
+    required String courseName,
+    required String courseCode,
+    required String courseType,
+    required String facultyDetail,
+    required String classesAttended,
+    required String totalClasses,
+    required String attendancePercentage,
+    required String attendenceFatCat,
+    required String debarStatus,
+    required String courseId,
+    required String semId,
+    required int time,
+    this.rowid = const Value.absent(),
+  }) : serial = Value(serial),
+       category = Value(category),
+       courseName = Value(courseName),
+       courseCode = Value(courseCode),
+       courseType = Value(courseType),
+       facultyDetail = Value(facultyDetail),
+       classesAttended = Value(classesAttended),
+       totalClasses = Value(totalClasses),
+       attendancePercentage = Value(attendancePercentage),
+       attendenceFatCat = Value(attendenceFatCat),
+       debarStatus = Value(debarStatus),
+       courseId = Value(courseId),
+       semId = Value(semId),
+       time = Value(time);
+  static Insertable<AttendanceTableData> custom({
+    Expression<int>? serial,
+    Expression<String>? category,
+    Expression<String>? courseName,
+    Expression<String>? courseCode,
+    Expression<String>? courseType,
+    Expression<String>? facultyDetail,
+    Expression<String>? classesAttended,
+    Expression<String>? totalClasses,
+    Expression<String>? attendancePercentage,
+    Expression<String>? attendenceFatCat,
+    Expression<String>? debarStatus,
+    Expression<String>? courseId,
+    Expression<String>? semId,
+    Expression<int>? time,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (serial != null) 'serial': serial,
+      if (category != null) 'category': category,
+      if (courseName != null) 'course_name': courseName,
+      if (courseCode != null) 'course_code': courseCode,
+      if (courseType != null) 'course_type': courseType,
+      if (facultyDetail != null) 'faculty_detail': facultyDetail,
+      if (classesAttended != null) 'classes_attended': classesAttended,
+      if (totalClasses != null) 'total_classes': totalClasses,
+      if (attendancePercentage != null)
+        'attendance_percentage': attendancePercentage,
+      if (attendenceFatCat != null) 'attendence_fat_cat': attendenceFatCat,
+      if (debarStatus != null) 'debar_status': debarStatus,
+      if (courseId != null) 'course_id': courseId,
+      if (semId != null) 'sem_id': semId,
+      if (time != null) 'time': time,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AttendanceTableCompanion copyWith({
+    Value<int>? serial,
+    Value<String>? category,
+    Value<String>? courseName,
+    Value<String>? courseCode,
+    Value<String>? courseType,
+    Value<String>? facultyDetail,
+    Value<String>? classesAttended,
+    Value<String>? totalClasses,
+    Value<String>? attendancePercentage,
+    Value<String>? attendenceFatCat,
+    Value<String>? debarStatus,
+    Value<String>? courseId,
+    Value<String>? semId,
+    Value<int>? time,
+    Value<int>? rowid,
+  }) {
+    return AttendanceTableCompanion(
+      serial: serial ?? this.serial,
+      category: category ?? this.category,
+      courseName: courseName ?? this.courseName,
+      courseCode: courseCode ?? this.courseCode,
+      courseType: courseType ?? this.courseType,
+      facultyDetail: facultyDetail ?? this.facultyDetail,
+      classesAttended: classesAttended ?? this.classesAttended,
+      totalClasses: totalClasses ?? this.totalClasses,
+      attendancePercentage: attendancePercentage ?? this.attendancePercentage,
+      attendenceFatCat: attendenceFatCat ?? this.attendenceFatCat,
+      debarStatus: debarStatus ?? this.debarStatus,
+      courseId: courseId ?? this.courseId,
+      semId: semId ?? this.semId,
+      time: time ?? this.time,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (serial.present) {
+      map['serial'] = Variable<int>(serial.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (courseName.present) {
+      map['course_name'] = Variable<String>(courseName.value);
+    }
+    if (courseCode.present) {
+      map['course_code'] = Variable<String>(courseCode.value);
+    }
+    if (courseType.present) {
+      map['course_type'] = Variable<String>(courseType.value);
+    }
+    if (facultyDetail.present) {
+      map['faculty_detail'] = Variable<String>(facultyDetail.value);
+    }
+    if (classesAttended.present) {
+      map['classes_attended'] = Variable<String>(classesAttended.value);
+    }
+    if (totalClasses.present) {
+      map['total_classes'] = Variable<String>(totalClasses.value);
+    }
+    if (attendancePercentage.present) {
+      map['attendance_percentage'] = Variable<String>(
+        attendancePercentage.value,
+      );
+    }
+    if (attendenceFatCat.present) {
+      map['attendence_fat_cat'] = Variable<String>(attendenceFatCat.value);
+    }
+    if (debarStatus.present) {
+      map['debar_status'] = Variable<String>(debarStatus.value);
+    }
+    if (courseId.present) {
+      map['course_id'] = Variable<String>(courseId.value);
+    }
     if (semId.present) {
       map['sem_id'] = Variable<String>(semId.value);
     }
@@ -1428,11 +2392,17 @@ class AttendanceTableCompanion extends UpdateCompanion<AttendanceTableData> {
   String toString() {
     return (StringBuffer('AttendanceTableCompanion(')
           ..write('serial: $serial, ')
-          ..write('date: $date, ')
-          ..write('slot: $slot, ')
-          ..write('dayTime: $dayTime, ')
-          ..write('status: $status, ')
-          ..write('remark: $remark, ')
+          ..write('category: $category, ')
+          ..write('courseName: $courseName, ')
+          ..write('courseCode: $courseCode, ')
+          ..write('courseType: $courseType, ')
+          ..write('facultyDetail: $facultyDetail, ')
+          ..write('classesAttended: $classesAttended, ')
+          ..write('totalClasses: $totalClasses, ')
+          ..write('attendancePercentage: $attendancePercentage, ')
+          ..write('attendenceFatCat: $attendenceFatCat, ')
+          ..write('debarStatus: $debarStatus, ')
+          ..write('courseId: $courseId, ')
           ..write('semId: $semId, ')
           ..write('time: $time, ')
           ..write('rowid: $rowid')
@@ -1446,6 +2416,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $SemTableTable semTable = $SemTableTable(this);
   late final $TimetableTable timetable = $TimetableTable(this);
+  late final $FullAttendanceTableTable fullAttendanceTable =
+      $FullAttendanceTableTable(this);
   late final $AttendanceTableTable attendanceTable = $AttendanceTableTable(
     this,
   );
@@ -1456,6 +2428,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     semTable,
     timetable,
+    fullAttendanceTable,
     attendanceTable,
   ];
 }
@@ -1490,6 +2463,33 @@ final class $$SemTableTableReferences
     ).filter((f) => f.semId.semid.sqlEquals($_itemColumn<String>('semid')!));
 
     final cache = $_typedResult.readTableOrNull(_timetableRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $FullAttendanceTableTable,
+    List<FullAttendanceTableData>
+  >
+  _fullAttendanceTableRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.fullAttendanceTable,
+        aliasName: $_aliasNameGenerator(
+          db.semTable.semid,
+          db.fullAttendanceTable.semId,
+        ),
+      );
+
+  $$FullAttendanceTableTableProcessedTableManager get fullAttendanceTableRefs {
+    final manager = $$FullAttendanceTableTableTableManager(
+      $_db,
+      $_db.fullAttendanceTable,
+    ).filter((f) => f.semId.semid.sqlEquals($_itemColumn<String>('semid')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _fullAttendanceTableRefsTable($_db),
+    );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -1554,6 +2554,31 @@ class $$SemTableTableFilterComposer
           }) => $$TimetableTableFilterComposer(
             $db: $db,
             $table: $db.timetable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> fullAttendanceTableRefs(
+    Expression<bool> Function($$FullAttendanceTableTableFilterComposer f) f,
+  ) {
+    final $$FullAttendanceTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.semid,
+      referencedTable: $db.fullAttendanceTable,
+      getReferencedColumn: (t) => t.semId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FullAttendanceTableTableFilterComposer(
+            $db: $db,
+            $table: $db.fullAttendanceTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -1649,6 +2674,32 @@ class $$SemTableTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> fullAttendanceTableRefs<T extends Object>(
+    Expression<T> Function($$FullAttendanceTableTableAnnotationComposer a) f,
+  ) {
+    final $$FullAttendanceTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.semid,
+          referencedTable: $db.fullAttendanceTable,
+          getReferencedColumn: (t) => t.semId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$FullAttendanceTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.fullAttendanceTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
   Expression<T> attendanceTableRefs<T extends Object>(
     Expression<T> Function($$AttendanceTableTableAnnotationComposer a) f,
   ) {
@@ -1688,7 +2739,11 @@ class $$SemTableTableTableManager
           $$SemTableTableUpdateCompanionBuilder,
           (SemTableData, $$SemTableTableReferences),
           SemTableData,
-          PrefetchHooks Function({bool timetableRefs, bool attendanceTableRefs})
+          PrefetchHooks Function({
+            bool timetableRefs,
+            bool fullAttendanceTableRefs,
+            bool attendanceTableRefs,
+          })
         > {
   $$SemTableTableTableManager(_$AppDatabase db, $SemTableTable table)
     : super(
@@ -1733,12 +2788,14 @@ class $$SemTableTableTableManager
                       .toList(),
           prefetchHooksCallback: ({
             timetableRefs = false,
+            fullAttendanceTableRefs = false,
             attendanceTableRefs = false,
           }) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
                 if (timetableRefs) db.timetable,
+                if (fullAttendanceTableRefs) db.fullAttendanceTable,
                 if (attendanceTableRefs) db.attendanceTable,
               ],
               addJoins: null,
@@ -1760,6 +2817,28 @@ class $$SemTableTableTableManager
                                 table,
                                 p0,
                               ).timetableRefs,
+                      referencedItemsForCurrentItem:
+                          (item, referencedItems) => referencedItems.where(
+                            (e) => e.semId == item.semid,
+                          ),
+                      typedResults: items,
+                    ),
+                  if (fullAttendanceTableRefs)
+                    await $_getPrefetchedData<
+                      SemTableData,
+                      $SemTableTable,
+                      FullAttendanceTableData
+                    >(
+                      currentTable: table,
+                      referencedTable: $$SemTableTableReferences
+                          ._fullAttendanceTableRefsTable(db),
+                      managerFromTypedResult:
+                          (p0) =>
+                              $$SemTableTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).fullAttendanceTableRefs,
                       referencedItemsForCurrentItem:
                           (item, referencedItems) => referencedItems.where(
                             (e) => e.semId == item.semid,
@@ -1808,7 +2887,11 @@ typedef $$SemTableTableProcessedTableManager =
       $$SemTableTableUpdateCompanionBuilder,
       (SemTableData, $$SemTableTableReferences),
       SemTableData,
-      PrefetchHooks Function({bool timetableRefs, bool attendanceTableRefs})
+      PrefetchHooks Function({
+        bool timetableRefs,
+        bool fullAttendanceTableRefs,
+        bool attendanceTableRefs,
+      })
     >;
 typedef $$TimetableTableCreateCompanionBuilder =
     TimetableCompanion Function({
@@ -2268,14 +3351,459 @@ typedef $$TimetableTableProcessedTableManager =
       TimetableData,
       PrefetchHooks Function({bool semId})
     >;
-typedef $$AttendanceTableTableCreateCompanionBuilder =
-    AttendanceTableCompanion Function({
+typedef $$FullAttendanceTableTableCreateCompanionBuilder =
+    FullAttendanceTableCompanion Function({
       required int serial,
       required String date,
       required String slot,
       required String dayTime,
       required String status,
       required String remark,
+      required String courseType,
+      required String courseId,
+      required String semId,
+      required int time,
+      Value<int> rowid,
+    });
+typedef $$FullAttendanceTableTableUpdateCompanionBuilder =
+    FullAttendanceTableCompanion Function({
+      Value<int> serial,
+      Value<String> date,
+      Value<String> slot,
+      Value<String> dayTime,
+      Value<String> status,
+      Value<String> remark,
+      Value<String> courseType,
+      Value<String> courseId,
+      Value<String> semId,
+      Value<int> time,
+      Value<int> rowid,
+    });
+
+final class $$FullAttendanceTableTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $FullAttendanceTableTable,
+          FullAttendanceTableData
+        > {
+  $$FullAttendanceTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $SemTableTable _semIdTable(_$AppDatabase db) =>
+      db.semTable.createAlias(
+        $_aliasNameGenerator(db.fullAttendanceTable.semId, db.semTable.semid),
+      );
+
+  $$SemTableTableProcessedTableManager get semId {
+    final $_column = $_itemColumn<String>('sem_id')!;
+
+    final manager = $$SemTableTableTableManager(
+      $_db,
+      $_db.semTable,
+    ).filter((f) => f.semid.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_semIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$FullAttendanceTableTableFilterComposer
+    extends Composer<_$AppDatabase, $FullAttendanceTableTable> {
+  $$FullAttendanceTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get serial => $composableBuilder(
+    column: $table.serial,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get slot => $composableBuilder(
+    column: $table.slot,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get dayTime => $composableBuilder(
+    column: $table.dayTime,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get courseType => $composableBuilder(
+    column: $table.courseType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get courseId => $composableBuilder(
+    column: $table.courseId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get time => $composableBuilder(
+    column: $table.time,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SemTableTableFilterComposer get semId {
+    final $$SemTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.semId,
+      referencedTable: $db.semTable,
+      getReferencedColumn: (t) => t.semid,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SemTableTableFilterComposer(
+            $db: $db,
+            $table: $db.semTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$FullAttendanceTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $FullAttendanceTableTable> {
+  $$FullAttendanceTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get serial => $composableBuilder(
+    column: $table.serial,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get slot => $composableBuilder(
+    column: $table.slot,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get dayTime => $composableBuilder(
+    column: $table.dayTime,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get remark => $composableBuilder(
+    column: $table.remark,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get courseType => $composableBuilder(
+    column: $table.courseType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get courseId => $composableBuilder(
+    column: $table.courseId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get time => $composableBuilder(
+    column: $table.time,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SemTableTableOrderingComposer get semId {
+    final $$SemTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.semId,
+      referencedTable: $db.semTable,
+      getReferencedColumn: (t) => t.semid,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SemTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.semTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$FullAttendanceTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FullAttendanceTableTable> {
+  $$FullAttendanceTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get serial =>
+      $composableBuilder(column: $table.serial, builder: (column) => column);
+
+  GeneratedColumn<String> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get slot =>
+      $composableBuilder(column: $table.slot, builder: (column) => column);
+
+  GeneratedColumn<String> get dayTime =>
+      $composableBuilder(column: $table.dayTime, builder: (column) => column);
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<String> get remark =>
+      $composableBuilder(column: $table.remark, builder: (column) => column);
+
+  GeneratedColumn<String> get courseType => $composableBuilder(
+    column: $table.courseType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get courseId =>
+      $composableBuilder(column: $table.courseId, builder: (column) => column);
+
+  GeneratedColumn<int> get time =>
+      $composableBuilder(column: $table.time, builder: (column) => column);
+
+  $$SemTableTableAnnotationComposer get semId {
+    final $$SemTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.semId,
+      referencedTable: $db.semTable,
+      getReferencedColumn: (t) => t.semid,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SemTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.semTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$FullAttendanceTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $FullAttendanceTableTable,
+          FullAttendanceTableData,
+          $$FullAttendanceTableTableFilterComposer,
+          $$FullAttendanceTableTableOrderingComposer,
+          $$FullAttendanceTableTableAnnotationComposer,
+          $$FullAttendanceTableTableCreateCompanionBuilder,
+          $$FullAttendanceTableTableUpdateCompanionBuilder,
+          (FullAttendanceTableData, $$FullAttendanceTableTableReferences),
+          FullAttendanceTableData,
+          PrefetchHooks Function({bool semId})
+        > {
+  $$FullAttendanceTableTableTableManager(
+    _$AppDatabase db,
+    $FullAttendanceTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer:
+              () => $$FullAttendanceTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer:
+              () => $$FullAttendanceTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer:
+              () => $$FullAttendanceTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> serial = const Value.absent(),
+                Value<String> date = const Value.absent(),
+                Value<String> slot = const Value.absent(),
+                Value<String> dayTime = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<String> remark = const Value.absent(),
+                Value<String> courseType = const Value.absent(),
+                Value<String> courseId = const Value.absent(),
+                Value<String> semId = const Value.absent(),
+                Value<int> time = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FullAttendanceTableCompanion(
+                serial: serial,
+                date: date,
+                slot: slot,
+                dayTime: dayTime,
+                status: status,
+                remark: remark,
+                courseType: courseType,
+                courseId: courseId,
+                semId: semId,
+                time: time,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int serial,
+                required String date,
+                required String slot,
+                required String dayTime,
+                required String status,
+                required String remark,
+                required String courseType,
+                required String courseId,
+                required String semId,
+                required int time,
+                Value<int> rowid = const Value.absent(),
+              }) => FullAttendanceTableCompanion.insert(
+                serial: serial,
+                date: date,
+                slot: slot,
+                dayTime: dayTime,
+                status: status,
+                remark: remark,
+                courseType: courseType,
+                courseId: courseId,
+                semId: semId,
+                time: time,
+                rowid: rowid,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          $$FullAttendanceTableTableReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
+          prefetchHooksCallback: ({semId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                T extends TableManagerState<
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic
+                >
+              >(state) {
+                if (semId) {
+                  state =
+                      state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.semId,
+                            referencedTable:
+                                $$FullAttendanceTableTableReferences
+                                    ._semIdTable(db),
+                            referencedColumn:
+                                $$FullAttendanceTableTableReferences
+                                    ._semIdTable(db)
+                                    .semid,
+                          )
+                          as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$FullAttendanceTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $FullAttendanceTableTable,
+      FullAttendanceTableData,
+      $$FullAttendanceTableTableFilterComposer,
+      $$FullAttendanceTableTableOrderingComposer,
+      $$FullAttendanceTableTableAnnotationComposer,
+      $$FullAttendanceTableTableCreateCompanionBuilder,
+      $$FullAttendanceTableTableUpdateCompanionBuilder,
+      (FullAttendanceTableData, $$FullAttendanceTableTableReferences),
+      FullAttendanceTableData,
+      PrefetchHooks Function({bool semId})
+    >;
+typedef $$AttendanceTableTableCreateCompanionBuilder =
+    AttendanceTableCompanion Function({
+      required int serial,
+      required String category,
+      required String courseName,
+      required String courseCode,
+      required String courseType,
+      required String facultyDetail,
+      required String classesAttended,
+      required String totalClasses,
+      required String attendancePercentage,
+      required String attendenceFatCat,
+      required String debarStatus,
+      required String courseId,
       required String semId,
       required int time,
       Value<int> rowid,
@@ -2283,11 +3811,17 @@ typedef $$AttendanceTableTableCreateCompanionBuilder =
 typedef $$AttendanceTableTableUpdateCompanionBuilder =
     AttendanceTableCompanion Function({
       Value<int> serial,
-      Value<String> date,
-      Value<String> slot,
-      Value<String> dayTime,
-      Value<String> status,
-      Value<String> remark,
+      Value<String> category,
+      Value<String> courseName,
+      Value<String> courseCode,
+      Value<String> courseType,
+      Value<String> facultyDetail,
+      Value<String> classesAttended,
+      Value<String> totalClasses,
+      Value<String> attendancePercentage,
+      Value<String> attendenceFatCat,
+      Value<String> debarStatus,
+      Value<String> courseId,
       Value<String> semId,
       Value<int> time,
       Value<int> rowid,
@@ -2340,28 +3874,58 @@ class $$AttendanceTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get date => $composableBuilder(
-    column: $table.date,
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get slot => $composableBuilder(
-    column: $table.slot,
+  ColumnFilters<String> get courseName => $composableBuilder(
+    column: $table.courseName,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get dayTime => $composableBuilder(
-    column: $table.dayTime,
+  ColumnFilters<String> get courseCode => $composableBuilder(
+    column: $table.courseCode,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get status => $composableBuilder(
-    column: $table.status,
+  ColumnFilters<String> get courseType => $composableBuilder(
+    column: $table.courseType,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get remark => $composableBuilder(
-    column: $table.remark,
+  ColumnFilters<String> get facultyDetail => $composableBuilder(
+    column: $table.facultyDetail,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get classesAttended => $composableBuilder(
+    column: $table.classesAttended,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get totalClasses => $composableBuilder(
+    column: $table.totalClasses,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get attendancePercentage => $composableBuilder(
+    column: $table.attendancePercentage,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get attendenceFatCat => $composableBuilder(
+    column: $table.attendenceFatCat,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get debarStatus => $composableBuilder(
+    column: $table.debarStatus,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get courseId => $composableBuilder(
+    column: $table.courseId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2408,28 +3972,58 @@ class $$AttendanceTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get date => $composableBuilder(
-    column: $table.date,
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get slot => $composableBuilder(
-    column: $table.slot,
+  ColumnOrderings<String> get courseName => $composableBuilder(
+    column: $table.courseName,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get dayTime => $composableBuilder(
-    column: $table.dayTime,
+  ColumnOrderings<String> get courseCode => $composableBuilder(
+    column: $table.courseCode,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get status => $composableBuilder(
-    column: $table.status,
+  ColumnOrderings<String> get courseType => $composableBuilder(
+    column: $table.courseType,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get remark => $composableBuilder(
-    column: $table.remark,
+  ColumnOrderings<String> get facultyDetail => $composableBuilder(
+    column: $table.facultyDetail,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get classesAttended => $composableBuilder(
+    column: $table.classesAttended,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get totalClasses => $composableBuilder(
+    column: $table.totalClasses,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get attendancePercentage => $composableBuilder(
+    column: $table.attendancePercentage,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get attendenceFatCat => $composableBuilder(
+    column: $table.attendenceFatCat,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get debarStatus => $composableBuilder(
+    column: $table.debarStatus,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get courseId => $composableBuilder(
+    column: $table.courseId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -2474,20 +4068,56 @@ class $$AttendanceTableTableAnnotationComposer
   GeneratedColumn<int> get serial =>
       $composableBuilder(column: $table.serial, builder: (column) => column);
 
-  GeneratedColumn<String> get date =>
-      $composableBuilder(column: $table.date, builder: (column) => column);
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
 
-  GeneratedColumn<String> get slot =>
-      $composableBuilder(column: $table.slot, builder: (column) => column);
+  GeneratedColumn<String> get courseName => $composableBuilder(
+    column: $table.courseName,
+    builder: (column) => column,
+  );
 
-  GeneratedColumn<String> get dayTime =>
-      $composableBuilder(column: $table.dayTime, builder: (column) => column);
+  GeneratedColumn<String> get courseCode => $composableBuilder(
+    column: $table.courseCode,
+    builder: (column) => column,
+  );
 
-  GeneratedColumn<String> get status =>
-      $composableBuilder(column: $table.status, builder: (column) => column);
+  GeneratedColumn<String> get courseType => $composableBuilder(
+    column: $table.courseType,
+    builder: (column) => column,
+  );
 
-  GeneratedColumn<String> get remark =>
-      $composableBuilder(column: $table.remark, builder: (column) => column);
+  GeneratedColumn<String> get facultyDetail => $composableBuilder(
+    column: $table.facultyDetail,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get classesAttended => $composableBuilder(
+    column: $table.classesAttended,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get totalClasses => $composableBuilder(
+    column: $table.totalClasses,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get attendancePercentage => $composableBuilder(
+    column: $table.attendancePercentage,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get attendenceFatCat => $composableBuilder(
+    column: $table.attendenceFatCat,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get debarStatus => $composableBuilder(
+    column: $table.debarStatus,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get courseId =>
+      $composableBuilder(column: $table.courseId, builder: (column) => column);
 
   GeneratedColumn<int> get time =>
       $composableBuilder(column: $table.time, builder: (column) => column);
@@ -2554,21 +4184,33 @@ class $$AttendanceTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> serial = const Value.absent(),
-                Value<String> date = const Value.absent(),
-                Value<String> slot = const Value.absent(),
-                Value<String> dayTime = const Value.absent(),
-                Value<String> status = const Value.absent(),
-                Value<String> remark = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String> courseName = const Value.absent(),
+                Value<String> courseCode = const Value.absent(),
+                Value<String> courseType = const Value.absent(),
+                Value<String> facultyDetail = const Value.absent(),
+                Value<String> classesAttended = const Value.absent(),
+                Value<String> totalClasses = const Value.absent(),
+                Value<String> attendancePercentage = const Value.absent(),
+                Value<String> attendenceFatCat = const Value.absent(),
+                Value<String> debarStatus = const Value.absent(),
+                Value<String> courseId = const Value.absent(),
                 Value<String> semId = const Value.absent(),
                 Value<int> time = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => AttendanceTableCompanion(
                 serial: serial,
-                date: date,
-                slot: slot,
-                dayTime: dayTime,
-                status: status,
-                remark: remark,
+                category: category,
+                courseName: courseName,
+                courseCode: courseCode,
+                courseType: courseType,
+                facultyDetail: facultyDetail,
+                classesAttended: classesAttended,
+                totalClasses: totalClasses,
+                attendancePercentage: attendancePercentage,
+                attendenceFatCat: attendenceFatCat,
+                debarStatus: debarStatus,
+                courseId: courseId,
                 semId: semId,
                 time: time,
                 rowid: rowid,
@@ -2576,21 +4218,33 @@ class $$AttendanceTableTableTableManager
           createCompanionCallback:
               ({
                 required int serial,
-                required String date,
-                required String slot,
-                required String dayTime,
-                required String status,
-                required String remark,
+                required String category,
+                required String courseName,
+                required String courseCode,
+                required String courseType,
+                required String facultyDetail,
+                required String classesAttended,
+                required String totalClasses,
+                required String attendancePercentage,
+                required String attendenceFatCat,
+                required String debarStatus,
+                required String courseId,
                 required String semId,
                 required int time,
                 Value<int> rowid = const Value.absent(),
               }) => AttendanceTableCompanion.insert(
                 serial: serial,
-                date: date,
-                slot: slot,
-                dayTime: dayTime,
-                status: status,
-                remark: remark,
+                category: category,
+                courseName: courseName,
+                courseCode: courseCode,
+                courseType: courseType,
+                facultyDetail: facultyDetail,
+                classesAttended: classesAttended,
+                totalClasses: totalClasses,
+                attendancePercentage: attendancePercentage,
+                attendenceFatCat: attendenceFatCat,
+                debarStatus: debarStatus,
+                courseId: courseId,
                 semId: semId,
                 time: time,
                 rowid: rowid,
@@ -2672,6 +4326,8 @@ class $AppDatabaseManager {
       $$SemTableTableTableManager(_db, _db.semTable);
   $$TimetableTableTableManager get timetable =>
       $$TimetableTableTableManager(_db, _db.timetable);
+  $$FullAttendanceTableTableTableManager get fullAttendanceTable =>
+      $$FullAttendanceTableTableTableManager(_db, _db.fullAttendanceTable);
   $$AttendanceTableTableTableManager get attendanceTable =>
       $$AttendanceTableTableTableManager(_db, _db.attendanceTable);
 }

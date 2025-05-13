@@ -1,48 +1,58 @@
 import 'package:vitapmate/core/rust_gen/api/vtop/types.dart';
 import 'package:vitapmate/core/shared/database/appdatabase.dart';
-import 'package:vitapmate/features/attendance/domain/entities/full_attendance_entity.dart';
-import 'package:vitapmate/features/attendance/domain/entities/sub_full_attendance_entity.dart';
+import 'package:vitapmate/features/attendance/domain/entities/attendance_entity.dart';
+import 'package:vitapmate/features/attendance/domain/entities/sub_attendance_entity.dart';
 
 class AttendanceModel {
-  static FullAttendanceEntity toEntityFromRemote(
-    List<RAttendanceList> rattendancelist,
+  static AttendanceEntity toEntityFromRemote(
+    List<RAtCourse> atten,
     String semid,
   ) {
-    List<SubFullAttendanceEntity> sub = [];
+    List<SubAttendanceEntity> sub = [];
     int unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-    for (var i in rattendancelist) {
-      var temp = SubFullAttendanceEntity(
+    for (var i in atten) {
+      var temp = SubAttendanceEntity(
         serial: i.serial,
-        date: i.date,
-        slot: i.slot,
-        dayTime: i.dayTime,
-        status: i.status,
-        remark: i.remark,
+        category: i.category,
+        courseName: i.courseName,
+        courseCode: i.courseCode,
+        courseType: i.courseType,
+        facultyDetail: i.facultyDetail,
+        classesAttended: i.classesAttended,
+        totalClasses: i.totalClasses,
+        attendancePercentage: i.attendancePercentage,
+        attendenceFatCat: i.attendenceFatCat,
+        debarStatus: i.debarStatus,
+        courseId: i.courseId,
         semid: semid,
         updateTime: unixTime,
       );
       sub.add(temp);
     }
-    return FullAttendanceEntity(attendance: sub);
+    return AttendanceEntity(attendance: sub);
   }
 
-  static FullAttendanceEntity toEntityFromLocal(List<AttendanceTableData> atten) {
-    List<SubFullAttendanceEntity> sub = [];
-    int unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-
+  static AttendanceEntity toEntityFromLocal(List<AttendanceTableData> atten) {
+    List<SubAttendanceEntity> sub = [];
     for (var i in atten) {
-      var temp = SubFullAttendanceEntity(
+      var temp = SubAttendanceEntity(
         serial: "${i.serial}",
-        date: i.date,
-        slot: i.slot,
-        dayTime: i.dayTime,
-        status: i.status,
-        remark: i.remark,
+        category: i.category,
+        courseName: i.courseName,
+        courseCode: i.courseCode,
+        courseType: i.courseType,
+        facultyDetail: i.facultyDetail,
+        classesAttended: i.classesAttended,
+        totalClasses: i.totalClasses,
+        attendancePercentage: i.attendancePercentage,
+        attendenceFatCat: i.attendenceFatCat,
+        debarStatus: i.debarStatus,
+        courseId: i.courseId,
         semid: i.semId,
-        updateTime: unixTime,
+        updateTime: i.time,
       );
       sub.add(temp);
     }
-    return FullAttendanceEntity(attendance: sub);
+    return AttendanceEntity(attendance: sub);
   }
 }

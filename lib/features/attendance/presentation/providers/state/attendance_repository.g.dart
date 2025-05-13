@@ -1,27 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'timetable.dart';
+part of 'attendance_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$timetableHash() => r'2ae367ace1ddbf6dbfe37b804e6dedf48da4e989';
+String _$attendanceRepositoryHash() =>
+    r'92b9fc3fac26364178028355faaec999d100e7b1';
 
-/// See also [Timetable].
-@ProviderFor(Timetable)
-final timetableProvider =
-    AutoDisposeAsyncNotifierProvider<Timetable, TimetableEntity>.internal(
-      Timetable.new,
-      name: r'timetableProvider',
+/// See also [attendanceRepository].
+@ProviderFor(attendanceRepository)
+final attendanceRepositoryProvider =
+    AutoDisposeFutureProvider<AttendanceRepository>.internal(
+      attendanceRepository,
+      name: r'attendanceRepositoryProvider',
       debugGetCreateSourceHash:
           const bool.fromEnvironment('dart.vm.product')
               ? null
-              : _$timetableHash,
+              : _$attendanceRepositoryHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$Timetable = AutoDisposeAsyncNotifier<TimetableEntity>;
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef AttendanceRepositoryRef =
+    AutoDisposeFutureProviderRef<AttendanceRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

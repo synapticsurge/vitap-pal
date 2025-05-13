@@ -5,5 +5,9 @@ part 'full_attendance_entity.freezed.dart';
 
 @freezed
 sealed class FullAttendanceEntity with _$FullAttendanceEntity {
-  factory FullAttendanceEntity({required List<SubFullAttendanceEntity> attendance}) = _FullAttendanceEntity;
+  factory FullAttendanceEntity({
+    required List<SubFullAttendanceEntity> attendance,
+    required String courseType,
+    required courseId,
+  }) = _FullAttendanceEntity;
 }

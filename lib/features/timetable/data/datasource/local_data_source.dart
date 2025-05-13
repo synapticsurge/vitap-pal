@@ -19,8 +19,6 @@ class LocalDataSource {
   }
 
   Future<void> saveTimetable(TimetableEntity timetable, String semid) async {
-    // await (_db.delete(_db.timetable)
-    //   ..where((tbl) => tbl.semId.equals(semid))).go();
     await _globalAsyncQueue.run(
       "toStroage_timetable_$semid",
       () => (_db.batch((batch) {
