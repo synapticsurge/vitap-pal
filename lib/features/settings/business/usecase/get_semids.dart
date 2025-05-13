@@ -7,6 +7,6 @@ class GetSemidsUsecase implements Usecase<SemidEntity, void> {
   GetSemidsUsecase(this._semidRepository);
   @override
   Future<SemidEntity> call({void params}) async {
-    return  await _semidRepository.getSemidsFromStorage();
+    return await _semidRepository.getSemidsFromStorage();
   }
 }

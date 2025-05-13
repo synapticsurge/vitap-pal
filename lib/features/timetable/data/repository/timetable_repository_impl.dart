@@ -20,8 +20,10 @@ class TimetableRepositoryImpl extends TimetableRepository {
   }
 
   @override
-  Future<void> saveTimetableToStorage({required TimetableEntity timetable}) async{
-    await localDataSource.saveTimetable(timetable,semid);
+  Future<void> saveTimetableToStorage({
+    required TimetableEntity timetable,
+  }) async {
+    await localDataSource.saveTimetable(timetable, semid);
   }
 
   @override

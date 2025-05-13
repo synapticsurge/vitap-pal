@@ -7,8 +7,8 @@ import 'package:vitapmate/features/timetable/domain/entities/timetable_entity.da
 class RemoteDataSource {
   final Iclient _client;
   final GlobalAsyncQueue _globalAsyncQueue;
-  RemoteDataSource(this._client,this._globalAsyncQueue);
-  
+  RemoteDataSource(this._client, this._globalAsyncQueue);
+
   Future<TimetableEntity> fetchTimetable(String semid) async {
     var data = await _globalAsyncQueue.run(
       "rust_timetable_$semid",

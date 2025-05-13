@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:vitapmate/core/shared/entities/global_async_queue_entity.dart';
- part 'global_async_queue.g.dart';
+part 'global_async_queue.g.dart';
 
 @Riverpod(keepAlive: true)
 class GlobalAsyncQueue extends _$GlobalAsyncQueue {

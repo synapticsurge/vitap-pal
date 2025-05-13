@@ -4,7 +4,7 @@ import 'package:vitapmate/features/timetable/domain/entities/sub_timetable_entit
 import 'package:vitapmate/features/timetable/domain/entities/timetable_entity.dart';
 
 class TimetableModel {
-  static toEntityFromRemote(List<RTimetable> rtimetable,String semid) {
+  static toEntityFromRemote(List<RTimetable> rtimetable, String semid) {
     List<SubTimeTableEntity> sub = [];
     int unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     for (var i in rtimetable) {
@@ -19,13 +19,14 @@ class TimetableModel {
         serial: i.serial,
         slot: i.slot,
         startTime: i.startTime,
-        semid: semid ,
-        updateTime: unixTime
+        semid: semid,
+        updateTime: unixTime,
       );
       sub.add(temp);
     }
     return TimetableEntity(timetable: sub);
   }
+
   static toEntityFromLocal(List<TimetableData> rtimetable) {
     List<SubTimeTableEntity> sub = [];
     int unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
@@ -41,8 +42,8 @@ class TimetableModel {
         serial: "${i.serial}",
         slot: i.slot,
         startTime: i.startTime,
-        semid: i.semId ,
-        updateTime: unixTime
+        semid: i.semId,
+        updateTime: unixTime,
       );
       sub.add(temp);
     }

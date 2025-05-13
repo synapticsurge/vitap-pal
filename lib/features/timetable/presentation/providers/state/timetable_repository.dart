@@ -6,7 +6,6 @@ import 'package:vitapmate/features/timetable/domain/repository/timetable_reposit
 import 'package:vitapmate/features/timetable/presentation/providers/state/data_source.dart';
 part 'timetable_repository.g.dart';
 
-
 @riverpod
 Future<TimetableRepository> timetableRepository(Ref ref) async {
   return TimetableRepositoryImpl(

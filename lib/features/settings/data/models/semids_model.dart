@@ -10,10 +10,13 @@ class SemidsModel {
     }
     return SemidEntity(semids: semids);
   }
+
   static fromRemoteToEntity(List<String> data) {
     List<SubSemidEntities> semids = [];
     for (var i in data) {
-      semids.add(SubSemidEntities(semName: i.split(":")[0], semid: i.split(":")[1],));
+      semids.add(
+        SubSemidEntities(semName: i.split(":")[0], semid: i.split(":")[1]),
+      );
     }
     return SemidEntity(semids: semids);
   }

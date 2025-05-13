@@ -9,7 +9,7 @@ part 'timetable.g.dart';
 class Timetable extends _$Timetable {
   @override
   Future<TimetableEntity> build() async {
-    var timetableRepository = await ref.read(
+    var timetableRepository = await ref.watch(
       timetableRepositoryProvider.future,
     );
     TimetableEntity timetable =

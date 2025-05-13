@@ -13,6 +13,6 @@ LocalDataSource userLocalDataSource(Ref ref) {
 
 @Riverpod(keepAlive: true)
 RemoteDataSource userRemoteDataSource(Ref ref) {
-GlobalAsyncQueue queue = ref.read(globalAsyncQueueProvider.notifier);
+  GlobalAsyncQueue queue = ref.read(globalAsyncQueueProvider.notifier);
   return RemoteDataSource(queue);
 }

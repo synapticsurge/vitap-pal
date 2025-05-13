@@ -7,9 +7,9 @@ sealed class UserEntity with _$UserEntity {
   factory UserEntity({
     required String? username,
     required String? password,
-     String? semid,
-     String? wifiusername,
-     String? wifiPassword,
+    String? semid,
+    String? wifiusername,
+    String? wifiPassword,
     @Default(false) bool isValid,
   }) = _UserEntity;
 }

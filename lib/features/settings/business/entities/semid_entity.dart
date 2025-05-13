@@ -5,5 +5,5 @@ part 'semid_entity.freezed.dart';
 
 @freezed
 sealed class SemidEntity with _$SemidEntity {
- factory  SemidEntity({required List<SubSemidEntities> semids}) = _SemidEntity;
+  factory SemidEntity({required List<SubSemidEntities> semids}) = _SemidEntity;
 }

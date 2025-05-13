@@ -22,18 +22,27 @@ class Timetable extends Table {
   TextColumn get block => text()();
   TextColumn get startTime => text()();
   TextColumn get endTime => text()();
- TextColumn get semId => text().references(SemTable, #semid)();
+  TextColumn get semId => text().references(SemTable, #semid)();
   IntColumn get time => integer()();
 
   @override
   List<Set<Column>>? get uniqueKeys => [
     {semId, startTime, day},
   ];
-
-
 }
 
-@DriftDatabase(tables: [SemTable, Timetable])
+class AttendanceTable extends Table {
+  IntColumn get serial => integer()();
+  TextColumn get date => text()();
+  TextColumn get slot => text()();
+  TextColumn get dayTime => text()();
+  TextColumn get status => text()();
+  TextColumn get remark => text()();
+  TextColumn get semId => text().references(SemTable, #semid)();
+  IntColumn get time => integer()();
+}
+
+@DriftDatabase(tables: [SemTable, Timetable,AttendanceTable])
 class AppDatabase extends _$AppDatabase {
   AppDatabase({QueryExecutor? executor, required String? username})
     : super(executor ?? _openConnection(username));
@@ -45,11 +54,8 @@ class AppDatabase extends _$AppDatabase {
     return driftDatabase(
       name: name ?? "NO USERNAME",
       native: const DriftNativeOptions(
-        // By default, `driftDatabase` from `package:drift_flutter` stores the
-        // database files in `getApplicationDocumentsDirectory()`.
         databaseDirectory: getApplicationSupportDirectory,
       ),
-      // If you need web support, see https://drift.simonbinder.eu/platforms/web/
     );
   }
 }

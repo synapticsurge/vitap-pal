@@ -10,12 +10,14 @@ part 'data_source.g.dart';
 @riverpod
 Future<LocalDataSource> semidlocalDataSource(Ref ref) async {
   var appDatabase = await ref.read(appDatabaseProvider.future);
-  return LocalDataSource(ref.read(globalAsyncQueueProvider.notifier),appDatabase);
+  return LocalDataSource(
+    ref.read(globalAsyncQueueProvider.notifier),
+    appDatabase,
+  );
 }
-
 
 @riverpod
 Future<RemoteDataSource> semidRemoteDataSource(Ref ref) async {
   var client = await ref.watch(clientProvider.future);
-  return RemoteDataSource(ref.read(globalAsyncQueueProvider.notifier),client);
+  return RemoteDataSource(ref.read(globalAsyncQueueProvider.notifier), client);
 }

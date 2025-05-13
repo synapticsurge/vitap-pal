@@ -32,8 +32,6 @@ class User extends _$User {
   Future<void> updateSemid(String semid) async {
     await UpdateUserSemid(ref.watch(userRepositoryImplProvider), semid).call();
     var data = await future;
-    state = AsyncData(
-      data.copyWith(semid: semid),
-    );
+    state = AsyncData(data.copyWith(semid: semid));
   }
 }
