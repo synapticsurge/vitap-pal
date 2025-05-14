@@ -90,9 +90,8 @@ class _VtopWebPageState extends ConsumerState<VtopWebPage> {
                       setState(() {
                         _loading = true;
                       });
-                      
-                       var _ =
-                       await ref.read(clientProvider.notifier).login();
+
+                      var _ = await ref.read(clientProvider.notifier).login();
                       // ref.read(appStateProvider.notifier).triggers();
                       setState(() {
                         _loading = false;
@@ -136,7 +135,7 @@ class _VtopWebPageState extends ConsumerState<VtopWebPage> {
                       setState(() {
                         _loading = true;
                       });
-                       await ref.read(clientProvider.notifier).login();
+                      await ref.read(clientProvider.notifier).login();
                       //ref.read(appStateProvider.notifier).triggers();
                       setState(() {
                         _loading = false;

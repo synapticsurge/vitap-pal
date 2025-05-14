@@ -86,9 +86,9 @@ class _AttendanceState extends ConsumerState<Attendance> {
                             return InkWell(
                               splashColor: Colors.transparent,
                               onTap: () async {
-                                 bool temp = _isopen[i];
+                                bool temp = _isopen[i];
                                 setState(() {
-                               _isopen = List.generate(
+                                  _isopen = List.generate(
                                     attendance.length,
                                     (index) => false,
                                   );

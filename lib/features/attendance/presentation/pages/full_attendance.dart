@@ -22,16 +22,15 @@ class FullAttendance extends ConsumerStatefulWidget {
 class _FullAttendanceState extends ConsumerState<FullAttendance> {
   @override
   Widget build(BuildContext context) {
-     if (!widget.exp) {
-          return Loadingsket();
-        }
+    if (!widget.exp) {
+      return Loadingsket();
+    }
     var c = ref.watch(
       FullAttendanceProvider(widget.courseType, widget.courseId),
     );
     return c.when(
       data: (p) {
         var data = p.attendance;
-       
 
         if (data.isEmpty) {
           return SizedBox(

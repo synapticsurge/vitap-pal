@@ -24,8 +24,13 @@ class FullAttendance extends _$FullAttendance {
           _courseType,
           _courseId,
         ).call();
-if (attendance.attendance.isEmpty) {
-      attendance = await UpdateFullAttendanceUsecase(attendanceRepository,_courseType,_courseId).call();
+    if (attendance.attendance.isEmpty) {
+      attendance =
+          await UpdateFullAttendanceUsecase(
+            attendanceRepository,
+            _courseType,
+            _courseId,
+          ).call();
     } else {
       Future.microtask(() async {
         try {
@@ -37,9 +42,11 @@ if (attendance.attendance.isEmpty) {
     }
     return attendance;
   }
-   Future<void> updateAttendance() async {
+
+  Future<void> updateAttendance() async {
     var repo = await ref.read(attendanceRepositoryProvider.future);
-    var data = await  UpdateFullAttendanceUsecase(repo,_courseType ,_courseId ).call();
+    var data =
+        await UpdateFullAttendanceUsecase(repo, _courseType, _courseId).call();
     state = AsyncData(data);
   }
 }
