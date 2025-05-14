@@ -6,6 +6,8 @@ import 'package:vitapmate/core/router/route_names.dart';
 import 'package:vitapmate/core/shared/user/presentation/providers/user.dart';
 import 'package:vitapmate/core/shared/widgets/scaffold.dart';
 import 'package:vitapmate/features/attendance/presentation/pages/attendance_page.dart';
+import 'package:vitapmate/features/others/presentation/pages/others_page.dart';
+import 'package:vitapmate/features/others/presentation/widgets/vtopweb_page.dart';
 import 'package:vitapmate/features/settings/presentation/pages/creds.dart';
 import 'package:vitapmate/features/settings/presentation/pages/settings.dart';
 import 'package:vitapmate/features/timetable/presentation/pages/timetable_page.dart';
@@ -56,7 +58,7 @@ final goRouterprovider = Provider((ref) {
               GoRoute(
                 path: '/others',
                 name: RouteNames.vtoputilsRoutename,
-                builder: (context, state) => Placeholder(),
+                builder: (context, state) => OthersPage(),
               ),
             ],
           ),
@@ -98,7 +100,7 @@ final goRouterprovider = Provider((ref) {
       GoRoute(
         path: '/VtopWeb',
         name: RouteNames.vtopWebsiteRouteName,
-        builder: (context, state) => Placeholder(),
+        builder: (context, state) => VtopWebPage(),
       ),
     ],
   );

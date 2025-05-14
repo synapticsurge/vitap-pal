@@ -23,7 +23,7 @@ class Client extends _$Client {
         );
       } else {
         Future.microtask(() async {
-          await login(user.username!, user.password!);
+          await _login(user.username!, user.password!);
         });
       }
     }
@@ -32,7 +32,7 @@ class Client extends _$Client {
     return client;
   }
 
-  Future<void> login(String username, String password) async {
+  Future<void> _login(String username, String password) async {
     Iclient client = await future;
     var login = await ref
         .read(globalAsyncQueueProvider.notifier)
@@ -44,7 +44,6 @@ class Client extends _$Client {
             password: password,
           ),
         );
-
     try {
       ref.read(appStateProvider.notifier).updatestate(login);
     } catch (e) {
@@ -52,93 +51,8 @@ class Client extends _$Client {
     }
   }
 
-  //   Future attendance(String selSemId) async {
-  //     var k = await ref.read(userProvider.future);
-  //     var client = await future;
-  //     if (!k.isValid) throw Exception("user details are in valid");
-  //     var c = await ref
-  //         .read(globalAsyncQueueProvider.notifier)
-  //         .run(
-  //           "rust_attendance_$selSemId",
-  //           () => rustAttendance(client: client, semid: selSemId),
-  //         );
-  //     ref.read(appStateProvider.notifier).updatestate(c);
-  //     return c;
-  //   }
-
-  //   Future fullAttendance(
-  //     String selSemId,
-  //     String classid,
-  //     String courseType,
-  //   ) async {
-  //     var k = await ref.read(userProvider.future);
-  //     var client = await future;
-  //     if (!k.isValid) throw Exception("user details are in valid");
-  //     var c = await ref
-  //         .watch(globalAsyncQueueProvider.notifier)
-  //         .run(
-  //           "rust_fullAttendance_${selSemId}_${classid}_$courseType",
-  //           () => rustFullAttendance(
-  //             client: client,
-  //             semid: selSemId,
-  //             courseId: classid,
-  //             courseType: courseType,
-  //           ),
-  //         );
-  //     ref.read(appStateProvider.notifier).updatestate(c);
-  //     return c;
-  //   }
-
-  //   Future timetable(String selSemId) async {
-  //     var k = await ref.read(userProvider.future);
-  //     var client = await future;
-  //     if (!k.isValid) throw Exception("user details are in valid");
-  //     var c = await ref
-  //         .read(globalAsyncQueueProvider.notifier)
-  //         .run(
-  //           "rust_timetable_$selSemId",
-  //           () => rustTimetable(client: client, semid: selSemId),
-  //         );
-  //     ref.read(appStateProvider.notifier).updatestate(c);
-  //     return c;
-  //   }
-
-  //   Future timetableSemid() async {
-  //     var k = await ref.read(userProvider.future);
-  //     var client = await future;
-  //     if (!k.isValid) throw Exception("user details are in valid");
-  //     var c = await ref
-  //         .read(globalAsyncQueueProvider.notifier)
-  //         .run("rust_timetableSemid", () => rustTimetableSemid(client: client));
-  //     ref.read(appStateProvider.notifier).updatestate(c);
-  //     return c;
-  //   }
-
-  //   Future examSchedule(String selSemId) async {
-  //     var k = await ref.read(userProvider.future);
-  //     var client = await future;
-  //    if (!k.isValid) throw Exception("user details are in valid");
-  //     var c = await ref
-  //         .read(globalAsyncQueueProvider.notifier)
-  //         .run(
-  //           "rust_examSchedule_$selSemId",
-  //           () => rustExamShedule(client: client, semid: selSemId),
-  //         );
-  //     ref.read(appStateProvider.notifier).updatestate(c);
-  //     return c;
-  //   }
-
-  //   Future marks(String selSemId) async {
-  //     var k = await ref.read(userProvider.future);
-  //     var client = await future;
-  //     if (!k.isValid) throw Exception("user details are in valid");
-  //     var c = await ref
-  //         .read(globalAsyncQueueProvider.notifier)
-  //         .run(
-  //           "rust_marks_$selSemId",
-  //           () => rustMarksList(client: client, semid: selSemId),
-  //         );
-  //     ref.read(appStateProvider.notifier).updatestate(c);
-  //     return c;
-  //   }
+  Future<void> login() async {
+    UserEntity user = await ref.watch(userProvider.future);
+    await _login(user.username!, user.password!);
+  }
 }
