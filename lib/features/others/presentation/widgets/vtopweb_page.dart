@@ -5,6 +5,8 @@ import 'package:vitapmate/core/rust_gen/api/vtop/client.dart';
 import 'package:vitapmate/core/rust_gen/api/vtop_main.dart';
 import 'package:vitapmate/core/shared/providers/app_state.dart';
 import 'package:vitapmate/core/shared/providers/client.dart';
+import 'package:vitapmate/features/others/presentation/widgets/menu.dart';
+import 'package:vitapmate/features/others/presentation/widgets/navigation_controls.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 var cookieManager = WebViewCookieManager();
@@ -35,6 +37,16 @@ class _VtopWebPageState extends ConsumerState<VtopWebPage> {
               onHttpError: (HttpResponseError error) {},
               onWebResourceError: (WebResourceError error) {},
             ),
+          )
+          ..enableZoom(true)
+          ..addJavaScriptChannel(
+            'Toaster',
+            onMessageReceived: (JavaScriptMessage message) {
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(message.message)));
+            },
           );
   }
 
@@ -109,10 +121,8 @@ class _VtopWebPageState extends ConsumerState<VtopWebPage> {
             appBar: AppBar(
               title: const Text('VTOP', style: TextStyle(fontSize: 15)),
               actions: [
-                IconButton(
-                  onPressed: () => _controller.reload(),
-                  icon: Icon(Icons.replay_outlined),
-                ),
+                NavigationControls(webViewController: _controller),
+                Menu(webViewController: _controller),
               ],
             ),
             body: WebViewWidget(controller: _controller),

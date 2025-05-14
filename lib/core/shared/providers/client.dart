@@ -13,17 +13,25 @@ part 'client.g.dart';
 class Client extends _$Client {
   @override
   Future<Iclient> build() async {
-    UserEntity user = await ref.watch(userProvider.future);
+    String? username = await ref.watch(
+      userProvider.selectAsync((val) => val.username),
+    );
+    String? password = await ref.watch(
+      userProvider.selectAsync((val) => val.password),
+    );
+    bool isValid = await ref.watch(
+      userProvider.selectAsync((val) => val.isValid),
+    );
     Iclient client = getClient();
 
-    if (user.isValid) {
-      if (user.password == null || user.username == null) {
+    if (isValid) {
+      if (password == null || username == null) {
         throw Exception(
           "No uername and password , this is not expected to happen",
         );
       } else {
         Future.microtask(() async {
-          await _login(user.username!, user.password!);
+          await _login(username, password);
         });
       }
     }
@@ -34,6 +42,7 @@ class Client extends _$Client {
 
   Future<void> _login(String username, String password) async {
     Iclient client = await future;
+    ref.read(appStateProvider.notifier).updateLoading(true);
     var login = await ref
         .read(globalAsyncQueueProvider.notifier)
         .run(
@@ -44,6 +53,7 @@ class Client extends _$Client {
             password: password,
           ),
         );
+    ref.read(appStateProvider.notifier).updateLoading(false);
     try {
       ref.read(appStateProvider.notifier).updatestate(login);
     } catch (e) {

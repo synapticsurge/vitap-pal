@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AppStateEntity implements DiagnosticableTreeMixin {
 
- bool get newtork; dynamic get isLogin; dynamic get vtopDown;
+ bool get loginloading; bool get newtork; dynamic get isLogin; dynamic get vtopDown;
 /// Create a copy of AppStateEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -27,21 +27,21 @@ $AppStateEntityCopyWith<AppStateEntity> get copyWith => _$AppStateEntityCopyWith
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'AppStateEntity'))
-    ..add(DiagnosticsProperty('newtork', newtork))..add(DiagnosticsProperty('isLogin', isLogin))..add(DiagnosticsProperty('vtopDown', vtopDown));
+    ..add(DiagnosticsProperty('loginloading', loginloading))..add(DiagnosticsProperty('newtork', newtork))..add(DiagnosticsProperty('isLogin', isLogin))..add(DiagnosticsProperty('vtopDown', vtopDown));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppStateEntity&&(identical(other.newtork, newtork) || other.newtork == newtork)&&const DeepCollectionEquality().equals(other.isLogin, isLogin)&&const DeepCollectionEquality().equals(other.vtopDown, vtopDown));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppStateEntity&&(identical(other.loginloading, loginloading) || other.loginloading == loginloading)&&(identical(other.newtork, newtork) || other.newtork == newtork)&&const DeepCollectionEquality().equals(other.isLogin, isLogin)&&const DeepCollectionEquality().equals(other.vtopDown, vtopDown));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,newtork,const DeepCollectionEquality().hash(isLogin),const DeepCollectionEquality().hash(vtopDown));
+int get hashCode => Object.hash(runtimeType,loginloading,newtork,const DeepCollectionEquality().hash(isLogin),const DeepCollectionEquality().hash(vtopDown));
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AppStateEntity(newtork: $newtork, isLogin: $isLogin, vtopDown: $vtopDown)';
+  return 'AppStateEntity(loginloading: $loginloading, newtork: $newtork, isLogin: $isLogin, vtopDown: $vtopDown)';
 }
 
 
@@ -52,7 +52,7 @@ abstract mixin class $AppStateEntityCopyWith<$Res>  {
   factory $AppStateEntityCopyWith(AppStateEntity value, $Res Function(AppStateEntity) _then) = _$AppStateEntityCopyWithImpl;
 @useResult
 $Res call({
- bool newtork, dynamic isLogin, dynamic vtopDown
+ bool loginloading, bool newtork, dynamic isLogin, dynamic vtopDown
 });
 
 
@@ -69,9 +69,10 @@ class _$AppStateEntityCopyWithImpl<$Res>
 
 /// Create a copy of AppStateEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? newtork = null,Object? isLogin = freezed,Object? vtopDown = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? loginloading = null,Object? newtork = null,Object? isLogin = freezed,Object? vtopDown = freezed,}) {
   return _then(_self.copyWith(
-newtork: null == newtork ? _self.newtork : newtork // ignore: cast_nullable_to_non_nullable
+loginloading: null == loginloading ? _self.loginloading : loginloading // ignore: cast_nullable_to_non_nullable
+as bool,newtork: null == newtork ? _self.newtork : newtork // ignore: cast_nullable_to_non_nullable
 as bool,isLogin: freezed == isLogin ? _self.isLogin : isLogin // ignore: cast_nullable_to_non_nullable
 as dynamic,vtopDown: freezed == vtopDown ? _self.vtopDown : vtopDown // ignore: cast_nullable_to_non_nullable
 as dynamic,
@@ -85,9 +86,10 @@ as dynamic,
 
 
 class _AppStateEntity with DiagnosticableTreeMixin implements AppStateEntity {
-   _AppStateEntity({this.newtork = true, this.isLogin = false, this.vtopDown = false});
+   _AppStateEntity({this.loginloading = false, this.newtork = true, this.isLogin = false, this.vtopDown = false});
   
 
+@override@JsonKey() final  bool loginloading;
 @override@JsonKey() final  bool newtork;
 @override@JsonKey() final  dynamic isLogin;
 @override@JsonKey() final  dynamic vtopDown;
@@ -103,21 +105,21 @@ _$AppStateEntityCopyWith<_AppStateEntity> get copyWith => __$AppStateEntityCopyW
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'AppStateEntity'))
-    ..add(DiagnosticsProperty('newtork', newtork))..add(DiagnosticsProperty('isLogin', isLogin))..add(DiagnosticsProperty('vtopDown', vtopDown));
+    ..add(DiagnosticsProperty('loginloading', loginloading))..add(DiagnosticsProperty('newtork', newtork))..add(DiagnosticsProperty('isLogin', isLogin))..add(DiagnosticsProperty('vtopDown', vtopDown));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppStateEntity&&(identical(other.newtork, newtork) || other.newtork == newtork)&&const DeepCollectionEquality().equals(other.isLogin, isLogin)&&const DeepCollectionEquality().equals(other.vtopDown, vtopDown));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppStateEntity&&(identical(other.loginloading, loginloading) || other.loginloading == loginloading)&&(identical(other.newtork, newtork) || other.newtork == newtork)&&const DeepCollectionEquality().equals(other.isLogin, isLogin)&&const DeepCollectionEquality().equals(other.vtopDown, vtopDown));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,newtork,const DeepCollectionEquality().hash(isLogin),const DeepCollectionEquality().hash(vtopDown));
+int get hashCode => Object.hash(runtimeType,loginloading,newtork,const DeepCollectionEquality().hash(isLogin),const DeepCollectionEquality().hash(vtopDown));
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AppStateEntity(newtork: $newtork, isLogin: $isLogin, vtopDown: $vtopDown)';
+  return 'AppStateEntity(loginloading: $loginloading, newtork: $newtork, isLogin: $isLogin, vtopDown: $vtopDown)';
 }
 
 
@@ -128,7 +130,7 @@ abstract mixin class _$AppStateEntityCopyWith<$Res> implements $AppStateEntityCo
   factory _$AppStateEntityCopyWith(_AppStateEntity value, $Res Function(_AppStateEntity) _then) = __$AppStateEntityCopyWithImpl;
 @override @useResult
 $Res call({
- bool newtork, dynamic isLogin, dynamic vtopDown
+ bool loginloading, bool newtork, dynamic isLogin, dynamic vtopDown
 });
 
 
@@ -145,9 +147,10 @@ class __$AppStateEntityCopyWithImpl<$Res>
 
 /// Create a copy of AppStateEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? newtork = null,Object? isLogin = freezed,Object? vtopDown = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? loginloading = null,Object? newtork = null,Object? isLogin = freezed,Object? vtopDown = freezed,}) {
   return _then(_AppStateEntity(
-newtork: null == newtork ? _self.newtork : newtork // ignore: cast_nullable_to_non_nullable
+loginloading: null == loginloading ? _self.loginloading : loginloading // ignore: cast_nullable_to_non_nullable
+as bool,newtork: null == newtork ? _self.newtork : newtork // ignore: cast_nullable_to_non_nullable
 as bool,isLogin: freezed == isLogin ? _self.isLogin : isLogin // ignore: cast_nullable_to_non_nullable
 as dynamic,vtopDown: freezed == vtopDown ? _self.vtopDown : vtopDown // ignore: cast_nullable_to_non_nullable
 as dynamic,

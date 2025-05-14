@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:vitapmate/features/settings/business/entities/semid_entity.dart';
 import 'package:vitapmate/features/settings/business/repository/semid_repository.dart';

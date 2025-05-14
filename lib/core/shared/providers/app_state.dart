@@ -12,11 +12,20 @@ class AppState extends _$AppState {
     return AppStateEntity();
   }
 
-  updatesucess() {
-    state = state.copyWith(isLogin: true, newtork: true, vtopDown: false);
+  void updatesucess() {
+    state = state.copyWith(
+      isLogin: true,
+      newtork: true,
+      vtopDown: false,
+      loginloading: false,
+    );
   }
 
-  updatestate(data) {
+  void updateLoading(bool k) {
+    state = state.copyWith(loginloading: k);
+  }
+
+  void updatestate(data) {
     if (!data.$1) {
       if (data.$2 == "NE") {
         state = state.copyWith(newtork: false);
@@ -24,7 +33,7 @@ class AppState extends _$AppState {
         state = state.copyWith(vtopDown: true);
       }
     } else {
-      state = state.copyWith(isLogin: true, newtork: true, vtopDown: false);
+      updatesucess();
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vitapmate/core/constants/constants.dart';
 import 'package:vitapmate/core/router/route_names.dart';
+import 'package:vitapmate/core/shared/providers/app_state.dart';
 import 'package:vitapmate/core/shared/user/presentation/providers/user.dart';
 import 'package:vitapmate/features/settings/presentation/providers/semid.dart';
 
@@ -294,6 +295,9 @@ class _SemidSelectionState extends ConsumerState<SemidSelection> {
   @override
   Widget build(BuildContext context) {
     var user = ref.watch(userProvider);
+    if (ref.watch(appStateProvider.select((val) => val.loginloading))) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),

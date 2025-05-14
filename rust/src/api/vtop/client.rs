@@ -212,7 +212,8 @@ impl Iclient {
     async fn login_request(&mut self) -> (bool, String) {
         let body = format!(
             "_csrf={}&username={}&password={}&captchaStr={}",
-            self.csrf, self.username, self.password, self.captchans
+     self.csrf, urlencoding::encode(&self.username), urlencoding::encode(&self.password), self.captchans
+
         );
         let page = self
             .client
