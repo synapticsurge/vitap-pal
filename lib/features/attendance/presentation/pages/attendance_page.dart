@@ -1,15 +1,13 @@
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vitapmate/core/constants/constants.dart';
 import 'package:vitapmate/core/router/route_names.dart';
-import 'package:vitapmate/core/shared/providers/app_state.dart';
+import 'package:vitapmate/features/attendance/presentation/pages/full_attendance.dart';
 import 'package:vitapmate/features/attendance/presentation/providers/attendance.dart';
 import 'package:vitapmate/features/attendance/presentation/widgets/expnasion_cutsom_plane.dart';
 
@@ -21,7 +19,6 @@ class AttendancePage extends StatelessWidget {
     return const Attendance();
   }
 }
-
 
 class Attendance extends ConsumerStatefulWidget {
   const Attendance({super.key});
@@ -65,7 +62,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
         return RefreshIndicator(
           onRefresh: () async {
             await ref.read(attendanceProvider.notifier).updateAttendance();
-           // ref.read(appStateProvider.notifier).triggers();
+            // ref.read(appStateProvider.notifier).triggers();
           },
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
@@ -85,16 +82,13 @@ class _AttendanceState extends ConsumerState<Attendance> {
                           splashColor: Colors.transparent,
                           backgroundColor: AppColors.backgroundDark,
                           headerBuilder: (context, isOpen) {
-                            bool islab =
-                                !item.courseType.endsWith(
-                                      "TH",
-                                    ) ;
+                            bool islab = !item.courseType.endsWith("TH");
                             return InkWell(
                               splashColor: Colors.transparent,
-                              onTap: () {
+                              onTap: () async {
+                                 bool temp = _isopen[i];
                                 setState(() {
-                                  bool temp = _isopen[i];
-                                  _isopen = List.generate(
+                               _isopen = List.generate(
                                     attendance.length,
                                     (index) => false,
                                   );
@@ -164,7 +158,9 @@ class _AttendanceState extends ConsumerState<Attendance> {
                                                 RichText(
                                                   text: TextSpan(
                                                     text:
-                                                        item.courseName.split("-")[0],
+                                                        item.courseName.split(
+                                                          "-",
+                                                        )[0],
 
                                                     style: TextStyle(
                                                       fontSize: 15,
@@ -185,9 +181,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                                           ),
                                           Column(
                                             children: [
-                                              progreess(
-                                                item.attendenceFatCat,
-                                              ),
+                                              progreess(item.attendenceFatCat),
                                               Text(
                                                 "BetweenExams",
                                                 style: TextStyle(
@@ -230,8 +224,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                                                   ),
                                                 ),
                                                 TextSpan(
-                                                  text:
-                                                      item.classesAttended,
+                                                  text: item.classesAttended,
                                                   style: TextStyle(
                                                     color: AppColors.primary,
                                                     fontWeight: FontWeight.w700,
@@ -250,8 +243,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                                                   ),
                                                 ),
                                                 TextSpan(
-                                                  text:
-                                                      item.totalClasses,
+                                                  text: item.totalClasses,
                                                   style: TextStyle(
                                                     color: AppColors.primary,
                                                     fontWeight: FontWeight.w700,
@@ -268,12 +260,12 @@ class _AttendanceState extends ConsumerState<Attendance> {
                               ),
                             );
                           },
-                          body: Text("Table data "),
-                          // body: FullAttendance(
-                          //   courseId: item.courseId,
-                          //   courseType: item.courseType,
-                          //   exp: _isopen[i],
-                          // ),
+                          // body: Text("Table data "),
+                          body: FullAttendance(
+                            courseId: item.courseId,
+                            courseType: item.courseType,
+                            exp: _isopen[i],
+                          ),
                           isExpanded: _isopen[i],
                         ),
                     ],
@@ -398,129 +390,6 @@ class Loadingsket extends StatelessWidget {
     );
   }
 }
-
-// class FullAttendance extends ConsumerStatefulWidget {
-//   final String courseId;
-//   final String courseType;
-//   final bool exp;
-//   const FullAttendance({
-//     super.key,
-//     required this.courseId,
-//     required this.courseType,
-//     required this.exp,
-//   });
-
-//   @override
-//   ConsumerState<FullAttendance> createState() => _FullAttendanceState();
-// }
-
-// class _FullAttendanceState extends ConsumerState<FullAttendance> {
-//   bool _canFetch = true;
-//   @override
-//   void didUpdateWidget(covariant FullAttendance oldWidget) {
-//     super.didUpdateWidget(oldWidget);
-
-//     if (widget.exp && !oldWidget.exp && _canFetch) {
-//       _canFetch = false;
-
-//       ref
-//           .read(fullAttendanceProvider.notifier)
-//           .updateFullAttendance(widget.courseId, widget.courseType);
-
-//       Future.delayed(const Duration(seconds: 5), () {
-//         if (mounted) {
-//           setState(() => _canFetch = true);
-//         }
-//       });
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     var c = ref.watch(fullAttendanceProvider);
-//     // if (!widget.exp) {
-//     //   return Loadingsket();
-//     // }
-//     var id = "${widget.courseId}.${widget.courseType}";
-//     return c.when(
-//       data: (p) {
-//         var data = List<Map<String, String>>.from(p.fullAttendance[id] ?? []);
-
-//         if (data.isEmpty) {
-//           return SizedBox(
-//             width: double.infinity,
-//             height: MediaQuery.of(context).size.height / 3,
-//             child: Loadingsket(),
-//           );
-//         } else if (data.length >= 2) {
-//           data.removeLast();
-//           data.removeLast();
-//         } else {
-//           return SizedBox(
-//             width: double.infinity,
-//             height: MediaQuery.of(context).size.height / 3,
-//             child: Loadingsket(),
-//           );
-//         }
-
-//         return ConstrainedBox(
-//           constraints: BoxConstraints(
-//             maxWidth: double.infinity,
-//             minWidth: MediaQuery.of(context).size.width,
-//             maxHeight: MediaQuery.of(context).size.height / 3,
-//           ),
-//           child: SingleChildScrollView(
-//             physics: AlwaysScrollableScrollPhysics(),
-//             child: SingleChildScrollView(
-//               scrollDirection: Axis.horizontal,
-//               physics: AlwaysScrollableScrollPhysics(),
-//               child: Padding(
-//                 padding: const EdgeInsets.all(8.0),
-//                 child: DataTable(
-//                   decoration: BoxDecoration(),
-//                   dividerThickness: 0,
-//                   border: TableBorder.all(
-//                     color: AppColors.textColor,
-//                     borderRadius: BorderRadius.all(Radius.circular(4)),
-//                   ),
-
-//                   columns: [
-//                     DataColumn(label: Text("")),
-//                     DataColumn(label: Text("Date")),
-//                     DataColumn(label: Text("Status")),
-//                     DataColumn(label: Text("Time")),
-//                     DataColumn(label: Text("Slot")),
-//                     DataColumn(label: Text("Remark")),
-//                   ],
-//                   rows: [
-//                     for (var i in data)
-//                       DataRow(
-//                         cells: [
-//                           DataCell(Text(i[DBfullattendance.serialRow] ?? "")),
-//                           DataCell(Text(i[DBfullattendance.dateRow] ?? "")),
-//                           DataCell(Text(i[DBfullattendance.statusRow] ?? "")),
-//                           DataCell(Text(i[DBfullattendance.dayTimeRow] ?? "")),
-//                           DataCell(Text(i[DBfullattendance.slotRow] ?? "")),
-//                           DataCell(Text(i[DBfullattendance.remarkRow] ?? "")),
-//                         ],
-//                       ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ),
-//         );
-//       },
-//       error: (e, se) => Text("$e"),
-//       loading:
-//           () => SizedBox(
-//             width: double.infinity,
-//             height: MediaQuery.of(context).size.height / 3,
-//             child: Loadingsket(),
-//           ),
-//     );
-//   }
-// }
 
 class Loadingsketpage extends StatelessWidget {
   const Loadingsketpage({super.key});

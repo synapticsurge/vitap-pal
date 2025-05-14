@@ -121,7 +121,7 @@ pub fn parse_full_attendance(html: String) -> Vec<RAttendanceList> {
     let document = Html::parse_document(&html);
     let rows_selector = Selector::parse("tr").unwrap();
     let mut attendance_lists: Vec<RAttendanceList> = Vec::new();
-    for row in document.select(&rows_selector).skip(1) {
+    for row in document.select(&rows_selector).skip(3) {
         let cells: Vec<_> = row.select(&Selector::parse("td").unwrap()).collect();
         if cells.len() > 5 {
             let attendance_list = RAttendanceList {

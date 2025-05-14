@@ -36,4 +36,5 @@ class Attendance extends _$Attendance {
     var data = await UpdateAttendanceUsecase(repo).call();
     state = AsyncData(data);
   }
+
 }

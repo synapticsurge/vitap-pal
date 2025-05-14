@@ -17,7 +17,7 @@ class RemoteDataSource {
     String courseId,
   ) async {
     var data = await _globalAsyncQueue.run(
-      "rust_Fullattendance_$semid",
+      "rust_Fullattendance_${semid}_${courseType}_$courseId",
       () => rustFullAttendance(
         client: _client,
         semid: semid,
