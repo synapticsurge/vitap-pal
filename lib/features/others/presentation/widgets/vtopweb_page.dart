@@ -80,6 +80,10 @@ class _VtopWebPageState extends ConsumerState<VtopWebPage> {
   @override
   Widget build(BuildContext context) {
     final clientAsync = ref.watch(clientProvider);
+    final loading = ref.watch(appStateProvider.select((it) => it.loginloading));
+    if (loading) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
     return clientAsync.when(
       data: (client) {

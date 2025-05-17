@@ -1,5 +1,6 @@
 import 'package:vitapmate/core/rust_gen/api/vtop/client.dart';
 import 'package:vitapmate/core/rust_gen/api/vtop_main.dart';
+import 'package:vitapmate/core/shared/exceptions/custom_exceptions.dart';
 import 'package:vitapmate/core/utils/global_async_queue.dart';
 import 'package:vitapmate/features/attendance/data/models/attendance_model.dart';
 import 'package:vitapmate/features/attendance/data/models/full_attendance_model.dart';
@@ -32,6 +33,10 @@ class RemoteDataSource {
         courseType,
         courseId,
       );
+    }else if (data.$2 == "NE") {
+      throw NoNetworkExpection(data.$2);
+    }  else if (data.$2 == "VE") {
+      throw VtopErrorExpection(data.$2);
     } else {
       throw Exception('Failed to fetch full attendance: ${data.$2}');
     }
@@ -44,6 +49,10 @@ class RemoteDataSource {
     );
     if (data.$1) {
       return AttendanceModel.toEntityFromRemote(data.$3, semid);
+    }else if (data.$2 == "NE") {
+      throw NoNetworkExpection(data.$2);
+    }  else if (data.$2 == "VE") {
+      throw VtopErrorExpection(data.$2);
     } else {
       throw Exception('Failed to fetch attendance: ${data.$2}');
     }

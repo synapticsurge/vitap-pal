@@ -21,7 +21,6 @@ pub fn parse_semid_marks(html: String) -> String {
 }
 
 pub fn parse_marks(html: String) -> Vec<RMarksCourse> {
-   
     let document = Html::parse_document(&html);
     let mut courses: Vec<RMarksCourse> = Vec::new();
 

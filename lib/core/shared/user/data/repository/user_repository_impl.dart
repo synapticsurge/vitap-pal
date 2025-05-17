@@ -29,4 +29,9 @@ class UserRepositoryImpl extends UserRepository {
   Future<void> updateSemid(String semid) async {
     await _localDataSource.saveUserSemid(semid);
   }
+
+  @override
+  Future<void> updateIsValid(bool isValid) async {
+   await _localDataSource.saveValidStateToStorage(isValid);
+  }
 }

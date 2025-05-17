@@ -1,12 +1,12 @@
 use std::sync::Arc;
 
-use scraper::{Html, Selector};
 use reqwest::{
     self,
     cookie::{CookieStore, Jar},
     header::{HeaderMap, HeaderValue, USER_AGENT},
     multipart, Client, Error, Url,
 };
+use scraper::{Html, Selector};
 
 // (true or false, "msg")
 // msg:
@@ -18,9 +18,9 @@ use reqwest::{
 // RE = registraion number parsing error
 
 pub struct Iclient {
-   client: Client,
+    client: Client,
     online: bool,
-    cookies : Arc<Jar>,
+    cookies: Arc<Jar>,
     vtop_online: bool,
     current_page: String,
     pub csrf: String,
@@ -29,16 +29,17 @@ pub struct Iclient {
     pub loginactive: bool,
     pub captcha: String,
     captchans: String,
+    pub is_valid: bool,
 }
 
 impl Iclient {
     pub fn new() -> Self {
         let data = Self::make_client();
         Iclient {
-            client : data.0,
+            client: data.0,
             online: true,
             vtop_online: true,
-            cookies : data.1,
+            cookies: data.1,
             current_page: "".to_string(),
             csrf: "".to_string(),
             username: "".to_string(),
@@ -46,7 +47,11 @@ impl Iclient {
             loginactive: false,
             captcha: "".to_string(),
             captchans: "".to_string(),
+            is_valid: true,
         }
+    }
+    pub fn client_set_valid(&mut self, val: bool) {
+        self.is_valid = val;
     }
     pub fn update_cred(&mut self, username: String, password: String) {
         if self.username != username && self.password != password {
@@ -55,7 +60,7 @@ impl Iclient {
             self.loginactive = false;
         }
     }
-    fn make_client() -> (Client,Arc<Jar>){
+    fn make_client() -> (Client, Arc<Jar>) {
         let mut headers = HeaderMap::new();
         let jar = Jar::default();
         let cookie_store = std::sync::Arc::new(jar);
@@ -92,7 +97,7 @@ impl Iclient {
             .cookie_provider(cookie_store.clone())
             .build()
             .unwrap();
-        return (client,cookie_store);
+        return (client, cookie_store);
     }
 
     async fn update_vtop_status(&mut self) -> Result<bool, Error> {
@@ -114,7 +119,6 @@ impl Iclient {
             }
         }
     }
-
 
     async fn initial_pageload(&mut self) -> Result<String, Error> {
         let body = self
@@ -212,8 +216,10 @@ impl Iclient {
     async fn login_request(&mut self) -> (bool, String) {
         let body = format!(
             "_csrf={}&username={}&password={}&captchaStr={}",
-     self.csrf, urlencoding::encode(&self.username), urlencoding::encode(&self.password), self.captchans
-
+            self.csrf,
+            urlencoding::encode(&self.username),
+            urlencoding::encode(&self.password),
+            self.captchans
         );
         let page = self
             .client
@@ -670,12 +676,14 @@ impl Iclient {
         }
     }
 
-    pub fn get_cookies(&mut self) -> Vec<u8>{
+    pub fn get_cookies(&mut self) -> Vec<u8> {
         let mut data = vec![];
-       let k = self.cookies.cookies(&Url::parse("https://vtop.vitap.ac.in/vtop").unwrap()) ;
-       if let Some(cookie) = k{
-   data= cookie.as_bytes().to_vec();
-       }
+        let k = self
+            .cookies
+            .cookies(&Url::parse("https://vtop.vitap.ac.in/vtop").unwrap());
+        if let Some(cookie) = k {
+            data = cookie.as_bytes().to_vec();
+        }
         data
     }
 }

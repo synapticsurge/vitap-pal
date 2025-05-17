@@ -21,7 +21,6 @@ pub fn parse_semid_attendance(html: String) -> Vec<String> {
 }
 
 pub fn parse_attendance(html: String) -> Vec<RAtCourse> {
-
     let document = Html::parse_document(&html);
     let rows_selector = Selector::parse("tr").unwrap();
     let mut courses: Vec<RAtCourse> = Vec::new();
@@ -112,12 +111,10 @@ pub fn parse_attendance(html: String) -> Vec<RAtCourse> {
             courses.push(course);
         }
     }
-    ;
     return courses;
 }
 
 pub fn parse_full_attendance(html: String) -> Vec<RAttendanceList> {
-   
     let document = Html::parse_document(&html);
     let rows_selector = Selector::parse("tr").unwrap();
     let mut attendance_lists: Vec<RAttendanceList> = Vec::new();

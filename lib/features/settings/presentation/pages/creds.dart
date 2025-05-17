@@ -27,8 +27,42 @@ class Creds extends ConsumerWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        body: Column(children: [CredsInput(), SemidSelection(), CredsDisp()]),
+        body: Column(
+          children: [
+            IsPasswordChanged(),
+            CredsInput(),
+            SemidSelection(),
+            CredsDisp(),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class IsPasswordChanged extends ConsumerWidget {
+  const IsPasswordChanged({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var user = ref.watch(userProvider);
+    return user.when(
+      data: (data) {
+        if (!data.isValid && data.username != null){
+          return Text(
+            "Please Change Your Password",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+      error: (error, stackTrace) {
+        return const SizedBox.shrink();
+      },
+      loading: () {
+        return const SizedBox.shrink();
+      },
     );
   }
 }

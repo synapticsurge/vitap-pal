@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:vitapmate/core/shared/user/presentation/providers/user.dart';
 import 'package:vitapmate/features/attendance/domain/entities/full_attendance_entity.dart';
 import 'package:vitapmate/features/attendance/domain/usecase/get_full_attendance.dart';
 import 'package:vitapmate/features/attendance/domain/usecase/update_full_attendance.dart';
@@ -44,6 +45,8 @@ class FullAttendance extends _$FullAttendance {
   }
 
   Future<void> updateAttendance() async {
+    var user = await ref.read(userProvider.future);
+    if (!user.isValid) return;
     var repo = await ref.read(attendanceRepositoryProvider.future);
     var data =
         await UpdateFullAttendanceUsecase(repo, _courseType, _courseId).call();

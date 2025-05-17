@@ -1,7 +1,7 @@
-use std::collections::HashMap;
 use scraper::{Html, Selector};
 use serde;
 use serde::Deserialize;
+use std::collections::HashMap;
 
 use super::types::RTimetable;
 
@@ -74,9 +74,13 @@ pub fn parse_timetable(html: String) -> Vec<RTimetable> {
                             .filter(|k| !k.is_empty())
                             .collect::<Vec<_>>();
                         if cle.len() > 2 {
-
                             let mut cl = class_name.split("-");
-                            let code = class_name.split("-").nth(1).unwrap_or("").trim().to_string();
+                            let code = class_name
+                                .split("-")
+                                .nth(1)
+                                .unwrap_or("")
+                                .trim()
+                                .to_string();
                             let class = RTimetable {
                                 serial: index.to_string(),
                                 day: day.clone(),
@@ -87,7 +91,10 @@ pub fn parse_timetable(html: String) -> Vec<RTimetable> {
                                 block: cl.take(2).collect::<Vec<_>>().join(" "),
                                 start_time: "".to_string(),
                                 end_time: "".to_string(),
-                                name: classname_code.get(&code).unwrap_or(&"".to_string()).to_string(),
+                                name: classname_code
+                                    .get(&code)
+                                    .unwrap_or(&"".to_string())
+                                    .to_string(),
                             };
                             timetables.push(class);
                         }
@@ -95,25 +102,31 @@ pub fn parse_timetable(html: String) -> Vec<RTimetable> {
                 }
             }
             count_for_offset += 1;
-        }else if cells.len() > 10 {
-            let cname =  cells[2]
-            .text()
-            .collect::<Vec<_>>()
-            .join("")
-            .trim()
-            .replace("\t", "")
-            .replace("\n", "");
-        let tep = cname.split("-").filter(|k| !k.is_empty())
-        .collect::<Vec<_>>();
-    if tep.len() >1{
-            let code = tep[0].trim().to_string();
-            let name = tep[1].to_string().split_once("(").unwrap_or(("","")).0.trim().to_string();
-           if !classname_code.contains_key(&code){
-            classname_code.insert(code, name);
-           }
-            
-        }
-            
+        } else if cells.len() > 10 {
+            let cname = cells[2]
+                .text()
+                .collect::<Vec<_>>()
+                .join("")
+                .trim()
+                .replace("\t", "")
+                .replace("\n", "");
+            let tep = cname
+                .split("-")
+                .filter(|k| !k.is_empty())
+                .collect::<Vec<_>>();
+            if tep.len() > 1 {
+                let code = tep[0].trim().to_string();
+                let name = tep[1]
+                    .to_string()
+                    .split_once("(")
+                    .unwrap_or(("", ""))
+                    .0
+                    .trim()
+                    .to_string();
+                if !classname_code.contains_key(&code) {
+                    classname_code.insert(code, name);
+                }
+            }
         }
     }
     for timetable in &mut timetables {
@@ -122,7 +135,6 @@ pub fn parse_timetable(html: String) -> Vec<RTimetable> {
             timetable.end_time = times.end_time.clone();
         }
     }
-
 
     return timetables;
 }

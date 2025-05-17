@@ -4,5 +4,5 @@ pub mod parsecoursepg;
 pub mod parsemarks;
 pub mod parsesched;
 pub mod parsett;
-pub mod wifi;
 pub mod types;
+pub mod wifi;

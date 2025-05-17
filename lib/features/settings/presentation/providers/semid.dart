@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:vitapmate/core/shared/user/presentation/providers/user.dart';
 import 'package:vitapmate/features/settings/business/entities/semid_entity.dart';
 import 'package:vitapmate/features/settings/business/repository/semid_repository.dart';
 import 'package:vitapmate/features/settings/business/usecase/get_semids.dart';
@@ -22,6 +23,8 @@ class Semids extends _$Semids {
   }
 
   Future<void> updatesemids() async {
+    var user = await ref.read(userProvider.future);
+    if (!user.isValid) return;
     SemidRepository repo = await ref.read(semidRepositoryProvider.future);
     var data = await repo.updateSemids();
     state = AsyncData(data);

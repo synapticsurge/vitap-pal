@@ -1,5 +1,6 @@
 import 'package:vitapmate/core/rust_gen/api/vtop/client.dart';
 import 'package:vitapmate/core/rust_gen/api/vtop_main.dart';
+import 'package:vitapmate/core/shared/exceptions/custom_exceptions.dart';
 import 'package:vitapmate/core/utils/global_async_queue.dart';
 import 'package:vitapmate/features/timetable/data/models/timetable_model.dart';
 import 'package:vitapmate/features/timetable/domain/entities/timetable_entity.dart';
@@ -16,7 +17,11 @@ class RemoteDataSource {
     );
     if (data.$1) {
       return TimetableModel.toEntityFromRemote(data.$3, semid);
-    } else {
+    } else if (data.$2 == "NE") {
+      throw NoNetworkExpection(data.$2);
+    }  else if (data.$2 == "VE") {
+      throw VtopErrorExpection(data.$2);
+    }else {
       throw Exception('Failed to fetch timetable: ${data.$2}');
     }
   }

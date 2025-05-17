@@ -7,6 +7,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vitapmate/core/constants/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:vitapmate/core/router/route_names.dart';
+import 'package:vitapmate/core/shared/exceptions/custom_exceptions.dart';
 import 'package:vitapmate/features/timetable/domain/entities/sub_timetable_entity.dart';
 import 'package:vitapmate/features/timetable/presentation/providers/timetable.dart';
 
@@ -36,6 +37,13 @@ class _TimetableState extends ConsumerState<Timetable>
   void initState() {
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
+  }
+
+  void _showSnackBar(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(behavior: SnackBarBehavior.floating, content: Text(message)),
+    );
   }
 
   @override
@@ -314,8 +322,21 @@ class _TimetableState extends ConsumerState<Timetable>
                           await ref
                               .read(timetableProvider.notifier)
                               .updateTimetable();
+                        } on NoNetworkExpection catch (e) {
+                          log("$e", level: 800);
+                          
+                          _showSnackBar(
+                            "Oops! No internet right now. Give it another try when you're back online.",
+                          );
+                        } on VtopErrorExpection catch (e) {
+                          log("$e", level: 800);
+                         
+                          _showSnackBar(
+                            "Oops! It looks like Vtop is down right now.",
+                          );
                         } catch (e) {
                           log("$e", level: 900);
+                          _showSnackBar("$e");
                         }
                         //ref.read(appStateProvider.notifier).triggers();
                       },

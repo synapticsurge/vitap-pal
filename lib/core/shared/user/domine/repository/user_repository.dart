@@ -4,4 +4,5 @@ abstract class UserRepository {
   Future<void> updateUserDetails(String username, String password);
   Future<UserEntity> getUserDetails();
   Future<void> updateSemid(String semid);
+  Future<void> updateIsValid(bool isValid);
 }

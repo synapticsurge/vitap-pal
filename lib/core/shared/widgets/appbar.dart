@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vitapmate/core/constants/constants.dart';
 import 'package:vitapmate/core/router/route_names.dart';
+import 'package:vitapmate/core/shared/providers/app_state.dart';
+import 'package:vitapmate/core/shared/user/presentation/providers/user.dart';
 
 class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
@@ -11,30 +14,18 @@ class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String text = '';
-    // var k = ref.watch(clientProvider);
-    // var app = ref.watch(appStateProvider);
-    // if (k.isLoading) {
-    //   text = " Updating data";
-    // } else {
-    //   if (!app.networkUp) {
-    //     text = " No internet";
-    //   } else if (app.isLogin && app.networkUp && !app.vtopDown) {
-    //     text = "";
-    //   }
-    // }
     return AppBar(
       // expandedHeight: 10,
       // floating: true,
       title: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
             'Vitap Mate',
             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w900),
           ),
-          Text(text, style: TextStyle(fontSize: 14.0, color: Colors.grey)),
+          Status(),
         ],
       ),
       actions: [
@@ -51,5 +42,61 @@ class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
         ),
       ],
     );
+  }
+}
+
+class Status extends ConsumerWidget {
+  const Status({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var user = ref.watch(userProvider);
+    return user.when(
+      data: (data) {
+        if (!data.isValid && data.username != null) {
+          return InkWell(
+            onTap: () {
+              GoRouter.of(context).pushNamed(RouteNames.credsRouteName);
+            },
+            child: Text(
+              "Please Update Your Password ǃ",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                color: AppColors.secondary,
+              ),
+            ),
+          );
+        } else {
+          return const SubStatus();
+        }
+      },
+      error: (error, stackTrace) {
+        return const SubStatus();
+      },
+      loading: () {
+        return const SubStatus();
+      },
+    );
+  }
+}
+
+class SubStatus extends ConsumerWidget {
+  const SubStatus({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var app = ref.watch(appStateProvider);
+    if (!app.newtork) {
+      return Text(
+        "No Internet Connection",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
+          color: AppColors.ptext,
+        ),
+      );
+    }
+    return SizedBox.shrink();
   }
 }

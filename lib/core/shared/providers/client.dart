@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:vitapmate/core/constants/constants.dart';
 import 'package:vitapmate/core/shared/user/domine/entities/user_entity.dart';
 import 'package:vitapmate/core/rust_gen/api/vtop/client.dart';
 import 'package:vitapmate/core/shared/user/presentation/providers/user.dart';
@@ -31,7 +32,7 @@ class Client extends _$Client {
         );
       } else {
         Future.microtask(() async {
-          await _login(username, password);
+          await _login(username, password, isValid);
         });
       }
     }
@@ -40,7 +41,7 @@ class Client extends _$Client {
     return client;
   }
 
-  Future<void> _login(String username, String password) async {
+  Future<void> _login(String username, String password, bool isValid) async {
     Iclient client = await future;
     ref.read(appStateProvider.notifier).updateLoading(true);
     var login = await ref
@@ -51,18 +52,25 @@ class Client extends _$Client {
             iclient: client,
             username: username,
             password: password,
+            isValid: isValid,
           ),
         );
     ref.read(appStateProvider.notifier).updateLoading(false);
-    try {
-      ref.read(appStateProvider.notifier).updatestate(login);
-    } catch (e) {
-      log("$e", level: 1000);
-    }
+    ref.read(appStateProvider.notifier).updatestate(login);
+    _checkLoginData(login);
   }
 
   Future<void> login() async {
     UserEntity user = await ref.watch(userProvider.future);
-    await _login(user.username!, user.password!);
+    await _login(user.username!, user.password!, user.isValid);
+  }
+
+  Future<void> _checkLoginData((bool, String) data) async {
+    if (data.$1) true;
+    if (VtopMsgConstants.invalidCredsNameMsg.contains(data.$2.toLowerCase())) {
+      Iclient client = await future;
+      await client.clientSetValid(val: false);
+      await ref.read(userProvider.notifier).updateIsValid(false);
+    }
   }
 }

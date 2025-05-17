@@ -2,7 +2,6 @@ use scraper::{Html, Selector};
 
 use super::types::{RscheduleCourse, RscheduleExam};
 
-
 pub fn parse_semid_schedule(html: String) -> String {
     let mut sem_names_ids = vec![];
     let document = Html::parse_document(&html);
@@ -22,7 +21,6 @@ pub fn parse_semid_schedule(html: String) -> String {
 }
 
 pub fn parse_schedule(html: String) -> Vec<RscheduleExam> {
- 
     let document = Html::parse_document(&html);
     let rows_selector = Selector::parse("tr").unwrap();
     let mut exams: Vec<RscheduleExam> = Vec::new();
@@ -142,5 +140,4 @@ pub fn parse_schedule(html: String) -> Vec<RscheduleExam> {
         }
     }
     exams
-
 }

@@ -14,6 +14,8 @@ abstract class Iclient implements RustOpaqueInterface {
 
   String get csrf;
 
+  bool get isValid;
+
   bool get loginactive;
 
   String get username;
@@ -22,9 +24,13 @@ abstract class Iclient implements RustOpaqueInterface {
 
   set csrf(String csrf);
 
+  set isValid(bool isValid);
+
   set loginactive(bool loginactive);
 
   set username(String username);
+
+  Future<void> clientSetValid({required bool val});
 
   Future<(bool, String)> getAttendance({required String semid});
 

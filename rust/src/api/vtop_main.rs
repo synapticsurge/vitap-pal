@@ -1,7 +1,8 @@
 use super::vtop::{
     client::Iclient,
     parseattn, parsemarks, parsesched, parsett,
-    types::{RAtCourse, RAttendanceList, RMarksCourse, RTimetable, RscheduleExam}, wifi,
+    types::{RAtCourse, RAttendanceList, RMarksCourse, RTimetable, RscheduleExam},
+    wifi,
 };
 use base64::{engine::general_purpose::URL_SAFE, Engine as _};
 
@@ -15,6 +16,9 @@ use base64::{engine::general_purpose::URL_SAFE, Engine as _};
 // VE = vtop error
 
 async fn login_vtop(client: &mut Iclient) -> (bool, String) {
+    if !client.is_valid {
+        return (false, "PC".to_string());
+    }
     for _ in 0..4 {
         let login_pg = client.login_pageload().await;
         let mut ans_cap = "".to_string();
@@ -55,9 +59,11 @@ pub async fn onstart_run(
     iclient: &mut Iclient,
     username: String,
     password: String,
+    is_valid: bool,
 ) -> (bool, String) {
     let m = iclient.loginactive;
     iclient.update_cred(username, password);
+    iclient.client_set_valid(is_valid);
     let mut k = (m, "LA".to_string());
     if !m {
         k = login_vtop(iclient).await;
@@ -186,7 +192,10 @@ pub async fn rust_full_attendance(
 }
 
 #[flutter_rust_bridge::frb()]
-pub async fn rust_marks_list(client: &mut Iclient, semid: String) -> (bool, String, Vec<RMarksCourse>) {
+pub async fn rust_marks_list(
+    client: &mut Iclient,
+    semid: String,
+) -> (bool, String, Vec<RMarksCourse>) {
     let mut result = (false, "".to_string(), vec![]);
 
     let m = client.loginactive;
@@ -242,9 +251,7 @@ pub async fn rust_exam_shedule(
 }
 
 #[flutter_rust_bridge::frb()]
-pub async fn rust_get_cookies(
-    client: &mut Iclient,
-) -> Vec<u8>{
+pub async fn rust_get_cookies(client: &mut Iclient) -> Vec<u8> {
     client.get_cookies()
 }
 

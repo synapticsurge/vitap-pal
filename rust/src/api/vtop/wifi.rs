@@ -1,5 +1,5 @@
-use scraper::{Html, Selector};
 use reqwest;
+use scraper::{Html, Selector};
 
 pub async fn wifi_login_logout(i: i32, username: String, password: String) -> (bool, String) {
     let client = reqwest::Client::new();

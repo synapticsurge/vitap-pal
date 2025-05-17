@@ -10,11 +10,22 @@ class GlobalAsyncQueue extends _$GlobalAsyncQueue {
     return const GlobalAsyncQueueEntity();
   }
 
-  Future<T> run<T>(String id, Future<T> Function() task) {
+  Future<T> run<T>(String id, Future<T> Function() task) async {
     final current = state.running;
     if (current.containsKey(id)) {
       log("alraedy contains $id", level: 800);
       return current[id] as Future<T>;
+    }
+    if (id.startsWith("rust")) {
+      final mainFutures =
+          state.running.entries
+              .where((entry) => entry.key.startsWith('rust_onstartRun'))
+              .map((entry) => entry.value)
+              .toList();
+      if (mainFutures.isNotEmpty) {
+        log("waiting for the on start run code ", level: 800);
+        await Future.wait(mainFutures);
+      }
     }
     final future = task();
     state = state.copyWith(running: {...current, id: future});

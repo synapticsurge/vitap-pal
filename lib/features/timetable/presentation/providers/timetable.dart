@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:vitapmate/core/shared/user/presentation/providers/user.dart';
 import 'package:vitapmate/features/timetable/domain/entities/timetable_entity.dart';
 import 'package:vitapmate/features/timetable/domain/usecase/get_timetable.dart';
 import 'package:vitapmate/features/timetable/domain/usecase/update_timetable.dart';
@@ -31,6 +32,8 @@ class Timetable extends _$Timetable {
   }
 
   Future<void> updateTimetable() async {
+    var user = await ref.read(userProvider.future);
+    if (!user.isValid) return;
     var repo = await ref.read(timetableRepositoryProvider.future);
     var data = await UpdateTimetableUsecase(repo).call();
     state = AsyncData(data);

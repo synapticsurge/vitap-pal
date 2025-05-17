@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:vitapmate/core/shared/user/domine/entities/user_entity.dart';
 import 'package:vitapmate/core/shared/user/domine/usecase/get_user_details.dart';
+import 'package:vitapmate/core/shared/user/domine/usecase/update_is_valid.dart';
 import 'package:vitapmate/core/shared/user/domine/usecase/update_user_details.dart';
 import 'package:vitapmate/core/shared/user/domine/usecase/update_user_semid.dart';
 import 'package:vitapmate/core/shared/user/presentation/providers/state/user_repository.dart';
@@ -33,5 +34,11 @@ class User extends _$User {
     await UpdateUserSemid(ref.watch(userRepositoryImplProvider), semid).call();
     var data = await future;
     state = AsyncData(data.copyWith(semid: semid));
+  }
+
+  Future<void> updateIsValid(bool isvalid) async {
+    await UpdateIsValid(ref.watch(userRepositoryImplProvider), isvalid).call();
+       var data = await future;
+    state = AsyncData(data.copyWith(isValid: isvalid));
   }
 }

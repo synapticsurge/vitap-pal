@@ -26,10 +26,12 @@ Future<(bool, String)> onstartRun({
   required Iclient iclient,
   required String username,
   required String password,
+  required bool isValid,
 }) => RustLib.instance.api.crateApiVtopMainOnstartRun(
   iclient: iclient,
   username: username,
   password: password,
+  isValid: isValid,
 );
 
 Future<(bool, String, List<String>)> rustTimetableSemid({

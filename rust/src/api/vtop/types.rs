@@ -61,7 +61,7 @@ pub struct RscheduleCourse {
     pub seat_location: String,
     pub seat_no: String,
 }
-pub struct   RscheduleExam {
-  pub exam_type: String,
-  pub course: Vec<RscheduleCourse>,
+pub struct RscheduleExam {
+    pub exam_type: String,
+    pub course: Vec<RscheduleCourse>,
 }
