@@ -32,6 +32,6 @@ class UserRepositoryImpl extends UserRepository {
 
   @override
   Future<void> updateIsValid(bool isValid) async {
-   await _localDataSource.saveValidStateToStorage(isValid);
+    await _localDataSource.saveValidStateToStorage(isValid);
   }
 }

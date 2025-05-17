@@ -29,7 +29,6 @@ class TimetableModel {
 
   static toEntityFromLocal(List<TimetableData> rtimetable) {
     List<SubTimeTableEntity> sub = [];
-    int unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     for (var i in rtimetable) {
       var temp = SubTimeTableEntity(
         block: i.block,
@@ -43,7 +42,7 @@ class TimetableModel {
         slot: i.slot,
         startTime: i.startTime,
         semid: i.semId,
-        updateTime: unixTime,
+        updateTime: i.time,
       );
       sub.add(temp);
     }

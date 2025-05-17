@@ -19,9 +19,9 @@ class RemoteDataSource {
       return TimetableModel.toEntityFromRemote(data.$3, semid);
     } else if (data.$2 == "NE") {
       throw NoNetworkExpection(data.$2);
-    }  else if (data.$2 == "VE") {
+    } else if (data.$2 == "VE") {
       throw VtopErrorExpection(data.$2);
-    }else {
+    } else {
       throw Exception('Failed to fetch timetable: ${data.$2}');
     }
   }

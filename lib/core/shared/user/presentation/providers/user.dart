@@ -38,7 +38,7 @@ class User extends _$User {
 
   Future<void> updateIsValid(bool isvalid) async {
     await UpdateIsValid(ref.watch(userRepositoryImplProvider), isvalid).call();
-       var data = await future;
+    var data = await future;
     state = AsyncData(data.copyWith(isValid: isvalid));
   }
 }

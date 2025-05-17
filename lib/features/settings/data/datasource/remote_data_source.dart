@@ -18,9 +18,9 @@ class RemoteDataSource {
       return SemidsModel.fromRemoteToEntity(data.$3);
     } else if (data.$2 == "NE") {
       throw NoNetworkExpection(data.$2);
-    }  else if (data.$2 == "VE") {
+    } else if (data.$2 == "VE") {
       throw VtopErrorExpection(data.$2);
-    }else {
+    } else {
       throw Exception(data.$2);
     }
   }

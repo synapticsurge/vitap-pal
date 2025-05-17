@@ -48,7 +48,7 @@ class IsPasswordChanged extends ConsumerWidget {
     var user = ref.watch(userProvider);
     return user.when(
       data: (data) {
-        if (!data.isValid && data.username != null){
+        if (!data.isValid && data.username != null) {
           return Text(
             "Please Change Your Password",
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -349,6 +349,7 @@ class _SemidSelectionState extends ConsumerState<SemidSelection> {
             return Text("Enter your VTOP credentials above to continue.");
           }
           var semids = ref.watch(semidsProvider);
+          var sel = value.semid;
           return semids.when(
             loading: () => CircularProgressIndicator(),
             error: (error, stackTrace) => Text("error $error"),
@@ -368,13 +369,15 @@ class _SemidSelectionState extends ConsumerState<SemidSelection> {
                   ),
                   DropdownMenu(
                     dropdownMenuEntries: menu,
-                    initialSelection: user.value?.semid,
+                    initialSelection: sel,
                     label: const Text('Default Semester'),
                     width: 300,
                     hintText: "Select semester",
-                    onSelected: (value) async {
+                    onSelected: (selvalue) async {
                       var ni = user.value?.semid;
-                      await ref.read(userProvider.notifier).updateSemid(value);
+                      await ref
+                          .read(userProvider.notifier)
+                          .updateSemid(selvalue);
                       if (!mounted) return;
                       if (ni == null) {
                         GoRouter.of(

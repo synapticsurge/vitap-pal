@@ -30,12 +30,13 @@ class Attendance extends ConsumerStatefulWidget {
 
 class _AttendanceState extends ConsumerState<Attendance> {
   late List<bool> _isopen = [];
-    void _showSnackBar(String message) {
+  void _showSnackBar(String message) {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(behavior: SnackBarBehavior.floating, content: Text(message)),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     var k = ref.watch(attendanceProvider);
@@ -68,24 +69,22 @@ class _AttendanceState extends ConsumerState<Attendance> {
         }
         return RefreshIndicator(
           onRefresh: () async {
-            try{
-            await ref.read(attendanceProvider.notifier).updateAttendance();
-            }on NoNetworkExpection catch (e) {
-                          log("$e", level: 800);
-                          
-                          _showSnackBar(
-                            "Oops! No internet right now. Give it another try when you're back online.",
-                          );
-                        } on VtopErrorExpection catch (e) {
-                          log("$e", level: 800);
-                         
-                          _showSnackBar(
-                            "Oops! It looks like Vtop is down right now.",
-                          );
-                        } catch (e) {
-                          log("$e", level: 900);
-                          _showSnackBar("$e");
-                        }
+            try {
+              await ref.read(attendanceProvider.notifier).updateAttendance();
+            } on NoNetworkExpection catch (e) {
+              log("$e", level: 800);
+
+              _showSnackBar(
+                "Oops! No internet right now. Give it another try when you're back online.",
+              );
+            } on VtopErrorExpection catch (e) {
+              log("$e", level: 800);
+
+              _showSnackBar("Oops! It looks like Vtop is down right now.");
+            } catch (e) {
+              log("$e", level: 900);
+              _showSnackBar("$e");
+            }
             // ref.read(appStateProvider.notifier).triggers();
           },
           child: SingleChildScrollView(

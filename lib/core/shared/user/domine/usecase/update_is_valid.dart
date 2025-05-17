@@ -4,7 +4,7 @@ import 'package:vitapmate/core/utils/usecase.dart';
 class UpdateIsValid extends Usecase<void, void> {
   final UserRepository _userRepository;
   final bool isValid;
- 
+
   UpdateIsValid(this._userRepository, this.isValid);
 
   @override

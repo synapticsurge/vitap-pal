@@ -14,7 +14,7 @@ class RemoteDataSource {
         iclient: getClient(),
         username: username,
         password: password,
-        isValid: true
+        isValid: true,
       ),
     );
   }

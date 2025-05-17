@@ -33,9 +33,9 @@ class RemoteDataSource {
         courseType,
         courseId,
       );
-    }else if (data.$2 == "NE") {
+    } else if (data.$2 == "NE") {
       throw NoNetworkExpection(data.$2);
-    }  else if (data.$2 == "VE") {
+    } else if (data.$2 == "VE") {
       throw VtopErrorExpection(data.$2);
     } else {
       throw Exception('Failed to fetch full attendance: ${data.$2}');
@@ -49,9 +49,9 @@ class RemoteDataSource {
     );
     if (data.$1) {
       return AttendanceModel.toEntityFromRemote(data.$3, semid);
-    }else if (data.$2 == "NE") {
+    } else if (data.$2 == "NE") {
       throw NoNetworkExpection(data.$2);
-    }  else if (data.$2 == "VE") {
+    } else if (data.$2 == "VE") {
       throw VtopErrorExpection(data.$2);
     } else {
       throw Exception('Failed to fetch attendance: ${data.$2}');

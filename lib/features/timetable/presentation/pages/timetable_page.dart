@@ -324,13 +324,13 @@ class _TimetableState extends ConsumerState<Timetable>
                               .updateTimetable();
                         } on NoNetworkExpection catch (e) {
                           log("$e", level: 800);
-                          
+
                           _showSnackBar(
                             "Oops! No internet right now. Give it another try when you're back online.",
                           );
                         } on VtopErrorExpection catch (e) {
                           log("$e", level: 800);
-                         
+
                           _showSnackBar(
                             "Oops! It looks like Vtop is down right now.",
                           );

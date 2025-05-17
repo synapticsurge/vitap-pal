@@ -16,14 +16,15 @@ class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return AppBar(
       // expandedHeight: 10,
-      // floating: true,
+      //floating: true,
       title: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
             'Vitap Mate',
             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w900),
+            textAlign: TextAlign.center,
           ),
           Status(),
         ],
@@ -59,12 +60,13 @@ class Status extends ConsumerWidget {
               GoRouter.of(context).pushNamed(RouteNames.credsRouteName);
             },
             child: Text(
-              "Please Update Your Password ǃ",
+              "Please Update Your Password !",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
                 color: AppColors.secondary,
               ),
+              textAlign: TextAlign.center,
             ),
           );
         } else {
@@ -89,7 +91,7 @@ class SubStatus extends ConsumerWidget {
     var app = ref.watch(appStateProvider);
     if (!app.newtork) {
       return Text(
-        "No Internet Connection",
+        "⚠️ No Internet Connection",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 12,

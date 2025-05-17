@@ -15,7 +15,6 @@ import 'package:vitapmate/features/timetable/presentation/pages/timetable_page.d
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final goRouterprovider = Provider((ref) {
-  ref.watch(userProvider.selectAsync((it) => it.isValid));
   return GoRouter(
     redirect: (context, state) => redirect(context, ref, state),
     initialLocation: '/timetable',
@@ -113,7 +112,7 @@ FutureOr<String?> redirect(
   GoRouterState state,
 ) async {
   var user = await ref.read(userProvider.future);
-  if (!user.isValid && user.semid == null) {
+  if (user.semid == null) {
     return "/settings/credentials";
   }
   return null;

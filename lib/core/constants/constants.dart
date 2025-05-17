@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class VtopMsgConstants {
-  static final invalidCredsNameMsg = ["Invalid Username/Password".toLowerCase()  ,"Invalid LoginId/Password".toLowerCase() ];
-
+  static final invalidCredsNameMsg = [
+    "Invalid Username/Password".toLowerCase(),
+    "Invalid LoginId/Password".toLowerCase(),
+  ];
 }
 
 class StorageKeys {
