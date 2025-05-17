@@ -1,12 +1,11 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vitapmate/core/constants/constants.dart';
-import 'package:vitapmate/core/router/route_names.dart';
+
 import 'package:vitapmate/core/shared/exceptions/custom_exceptions.dart';
 import 'package:vitapmate/features/attendance/presentation/pages/full_attendance.dart';
 import 'package:vitapmate/features/attendance/presentation/providers/attendance.dart';
@@ -37,6 +36,54 @@ class _AttendanceState extends ConsumerState<Attendance> {
     );
   }
 
+  Widget _showerror(String msg) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        await _reload();
+      },
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: SizedBox(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height-200,
+          child: 
+            Center(
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: msg,
+                      style: TextStyle(color: AppColors.primary, fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          
+        ),
+      ),
+    );
+  }
+
+  Future<void> _reload() async {
+    try {
+      await ref.read(attendanceProvider.notifier).updateAttendance();
+    } on NoNetworkExpection catch (e) {
+      log("$e", level: 800);
+
+      _showSnackBar(
+        "Oops! No internet right now. Give it another try when you're back online.",
+      );
+    } on VtopErrorExpection catch (e) {
+      log("$e", level: 800);
+
+      _showSnackBar("Oops! It looks like Vtop is down right now.");
+    } catch (e) {
+      log("$e", level: 900);
+      _showSnackBar("$e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var k = ref.watch(attendanceProvider);
@@ -46,7 +93,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
         if (data.attendance.isEmpty) {
           return RefreshIndicator(
             onRefresh: () async {
-              await ref.read(attendanceProvider.notifier).updateAttendance();
+              await _reload();
               //ref.read(appStateProvider.notifier);
             },
             child: SingleChildScrollView(
@@ -303,25 +350,15 @@ class _AttendanceState extends ConsumerState<Attendance> {
           ),
         );
       },
-      error:
-          (e, se) => Center(
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: "Add your vtop details in ",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  TextSpan(
-                    text: "settings",
-                    style: TextStyle(color: AppColors.primary, fontSize: 20),
-                    onEnter:
-                        (event) => context.goNamed(RouteNames.credsRouteName),
-                  ),
-                ],
-              ),
-            ),
-          ),
+      error: (e, se) {
+        if (e is NoNetworkExpection) {
+          return _showerror("No internet connection to fetch data");
+        } else if (e is VtopErrorExpection) {
+          return _showerror("No internet connection to fetch data");
+        } else {
+          return _showerror("$e");
+        }
+      },
       loading: () {
         return Loadingsketpage();
       },
