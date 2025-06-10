@@ -174,7 +174,7 @@ class _AttendanceState extends ConsumerState<Attendance> {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 elevation: 0,
-                                color: AppColors.backgroundDark,
+                                color: AppColors.backgroundLight,
                                 child: Padding(
                                   padding: EdgeInsets.all(10),
                                   child: Column(

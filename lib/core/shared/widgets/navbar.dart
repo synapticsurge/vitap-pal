@@ -22,7 +22,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ),
       child: BottomNavigationBar(
         currentIndex: selectedIndex,
-
+        selectedItemColor: Colors.white, // This applies to both icon and label
+      
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
@@ -68,6 +69,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     final bool isSelected = selectedIndex == index;
 
     return BottomNavigationBarItem(
+      
       icon: Stack(
         alignment: Alignment.center,
         children: [
@@ -76,7 +78,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               width: 48,
               height: 30,
               decoration: BoxDecoration(
-                color: AppColors.backgroundLight.withValues(alpha: 0.2),
+                color: AppColors.foregroundColor.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(15),
               ),
             ),

@@ -193,7 +193,7 @@ Widget _showerror(String msg) {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     elevation: 0,
-                    color: AppColors.backgroundDark,
+                    color: AppColors.backgroundLight,
 
                     // color: AppColors.green.withValues(alpha: 0.2,),
                     child: Padding(
@@ -250,7 +250,7 @@ Widget _showerror(String msg) {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     elevation: 0,
-                    color: AppColors.backgroundDark,
+                    color: AppColors.backgroundLight,
 
                     child: Padding(
                       padding: EdgeInsets.all(10),

@@ -47,7 +47,7 @@ class MyApp extends ConsumerWidget {
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: AppColors.backgroundDark,
-          selectedItemColor: AppColors.backgroundLight,
+         
           elevation: 0,
         ),
         textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),

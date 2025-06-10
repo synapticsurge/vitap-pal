@@ -19,8 +19,8 @@ class AppColors {
   static const secondary = Color(0xFFFF4D4D);
   static const green = Color.fromARGB(255, 67, 233, 86);
   static const tertiary = Color(0xFF5F5F5F);
-  static const backgroundLight = Color(0xFFF5F5F5);
-  static const backgroundDark = Color.fromARGB(255, 0, 0, 0);
+  static const backgroundLight = Color(0xFF1E1E1E);
+  static const backgroundDark = Color(0xFF121212);
   static const foregroundColor = Colors.white;
   static const accentColor = Color(0xFF4CAF50);
   static const errorColor = Color(0xFFB71C1C);
